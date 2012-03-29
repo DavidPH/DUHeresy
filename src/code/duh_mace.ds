@@ -1,0 +1,82 @@
+//DS---------------------------------------------------------------------------
+//
+// Copyright(C) 2012 David Hill
+//
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program; if not, see <http://www.gnu.org/licenses/>.
+//
+//-----------------------------------------------------------------------------
+//
+// Firemace functions.
+//
+//-----------------------------------------------------------------------------
+
+[
+#include "duh_defs.dh"
+
+
+//----------------------------------------------------------------------------|
+// Global Functions                                                           |
+//
+
+//
+// DUH_FiremaceAltFire
+//
+script DUH_FiremaceAltFire(bool useammo)
+{
+   __variable __autoreg int ammo_count = CheckInventory(DUHfiremaceAmmo);
+   __variable __autoreg int ammo_usage = (ammo_count / 75) + 1;
+   __variable __autoreg int damage = (ammo_count / 25) + ammo_usage + 7;
+
+   __variable __autoreg int tid;
+
+   tid = DUH_FireMissile(ActivatorTID(), "DUH_FiremaceMissile4", damage,
+                         GetActorAngle(0), GetActorPitch(0), 25);
+
+   GiveActorInventory(tid, "DUH_MemberShooterTID", ActivatorTID());
+
+   if (useammo)
+      TakeInventory(DUHfiremaceAmmo, ammo_usage);
+};
+
+//
+// DUH_FiremaceDeathRing
+//
+script DUH_FiremaceDeathRing()
+{
+   __variable __autoreg int damage = GetActorProperty(0, APROP_Damage) + 7;
+   __variable __autoreg int shooter = CheckInventory("DUH_MemberShooterTID");
+
+   __variable __autoreg int i;
+
+   for (i = damage; i--;)
+   {
+      __variable __autoreg fixed angle = (fixed)i / damage;
+
+      DUH_FireMissile(shooter, "DUH_FiremaceMissile5", 1, angle, 0, 15);
+   };
+};
+
+//
+// DUH_FiremaceReady
+//
+script DUH_FiremaceReady(int frames)
+{
+   __variable static __array int[MAX_PLAYERS] tics;
+
+   DUH_WeaponReady(frames, tics, DUHfiremaceAmmo, 20);
+};
+
+]
+// EOF
+

@@ -1,0 +1,59 @@
+//DS---------------------------------------------------------------------------
+//
+// Copyright(C) 2012 David Hill
+//
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program; if not, see <http://www.gnu.org/licenses/>.
+//
+//-----------------------------------------------------------------------------
+//
+// Dragon Claw functions.
+//
+//-----------------------------------------------------------------------------
+
+[
+#include "duh_defs.dh"
+
+
+//----------------------------------------------------------------------------|
+// Global Functions                                                           |
+//
+
+//
+// DUH_DragonClawDamage
+//
+script DUH_DragonClawDamage(bool useammo) -> int
+{
+   __variable __autoreg int ammo_count = CheckInventory(DUHdragonClawAmmo);
+   __variable __autoreg int ammo_usage = (ammo_count / 100) + 1;
+   __variable __autoreg int damage = (ammo_count / 50) + ammo_usage + 5;
+
+   if (useammo)
+      TakeInventory(DUHdragonClawAmmo, ammo_usage);
+
+   return damage;
+};
+
+//
+// DUH_DragonClawReady
+//
+script DUH_DragonClawReady(int frames)
+{
+   __variable static __array int[MAX_PLAYERS] tics;
+
+   DUH_WeaponReady(frames, tics, DUHdragonClawAmmo, 4);
+};
+
+]
+// EOF
+

@@ -1,0 +1,421 @@
+//-----------------------------------------------------------------------------
+//
+// Copyright(C) 2012 David Hill
+//
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program; if not, see <http://www.gnu.org/licenses/>.
+//
+//-----------------------------------------------------------------------------
+//
+// Mobj actors.
+//
+//-----------------------------------------------------------------------------
+
+
+//----------------------------------------------------------------------------|
+// Types                                                                      |
+//
+
+//
+// DUH_Disciple
+//
+actor DUH_Disciple : Wizard replaces Wizard
+{
+   states
+   {
+   Death:
+      WZRD F 6 A_GhostOff
+      WZRD G 6 A_Scream
+      WZRD HI 6
+      WZRD J 6 A_NoBlocking
+      WZRD KLM 6
+      WZRD M 2800 A_SetFloorClip
+      WZRD M -1 Thing_Raise(0)
+      stop
+
+   Raise:
+      WZRD M 12 A_UnSetFloorClip
+      WZRD LKJIHGF 12
+      goto See
+   }
+}
+
+//
+// DUH_DSparil
+//
+actor DUH_DSparil : Sorcerer2 replaces Sorcerer2
+{
+   Health 8000
+
+   states
+   {
+   Death:
+      SDTH AB 8
+      SDTH C 8 A_PlaySoundEx("dsparil/scream", "Body")
+      SDTH DEFDEFDEFDEFDEFDEFDEF 7
+      SDTH G 6 A_PlaySoundEx("dsparil/explode", "Body")
+      SDTH HIII 6
+      SDTH J 6 A_NoBlocking
+      SDTH K 6 A_PlaySoundEx("dsparil/bones", "Body")
+      SDTH LMNO 6
+      SDTH O 175 A_BossDeath
+      SDTH O -1 Thing_Raise(0)
+      stop
+
+   Raise:
+      SDTH O 12 A_SetInvulnerable
+      SDTH N 12 A_PlaySoundEx("dsparil/bones", "Body")
+      SDTH MLKJIIIH 12
+      SDTH G 12 A_PlaySoundEx("dsparil/scream", "Body")
+      SDTH FEDFEDFEDFEDFEDFEDFED 14
+      SDTH C 16 A_PlaySoundEx("dsparil/explode", "Body")
+      SDTH B 16
+      SDTH A 16 A_UnSetInvulnerable
+      goto See
+   }
+}
+
+//
+// DUH_DSparilMounted
+//
+actor DUH_DSparilMounted : Sorcerer1 replaces Sorcerer1
+{
+   Health 4000
+}
+
+//
+// DUH_FireGargoyle
+//
+actor DUH_FireGargoyle : HereticImpLeader replaces HereticImpLeader
+{
+   states
+   {
+   Death:
+      IMPX G 4 A_ImpDeath
+      IMPX H 5
+      wait
+
+   XDeath:
+      IMPX S 5 A_ImpXDeath1
+      IMPX TU 5
+      IMPX V 5 A_Gravity
+      IMPX W 5
+      wait
+
+   Crash:
+      IMPX I 7 A_ImpExplode
+      IMPX J 7 A_Scream
+      IMPX KL 7
+      IMPX L 700
+      IMPX L -1 Thing_Raise(0)
+      stop
+
+   XCrash:
+      IMPX X 7
+      IMPX YZ 7
+      IMPX Z 700
+      IMPX Z -1 Thing_Raise(0)
+      stop
+
+   Raise:
+      IMPX LKJIHG 10
+      goto See
+   }
+}
+
+//
+// DUH_Gargoyle
+//
+actor DUH_Gargoyle : HereticImp replaces HereticImp
+{
+   states
+   {
+   Death:
+      IMPX G 4 A_ImpDeath
+      IMPX H 5
+      wait
+
+   XDeath:
+      IMPX S 5 A_ImpXDeath1
+      IMPX TU 5
+      IMPX V 5 A_Gravity
+      IMPX W 5
+      wait
+
+   Crash:
+      IMPX I 7 A_ImpExplode
+      IMPX J 7 A_Scream
+      IMPX KL 7
+      IMPX L 350
+      IMPX L -1 Thing_Raise(0)
+      stop
+
+   XCrash:
+      IMPX X 7
+      IMPX YZ 7
+      IMPX Z 350
+      IMPX Z -1 Thing_Raise(0)
+      stop
+
+   Raise:
+      IMPX LKJIHG 10
+      goto See
+   }
+}
+
+//
+// DUH_Golem
+//
+actor DUH_Golem : Mummy replaces Mummy
+{
+   states
+   {
+   Death:
+      MUMM I 5
+      MUMM J 5 A_Scream
+      MUMM K 5 A_SpawnItemEx("MummySoul", 0,0,10, 0,0,1)
+      MUMM L 5
+      MUMM M 5 A_NoBlocking
+      MUMM NOP 5
+      MUMM P 700
+      MUMM P -1 Thing_Raise(0)
+      stop
+
+   Raise:
+      MUMM ONMLKJI 10
+      goto See
+   }
+}
+
+//
+// DUH_GhostGolem
+//
+actor DUH_GhostGolem : DUH_Golem replaces MummyGhost
+{
+   Alpha 0.4
+   RenderStyle Translucent
+
+   +GHOST
+   +SHADOW
+}
+
+//
+// DUH_IronLich
+//
+actor DUH_IronLich : IronLich replaces IronLich
+{
+   states
+   {
+   Death:
+      LICH C 7
+      LICH D 7 A_Scream
+      LICH EF 7
+      LICH G 7 A_NoBlocking
+      LICH HI 7
+      LICH I 3150 A_BossDeath
+      LICH I -1 Thing_Raise(0)
+      stop
+
+   Raise:
+      LICH IHGFEDC 14
+      goto See
+   }
+}
+
+//
+// DUH_Maulotaur
+//
+actor DUH_Maulotaur : Minotaur replaces Minotaur
+{
+   states
+   {
+   Death:
+      MNTR F 6 A_MinotaurDeath
+      MNTR G 5
+      MNTR H 6 A_Scream
+      MNTR I 5
+      MNTR J 6
+      MNTR K 5
+      MNTR L 6
+      MNTR M 5 A_NoBlocking
+      MNTR N 6
+      MNTR O 5
+      MNTR P 6
+      MNTR Q 5
+      MNTR R 6
+      MNTR S 5
+      MNTR T 6
+      MNTR T 3500 A_BossDeath
+      MNTR T -1 Thing_Raise(0)
+      stop
+
+   Raise:
+      MNTR TSRQPONMLKJIHGF 12
+      goto See
+   }
+}
+
+//
+// DUH_Nitrogolem
+//
+actor DUH_Nitrogolem : MummyLeader replaces MummyLeader
+{
+   states
+   {
+   Death:
+      MUMM I 5
+      MUMM J 5 A_Scream
+      MUMM K 5 A_SpawnItemEx("MummySoul", 0,0,10, 0,0,1)
+      MUMM L 5
+      MUMM M 5 A_NoBlocking
+      MUMM NOP 5
+      MUMM P 1050
+      MUMM P -1 Thing_Raise(0)
+      stop
+
+   Raise:
+      MUMM ONMLKJI 10
+      goto See
+   }
+}
+
+//
+// DUH_GhostNitrogolem
+//
+actor DUH_GhostNitrogolem : DUH_Nitrogolem replaces MummyLeaderGhost
+{
+   Alpha 0.4
+   RenderStyle Translucent
+
+   +GHOST
+   +SHADOW
+}
+
+//
+// DUH_Ophidian
+//
+actor DUH_Ophidian : Snake replaces Snake
+{
+   states
+   {
+   Death:
+      SNKE G 5
+      SNKE H 5 A_Scream
+      SNKE IJKL 5
+      SNKE M 5 A_NoBlocking
+      SNKE NOP 5
+      SNKE P 2450
+      SNKE P -1 Thing_Raise(0)
+      stop
+
+   Raise:
+     SNKE PONMLKJIHG 10
+     goto See
+   }
+}
+
+//
+// DUH_Sabreclaw
+//
+actor DUH_Sabreclaw : Clink replaces Clink
+{
+   states
+   {
+   Death:
+      CLNK IJ 6
+      CLNK K 5 A_Scream
+      CLNK L 5 A_NoBlocking
+      CLNK MNO 5
+      CLNK O 1750
+      CLNK O -1 Thing_Raise(0)
+      stop
+
+   Raise:
+      CLNK ONMLKJI 10
+      goto See
+   }
+}
+
+//
+// DUH_UndeadWarrior
+//
+actor DUH_UndeadWarrior : Knight replaces Knight
+{
+   states
+   {
+   Death:
+      KNIG I 6
+      KNIG J 6 A_Scream
+      KNIG K 6
+      KNIG L 6 A_NoBlocking
+      KNIG MNO 6
+      KNIG O 1400
+      KNIG O -1 Thing_Raise(0)
+      stop
+
+   Raise:
+      KNIG ONMLKJI 12
+      goto See
+   }
+}
+
+//
+// DUH_GhostWarrior
+//
+actor DUH_GhostWarrior : DUH_UndeadWarrior replaces KnightGhost
+{
+   Alpha 0.4
+   RenderStyle Translucent
+
+   +GHOST
+   +SHADOW
+}
+
+//
+// DUH_Weredragon
+//
+actor DUH_Weredragon : Beast replaces Beast
+{
+   states
+   {
+   Death:
+      BEAS R 6
+      BEAS S 6 A_Scream
+      BEAS TUV 6
+      BEAS W 6 A_NoBlocking
+      BEAS XYZ 6
+      BEAS Z 2100
+      BEAS Z -1 Thing_Raise(0)
+      stop
+
+   XDeath:
+      BEAS J 5
+      BEAS K 6 A_Scream
+      BEAS L 5
+      BEAS M 6
+      BEAS N 5
+      BEAS O 6 A_NoBlocking
+      BEAS P 5
+      BEAS Q 6
+      BEAS Q 2100
+      BEAS Q -1 Thing_Raise(0)
+      stop
+
+   Raise:
+      BEAS ZYXWVUTSR 12
+      goto See
+   }
+}
+
+// EOF
+

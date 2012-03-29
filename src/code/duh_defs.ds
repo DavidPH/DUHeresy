@@ -1,0 +1,117 @@
+//-----------------------------------------------------------------------------
+//
+// Copyright(C) 2012 David Hill
+//
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program; if not, see <http://www.gnu.org/licenses/>.
+//
+//-----------------------------------------------------------------------------
+//
+// Common DUHeresy defintions and general functions.
+//
+//-----------------------------------------------------------------------------
+
+[
+#include "duh_defs.dh"
+
+
+//----------------------------------------------------------------------------|
+// Global Functions                                                           |
+//
+
+//
+// DUH_FireMissile
+//
+function DUH_FireMissile
+(int shooter, str name, int damage, fixed angle, fixed pitch, fixed speed)
+ -> int
+{
+   __variable __autoreg int tid = DUH_MakeTID();
+
+   __variable __autoreg fixed velx = Cos(angle) * Cos(pitch) * speed;
+   __variable __autoreg fixed vely = Sin(angle) * Cos(pitch) * speed;
+   __variable __autoreg fixed velz = Sin(1.0 - pitch) * speed;
+
+   __variable __autoreg fixed x = GetActorX(0);
+   __variable __autoreg fixed y = GetActorY(0);
+   __variable __autoreg fixed z = GetActorZ(0);
+
+   if (GetActorViewHeight(ActivatorTID()))
+   {
+      z += GetActorViewHeight(ActivatorTID()) - 5;
+   };
+
+   // Hack to not kill projectile if shooting from water.
+   // Cache original position because the position change could fail in which
+   // case saying z-16 would lower the mobj!
+   __variable __autoreg fixed shooterx = GetActorX(shooter);
+   __variable __autoreg fixed shootery = GetActorY(shooter);
+   __variable __autoreg fixed shooterz = GetActorZ(shooter);
+
+   SetActorPosition(shooter, shooterx, shootery, shooterz+16, false);
+
+   // SpawnProjectile is used to set the newly created missile's target.
+   // Other than that, it's pretty useless because it always spawns at the
+   // shooter's feet, so we just set all the positioning and velocity manually.
+   SpawnProjectile(shooter, name, 0, 0, 0, 0, tid);
+
+   SetActorPosition(shooter, shooterx, shootery, shooterz, false);
+
+   // And here's the entire point of this function, custom damage.
+   SetActorProperty(tid, APROP_Damage, damage);
+
+   SetActorPosition(tid, x, y, z, false);
+   SetActorVelocity(tid, velx, vely, velz);
+
+   SetActorAngle(tid, angle);
+   SetActorPitch(tid, pitch);
+
+   return tid;
+};
+
+//
+// DUH_MakeTID
+//
+function DUH_MakeTID() -> int
+{
+   __variable static int tid;
+
+   while (ThingCount(0, ++tid));
+
+   return tid;
+};
+
+//
+// DUH_WeaponReady
+//
+script DUH_WeaponReady(int frames, int *tics, str ammo, int multiplier)
+{
+   DUH_ArtifactReady(frames);
+
+   while (frames--)
+   {
+      __variable __autoreg int tic = ++tics[PlayerNumber()];
+      __variable __autoreg int ammo_count = CheckInventory(ammo);
+      __variable __autoreg int ammo_limit = GetAmmoCapacity(ammo) * multiplier;
+      __variable __autoreg int period;
+
+      period = ammo_count ? ammo_limit / ammo_count : ammo_limit;
+      if (!(tic % period)) GiveInventory(ammo, 1);
+
+      if (frames) Delay(1);
+   };
+};
+
+]
+// EOF
+

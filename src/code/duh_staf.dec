@@ -1,0 +1,137 @@
+//-----------------------------------------------------------------------------
+//
+// Copyright(C) 2012 David Hill
+//
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program; if not, see <http://www.gnu.org/licenses/>.
+//
+//-----------------------------------------------------------------------------
+//
+// Staff actors.
+//
+//-----------------------------------------------------------------------------
+
+
+//----------------------------------------------------------------------------|
+// Types                                                                      |
+//
+
+//
+// DUH_StaffPuff
+//
+actor DUH_StaffPuff : StaffPuff
+{
+}
+
+//
+// DUH_StaffPuffPain
+//
+actor DUH_StaffPuffPain : DUH_StaffPuff
+{
+   +FORCEPAIN
+}
+
+//
+// DUH_StaffPoweredPuff
+//
+actor DUH_StaffPoweredPuff : StaffPuff2
+{
+}
+
+//
+// DUH_StaffPoweredPuffPain
+//
+actor DUH_StaffPoweredPuffPain : DUH_StaffPoweredPuff
+{
+   +FORCEPAIN
+}
+
+//
+// DUH_Staff
+//
+actor DUH_Staff : Staff replaces Staff
+{
+   Weapon.SisterWeapon "DUH_StaffPowered"
+
+   states
+   {
+   Ready:
+      STFF A 1 A_WeaponReady
+      TNT1 AA 0 ACS_NamedExecuteAlways("DUH_ArtifactReady",0, 1)
+      goto Ready
+
+   Fire:
+      TNT1 A 0 ACS_NamedExecuteAlways("DUH_ArtifactReady",0, 14)
+      STFF B 6
+      STFF C 8 A_CustomPunch(5, false, 0, "DUH_StaffPuff")
+      STFF B 8 A_ReFire
+      goto Ready
+
+   AltFire:
+      STFF A 3
+      STFF B 4 A_CustomPunch(1, false, 0, "DUH_StaffPuffPain")
+      STFF A 3
+      STFF B 4 A_CustomPunch(1, false, 0, "DUH_StaffPuffPain")
+      STFF A 3
+      STFF B 4 A_CustomPunch(1, false, 0, "DUH_StaffPuffPain")
+      STFF AB 3
+      STFF C 16 A_CustomPunch(2, false, 0, "DUH_StaffPuffPain")
+      STFF B 16 A_ReFire
+      goto Ready
+   }
+}
+
+//
+// DUH_StaffPowered
+//
+actor DUH_StaffPowered : DUH_Staff replaces StaffPowered
+{
+   Weapon.SisterWeapon "DUH_Staff"
+
+   +WEAPON.POWERED_UP
+
+   states
+   {
+   Ready:
+      STFF DDDD 1 A_WeaponReady
+      TNT1 AAAA 0 ACS_NamedExecuteAlways("DUH_ArtifactReady",0, 4)
+      STFF EEEE 1 A_WeaponReady
+      TNT1 AAAA 0 ACS_NamedExecuteAlways("DUH_ArtifactReady",0, 4)
+      STFF FFFF 1 A_WeaponReady
+      TNT1 AAAA 0 ACS_NamedExecuteAlways("DUH_ArtifactReady",0, 4)
+      goto Ready
+
+   Fire:
+      TNT1 AA 0 ACS_NamedExecuteAlways("DUH_ArtifactReady",0, 14)
+      STFF G 6
+      STFF H 8 A_CustomPunch(15, false, 0, "DUH_StaffPoweredPuff")
+      STFF G 8 A_ReFire
+      goto Ready
+
+   AltFire:
+      TNT1 A 0 ACS_NamedExecuteAlways("DUH_ArtifactReady",0, 43)
+      STFF F 3
+      STFF G 4 A_CustomPunch(3, false, 0, "DUH_StaffPoweredPuffPain")
+      STFF F 3
+      STFF G 4 A_CustomPunch(3, false, 0, "DUH_StaffPoweredPuffPain")
+      STFF F 3
+      STFF G 4 A_CustomPunch(3, false, 0, "DUH_StaffPoweredPuffPain")
+      STFF FG 3
+      STFF H 16 A_CustomPunch(6, false, 0, "DUH_StaffPoweredPuffPain")
+      STFF G 16 A_ReFire
+      goto Ready
+   }
+}
+
+// EOF
+

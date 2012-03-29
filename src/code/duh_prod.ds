@@ -1,0 +1,106 @@
+//DS---------------------------------------------------------------------------
+//
+// Copyright(C) 2012 David Hill
+//
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program; if not, see <http://www.gnu.org/licenses/>.
+//
+//-----------------------------------------------------------------------------
+//
+// Phoenix Rod functions.
+//
+//-----------------------------------------------------------------------------
+
+[
+#include "duh_defs.dh"
+
+
+//----------------------------------------------------------------------------|
+// Global Functions                                                           |
+//
+
+//
+// DUH_PhoenixRodAltDone
+//
+script DUH_PhoenixRodAltDone(bool useammo)
+{
+   __variable __autoreg int ammo_usage =
+      CheckInventory("DUH_PhoenixRodFireAmmo");
+
+   if (useammo)
+      TakeInventory(DUHphoenixRodAmmo, ammo_usage);
+};
+
+//
+// DUH_PhoenixRodAltFire
+//
+script DUH_PhoenixRodAltFire()
+{
+   TakeInventory("DUH_PhoenixRodFireTics", 1);
+   if (!CheckInventory("DUH_PhoenixRodFireTics"))
+   {
+      GiveInventory("DUH_PhoenixRodFireEnd", 1);
+      return;
+   };
+
+   __variable __autoreg int damage =
+      CheckInventory("DUH_PhoenixRodFireDamage");
+
+   DUH_FireMissile(ActivatorTID(), "DUH_PhoenixRodMissile2", damage,
+                   GetActorAngle(0), GetActorPitch(0), 10);
+};
+
+//
+// DUH_PhoenixRodAltInit
+//
+script DUH_PhoenixRodAltInit()
+{
+   __variable __autoreg int ammo_count = CheckInventory(DUHphoenixRodAmmo);
+   __variable __autoreg int ammo_usage = (ammo_count / 10) + 1;
+   __variable __autoreg int damage = (ammo_count / 10) + ammo_usage + 1;
+
+   TakeInventory("DUH_PhoenixRodFireAmmo", 1000);
+   TakeInventory("DUH_PhoenixRodFireDamage", 1000);
+   TakeInventory("DUH_PhoenixRodFireEnd", 1);
+
+   GiveInventory("DUH_PhoenixRodFireAmmo", ammo_usage);
+   GiveInventory("DUH_PhoenixRodFireDamage", damage);
+   GiveInventory("DUH_PhoenixRodFireTics", 350);
+};
+
+//
+// DUH_PhoenixRodFlameTic
+//
+script DUH_PhoenixRodFlameTic()
+{
+   __variable __autoreg int damage;
+
+   damage = GetActorProperty(0, APROP_Damage);
+   SetActorProperty(0, APROP_Damage, --damage);
+
+   if (!damage) SetActorState(0, "Done", false);
+};
+
+//
+// DUH_PhoenixRodReady
+//
+script DUH_PhoenixRodReady(int frames)
+{
+   __variable static __array int[MAX_PLAYERS] tics;
+
+   DUH_WeaponReady(frames, tics, DUHphoenixRodAmmo, 10);
+};
+
+]
+// EOF
+

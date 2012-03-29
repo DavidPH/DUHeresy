@@ -1,0 +1,111 @@
+//DS---------------------------------------------------------------------------
+//
+// Copyright(C) 2012 David Hill
+//
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program; if not, see <http://www.gnu.org/licenses/>.
+//
+//-----------------------------------------------------------------------------
+//
+// Hellstaff functions.
+//
+//-----------------------------------------------------------------------------
+
+[
+#include "duh_defs.dh"
+
+
+//----------------------------------------------------------------------------|
+// Global Functions                                                           |
+//
+
+//
+// DUH_HellstaffAltFire
+//
+script DUH_HellstaffAltFire(bool useammo)
+{
+   __variable __autoreg int ammo_count = CheckInventory(DUHhellstaffAmmo);
+   __variable __autoreg int ammo_usage = (ammo_count / 100) + 1;
+   __variable __autoreg int damage = (ammo_count / 25) + ammo_usage + 1;
+
+   __variable __autoreg int tid;
+
+   tid = DUH_FireMissile(ActivatorTID(), "DUH_HellstaffMissile2", damage,
+                         GetActorAngle(0), GetActorPitch(0), 25);
+
+   GiveActorInventory(tid, "DUH_HellstaffMissileStormTics", (ammo_count / 10) + 10);
+   GiveActorInventory(tid, "DUH_MemberShooterTID", ActivatorTID());
+
+   if (useammo)
+      TakeInventory(DUHhellstaffAmmo, ammo_usage);
+};
+
+//
+// DUH_HellstaffReady
+//
+script DUH_HellstaffReady(int frames)
+{
+   __variable static __array int[MAX_PLAYERS] tics;
+
+   DUH_WeaponReady(frames, tics, DUHhellstaffAmmo, 5);
+};
+
+//
+// DUH_HellstaffStorm
+//
+script DUH_HellstaffStorm()
+{
+   __variable __autoreg fixed basex = GetActorX(0);
+   __variable __autoreg fixed basey = GetActorY(0);
+   __variable __autoreg fixed basez = GetActorCeilingZ(0) - 12;
+
+   __variable __autoreg int shooter = CheckInventory("DUH_MemberShooterTID");
+
+   __variable __autoreg int i =
+      CheckInventory("DUH_HellstaffMissileStormtics");
+
+   while (i)
+   {
+      __variable __autoreg fixed x = basex + RandomFixed(-64, 64);
+      __variable __autoreg fixed y = basey + RandomFixed(-64, 64);
+      __variable __autoreg fixed z = basez;
+
+      __variable __autoreg int tid = DUH_MakeTID();
+
+      // Hack to not kill projectile if shooting from water.
+      __variable __autoreg fixed shooterx = GetActorX(shooter);
+      __variable __autoreg fixed shootery = GetActorY(shooter);
+      __variable __autoreg fixed shooterz = GetActorZ(shooter);
+
+      SetActorPosition(shooter, shooterx, shootery, shooterz+16, false);
+
+      SpawnProjectile(shooter, "DUH_HellstaffMissile3", 0, 0, 0, 0, tid);
+      if (SetActorPosition(tid, x, y, z, false))
+      {
+         SetActorVelocity(tid, 0, 0, -5, false, false);
+         --i;
+      }
+      else
+      {
+         Thing_Remove(tid);
+      };
+
+      SetActorPosition(shooter, shooterx, shootery, shooterz, false);
+
+      Delay(1);
+   };
+};
+
+]
+// EOF
+

@@ -1,0 +1,209 @@
+//-----------------------------------------------------------------------------
+//
+// Copyright(C) 2012 David Hill
+//
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program; if not, see <http://www.gnu.org/licenses/>.
+//
+//-----------------------------------------------------------------------------
+//
+// Firemace actors.
+//
+//-----------------------------------------------------------------------------
+
+
+//----------------------------------------------------------------------------|
+// Types                                                                      |
+//
+
+//
+// DUH_FiremaceMissile1
+//
+actor DUH_FiremaceMissile1 : MaceFX1
+{
+   BounceSound "weapons/macebounce"
+   BounceType "Doom"
+   Damage 1
+   DeathSound "weapons/macehit"
+   Gravity 0.125
+
+   -NOGRAVITY
+
+   states
+   {
+   Spawn:
+      FX02 CD 4 BRIGHT
+      goto Spawn
+
+   Death:
+      TNT1 A 0 A_CustomMissile("DUH_FiremaceMissile2", 0, 0, +11.25, CMF_AIMDIRECTION|CMF_TRACKOWNER, 22.5)
+      TNT1 A 0 A_CustomMissile("DUH_FiremaceMissile2", 0, 0, -11.25, CMF_AIMDIRECTION|CMF_TRACKOWNER, 22.5)
+   DeathDone:
+      FX02 FGHIJ 4 BRIGHT
+      stop
+   }
+}
+
+//
+// DUH_FiremaceMissile2
+//
+actor DUH_FiremaceMissile2 : DUH_FiremaceMissile1
+{
+   Speed 10
+
+   states
+   {
+   Spawn:
+      FX02 AB 4 BRIGHT
+      goto Spawn
+
+   Death:
+      TNT1 A 0 A_CustomMissile("DUH_FiremaceMissile3", 0, 0, +5.625, CMF_AIMDIRECTION|CMF_TRACKOWNER, 11.25)
+      TNT1 A 0 A_CustomMissile("DUH_FiremaceMissile3", 0, 0, -5.625, CMF_AIMDIRECTION|CMF_TRACKOWNER, 11.25)
+      goto DeathDone
+   }
+}
+
+//
+// DUH_FiremaceMissile3
+//
+actor DUH_FiremaceMissile3 : DUH_FiremaceMissile2
+{
+   Speed 5
+
+   states
+   {
+   Spawn:
+      FX02 AB 4
+      goto Spawn
+
+   Death:
+      goto DeathDone
+   }
+}
+
+//
+// DUH_FiremaceMissile4
+//
+actor DUH_FiremaceMissile4
+{
+   Damage 0
+   DeathSound "weapons/macehit"
+   Game Heretic
+   Height 6
+   Radius 8
+   SeeSound "weapons/maceshoot"
+   Speed 7
+
+   PROJECTILE
+
+   states
+   {
+   Spawn:
+      FX02 E -1
+      goto Spawn
+
+   Death:
+      FX02 F 4 BRIGHT ACS_NamedExecuteAlways("DUH_FiremaceDeathRing",0)
+      FX02 GHIJ 4 BRIGHT
+      stop
+   }
+}
+
+//
+// DUH_FiremaceMissile5
+//
+actor DUH_FiremaceMissile5 : DUH_FiremaceMissile4
+{
+   Damage 1
+   Speed 15
+   SeeSound ""
+
+   +RIPPER
+
+   states
+   {
+   Spawn:
+      FX02 AB 4
+      goto Spawn
+
+   Death:
+      FX02 FGHIJ 4 BRIGHT
+      stop
+   }
+}
+
+//
+// DUH_Firemace
+//
+actor DUH_Firemace : Mace replaces Mace
+{
+   Weapon.AmmoUse 0
+   Weapon.SisterWeapon "DUH_FiremacePowered"
+
+   states
+   {
+   Ready:
+      MACE A 1 A_WeaponReady
+      TNT1 A 0 ACS_NamedExecuteAlways("DUH_FiremaceReady",0, 1)
+      goto Ready
+
+   Fire:
+      MACE B 4
+   Hold:
+      MACE CDEF 3 A_FireCustomMissile("DUH_FiremaceMissile1")
+      MACE C 4 A_ReFire
+      MACE DEF 4
+      goto Ready
+
+   AltFire:
+      MACE B 20 A_PlaySound("dsparil/rise", CHAN_WEAPON)
+      MACE C 10
+      MACE C 10 ACS_NamedExecuteAlways("DUH_FiremaceAltFire",0, true)
+      MACE B 20 A_ReFire
+      goto Ready
+   }
+}
+
+//
+// DUH_FiremacePowered
+//
+actor DUH_FiremacePowered : DUH_Firemace replaces MacePowered
+{
+   Weapon.AmmoGive 0
+   Weapon.SisterWeapon "DUH_Firemace"
+
+   +WEAPON.POWERED_UP
+
+   states
+   {
+   Fire:
+      MACE B 4
+   Hold:
+      TNT1 A 0 ACS_NamedExecuteAlways("DUH_FiremaceReady",0, 12)
+      MACE CDEF 3 A_FireCustomMissile("DUH_FiremaceMissile1")
+      MACE C 4 A_ReFire
+      MACE DEF 4
+      goto Ready
+
+   AltFire:
+      MACE B 20 A_PlaySound("dsparil/rise", CHAN_WEAPON)
+      MACE C 10
+      MACE C 10 ACS_NamedExecuteAlways("DUH_FiremaceAltFire",0, false)
+      MACE B 20 A_ReFire
+      goto Ready
+   }
+}
+
+// EOF
+

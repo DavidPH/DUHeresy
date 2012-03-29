@@ -1,0 +1,72 @@
+//-----------------------------------------------------------------------------
+//
+// Copyright(C) 2012 David Hill
+//
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program; if not, see <http://www.gnu.org/licenses/>.
+//
+//-----------------------------------------------------------------------------
+//
+// Root DECORATE file for DavidPH's Unending Heresy.
+//
+//-----------------------------------------------------------------------------
+
+#include "code/duh_defs.dec"
+
+#include "code/duh_arti.dec"
+#include "code/duh_claw.dec"
+#include "code/duh_gaun.dec"
+#include "code/duh_hell.dec"
+#include "code/duh_mace.dec"
+#include "code/duh_mobj.dec"
+#include "code/duh_prod.dec"
+#include "code/duh_staf.dec"
+#include "code/duh_wand.dec"
+#include "code/duh_xbow.dec"
+
+
+//----------------------------------------------------------------------------|
+// Types                                                                      |
+//
+
+//
+// DUH_MemberShooterTID
+//
+actor DUH_MemberShooterTID : Inventory
+{
+   Inventory.MaxAmount 65535
+}
+
+//
+// DUH_Player
+//
+actor DUH_Player : HereticPlayer
+{
+   Player.DisplayName "Heretic"
+
+   Player.StartItem DUH_ElvenWand
+   Player.StartItem DUH_Staff
+
+   Player.WeaponSlot 1, DUH_Staff, DUH_Gauntlets
+   Player.WeaponSlot 2, DUH_ElvenWand
+   Player.WeaponSlot 3, DUH_Crossbow
+   Player.WeaponSlot 4, DUH_DragonClaw
+   Player.WeaponSlot 5, DUH_Hellstaff
+   Player.WeaponSlot 6, DUH_PhoenixRod
+   Player.WeaponSlot 7, DUH_Firemace
+
+   -FLOORCLIP
+}
+
+// EOF
+

@@ -1,0 +1,96 @@
+//-----------------------------------------------------------------------------
+//
+// Copyright(C) 2012 David Hill
+//
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program; if not, see <http://www.gnu.org/licenses/>.
+//
+//-----------------------------------------------------------------------------
+//
+// Dragon Claw actors.
+//
+//-----------------------------------------------------------------------------
+
+
+//----------------------------------------------------------------------------|
+// Types                                                                      |
+//
+
+//
+// DUH_DragonClaw
+//
+actor DUH_DragonClaw : Blaster replaces Blaster
+{
+   AttackSound "weapons/blastershoot"
+
+   Weapon.AmmoUse 0
+   Weapon.SisterWeapon "DUH_DragonClawPowered"
+
+   states
+   {
+   Ready:
+      BLSR A 1 A_WeaponReady
+      BLSR A 0 ACS_NamedExecuteAlways("DUH_DragonClawReady",0, 1)
+      goto Ready
+
+   Fire:
+      BLSR BC 3
+   Hold:
+      BLSR D 2 A_FireBullets(5.0, 5.0, -1, 10, "BlasterPuff")
+      BLSR CB 2
+      BLSR A 0 A_ReFire
+      goto Ready
+
+   AltFire:
+      BLSR BC 3
+   AltHold:
+      BLSR D 1 A_FireBullets(3.0, 3.0, -1, CallACS("DUH_DragonClawDamage", true), "BlasterPuff")
+      BLSR CB 2
+      BLSR A 0 A_ReFire
+      goto Ready
+   }
+}
+
+//
+// DUH_DragonClawPowered
+//
+actor DUH_DragonClawPowered : DUH_DragonClaw replaces BlasterPowered
+{
+   Weapon.AmmoGive 0
+   Weapon.SisterWeapon "DUH_DragonClaw"
+
+   +WEAPON.POWERED_UP
+
+   states
+   {
+   Fire:
+      BLSR BC 3
+   Hold:
+      BLSR A 0 ACS_NamedExecuteAlways("DUH_DragonClawReady",0, 4)
+      BLSR D 1 A_FireBullets(5.0, 5.0, -1, 10, "BlasterPuff")
+      BLSR CB 1
+      BLSR A 0 A_ReFire
+      goto Ready
+
+   AltFire:
+      BLSR BC 3
+   AltHold:
+      BLSR D 1 A_FireBullets(3.0, 3.0, -1, CallACS("DUH_DragonClawDamage", false), "BlasterPuff")
+      BLSR CB 2
+      BLSR A 0 A_ReFire
+      goto Ready
+   }
+}
+
+// EOF
+
