@@ -31,19 +31,21 @@
 //
 actor DUH_FiremaceMissile1 : MaceFX1
 {
-   BounceSound "weapons/macebounce"
-   BounceType "Doom"
    Damage 1
    DeathSound "weapons/macehit"
    Gravity 0.125
 
+   +DOOMBOUNCE
    -NOGRAVITY
 
    states
    {
    Spawn:
+      TNT1 AA 0 ACS_ExecuteAlways(DUH_FiremaceMissileSound,0)
+      TNT1 A 0 A_Jump(256, "Idle")
+   Idle:
       FX02 CD 4 BRIGHT
-      goto Spawn
+      goto Idle
 
    Death:
       TNT1 A 0 A_CustomMissile("DUH_FiremaceMissile2", 0, 0, +11.25, CMF_AIMDIRECTION|CMF_TRACKOWNER, 22.5)
@@ -63,9 +65,9 @@ actor DUH_FiremaceMissile2 : DUH_FiremaceMissile1
 
    states
    {
-   Spawn:
+   Idle:
       FX02 AB 4 BRIGHT
-      goto Spawn
+      goto Idle
 
    Death:
       TNT1 A 0 A_CustomMissile("DUH_FiremaceMissile3", 0, 0, +5.625, CMF_AIMDIRECTION|CMF_TRACKOWNER, 11.25)
@@ -83,9 +85,9 @@ actor DUH_FiremaceMissile3 : DUH_FiremaceMissile2
 
    states
    {
-   Spawn:
+   Idle:
       FX02 AB 4
-      goto Spawn
+      goto Idle
 
    Death:
       goto DeathDone

@@ -68,6 +68,14 @@ script DUH_FiremaceDeathRing()
 };
 
 //
+// DUH_FiremaceMissileSound
+//
+script DUH_FiremaceMissileSound()
+{
+   SetActorProperty(0, APROP_SeeSound, "weapons/macebounce");
+};
+
+//
 // DUH_FiremaceReady
 //
 script DUH_FiremaceReady(int frames)
