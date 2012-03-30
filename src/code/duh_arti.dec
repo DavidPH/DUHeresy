@@ -116,15 +116,15 @@ actor DUH_SilverShield : SilverShield replaces SilverShield
 //
 // DUH_TimeBombAura
 //
-actor DUH_TimeBombAura : CustomInventory
+actor DUH_TimeBombAura
 {
-   +INVENTORY.ALWAYSPICKUP
-   +INVENTORY.AUTOACTIVATE
+   PROJECTILE
 
    states
    {
-   Use:
-      TNT1 A 0 A_Explode(8, 256, false)
+   Spawn:
+      TNT1 A 0
+      TNT1 A 1 A_Explode(8, 256, false)
       stop
    }
 }

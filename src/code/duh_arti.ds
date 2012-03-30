@@ -105,7 +105,7 @@ script DUH_ArtifactReady(int frames)
 
       inv_count = CheckInventory("ArtiTimeBomb");
       if (inv_count && !(tic % ((35 * 16) / inv_count)))
-         GiveInventory("DUH_TimeBombAura", 1);
+         SpawnProjectile(tid, "DUH_TimeBombAura", 0, 0, 0, 0, 0);
 
       inv_count = CheckInventory("ArtiTomeOfPower") + 4;
       DUH_artifactTomeReady(DUHelvenWandAmmo,  inv_count *  50);
