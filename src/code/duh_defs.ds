@@ -37,6 +37,16 @@ function DUH_AbsFixed(fixed f) -> fixed
    return f < 0 ? -f : f;
 };
 
+function DUH_AmmoReady(int tic, str ammo, int mul)
+{
+   __variable __autoreg int ammo_count = CheckInventory(ammo);
+   __variable __autoreg int ammo_limit = GetAmmoCapacity(ammo) * mul;
+   __variable __autoreg int period;
+
+   period = ammo_count ? ammo_limit / ammo_count : ammo_limit;
+   if (!(tic % period)) GiveInventory(ammo, 1);
+};
+
 //
 // DUH_FireMissile
 //
@@ -108,13 +118,7 @@ script DUH_WeaponReady(int frames, int *tics, str ammo, int multiplier)
 
    while (frames--)
    {
-      __variable __autoreg int tic = ++tics[PlayerNumber()];
-      __variable __autoreg int ammo_count = CheckInventory(ammo);
-      __variable __autoreg int ammo_limit = GetAmmoCapacity(ammo) * multiplier;
-      __variable __autoreg int period;
-
-      period = ammo_count ? ammo_limit / ammo_count : ammo_limit;
-      if (!(tic % period)) GiveInventory(ammo, 1);
+      DUH_AmmoReady(++tics[PlayerNumber()], ammo, multiplier);
 
       if (frames) Delay(1);
    };

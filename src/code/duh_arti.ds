@@ -119,6 +119,13 @@ script DUH_ArtifactReady(int frames)
       if (inv_count && !(tic % ((35 * 64) / inv_count)))
          GiveInventory("ArtiTorch", 1);
 
+      DUH_AmmoReady(tic, DUHelvenWandAmmo,   20);
+      DUH_AmmoReady(tic, DUHcrossbowAmmo,    30);
+      DUH_AmmoReady(tic, DUHdragonClawAmmo,  40);
+      DUH_AmmoReady(tic, DUHhellstaffAmmo,   50);
+      DUH_AmmoReady(tic, DUHphoenixRodAmmo, 100);
+      DUH_AmmoReady(tic, DUHfiremaceAmmo,   200);
+
       if (frames) Delay(1);
    };
 };
