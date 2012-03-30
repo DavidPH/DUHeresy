@@ -82,28 +82,29 @@ script DUH_ArtifactReady(int frames)
          SpawnForced("DUH_ChickenFriend", GetActorX(0), GetActorY(0),
                      GetActorZ(0), 0, GetActorAngle(0)*256);
 
+      inv_count = CheckInventory("ArtiFly");
+      SetActorPropertyFixed(0, APROP_JumpZ, inv_count + 8.0);
+
       inv_count = CheckInventory("ArtiHealth");
-      if (inv_count && !(tic % ((35 * 16) / inv_count)))
+      if (inv_count && !(tic % ((35 * 4) / inv_count)))
          HealThing(1);
 
       inv_count = CheckInventory("ArtiInvisibility");
-      if (inv_count && !(tic % ((35 * 8) / inv_count)))
-         GiveInventory("DUH_ArmorBonus", 1);
+      if (inv_count && !(tic % ((35 * 1) / inv_count)))
+         GiveInventory("DUH_ArmorBonus", 8);
 
       inv_count = CheckInventory("ArtiInvulnerability");
       if (inv_count && !(tic % ((35 * 1) / inv_count)))
          GiveInventory("DUH_ArmorBonus", 1);
 
-      inv_count = CheckInventory("ArtiSuperHealth");
-      if (inv_count && !(tic % ((35 * 4) / inv_count)))
-         HealThing(1);
+      inv_count = CheckInventory("ArtiSuperHealth") + 4;
+      SetActorProperty(0, APROP_SpawnHealth, inv_count * 25);
 
       inv_count = CheckInventory("ArtiTeleport");
-      if (inv_count && !(tic % ((35 * 2) / inv_count)))
-         ;
+      SetActorPropertyFixed(0, APROP_Speed, (inv_count / 10.0) + 1.0);
 
       inv_count = CheckInventory("ArtiTimeBomb");
-      if (inv_count && !(tic % ((35 * 32) / inv_count)))
+      if (inv_count && !(tic % ((35 * 16) / inv_count)))
          GiveInventory("DUH_TimeBombAura", 1);
 
       inv_count = CheckInventory("ArtiTomeOfPower") + 4;
