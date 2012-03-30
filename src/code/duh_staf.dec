@@ -67,11 +67,11 @@ actor DUH_Staff : Staff replaces Staff
    {
    Ready:
       STFF A 1 A_WeaponReady
-      TNT1 AA 0 ACS_NamedExecuteAlways("DUH_ArtifactReady",0, 1)
+      TNT1 AA 0 ACS_ExecuteAlways(DUH_ArtifactReady,0, 1)
       goto Ready
 
    Fire:
-      TNT1 A 0 ACS_NamedExecuteAlways("DUH_ArtifactReady",0, 14)
+      TNT1 A 0 ACS_ExecuteAlways(DUH_ArtifactReady,0, 14)
       STFF B 6
       STFF C 8 A_CustomPunch(5, false, 0, "DUH_StaffPuff")
       STFF B 8 A_ReFire
@@ -104,22 +104,22 @@ actor DUH_StaffPowered : DUH_Staff replaces StaffPowered
    {
    Ready:
       STFF DDDD 1 A_WeaponReady
-      TNT1 AAAA 0 ACS_NamedExecuteAlways("DUH_ArtifactReady",0, 4)
+      TNT1 AAAA 0 ACS_ExecuteAlways(DUH_ArtifactReady,0, 4)
       STFF EEEE 1 A_WeaponReady
-      TNT1 AAAA 0 ACS_NamedExecuteAlways("DUH_ArtifactReady",0, 4)
+      TNT1 AAAA 0 ACS_ExecuteAlways(DUH_ArtifactReady,0, 4)
       STFF FFFF 1 A_WeaponReady
-      TNT1 AAAA 0 ACS_NamedExecuteAlways("DUH_ArtifactReady",0, 4)
+      TNT1 AAAA 0 ACS_ExecuteAlways(DUH_ArtifactReady,0, 4)
       goto Ready
 
    Fire:
-      TNT1 AA 0 ACS_NamedExecuteAlways("DUH_ArtifactReady",0, 14)
+      TNT1 AA 0 ACS_ExecuteAlways(DUH_ArtifactReady,0, 14)
       STFF G 6
       STFF H 8 A_CustomPunch(15, false, 0, "DUH_StaffPoweredPuff")
       STFF G 8 A_ReFire
       goto Ready
 
    AltFire:
-      TNT1 A 0 ACS_NamedExecuteAlways("DUH_ArtifactReady",0, 43)
+      TNT1 A 0 ACS_ExecuteAlways(DUH_ArtifactReady,0, 43)
       STFF F 3
       STFF G 4 A_CustomPunch(3, false, 0, "DUH_StaffPoweredPuffPain")
       STFF F 3

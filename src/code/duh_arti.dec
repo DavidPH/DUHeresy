@@ -73,12 +73,12 @@ actor DUH_ChickenFriend : Chicken
    {
    Spawn:
       CHKN AB 10 A_Look
-      TNT1 A 0 ACS_NamedExecute("DUH_ChickenFriendCountdown",0, 20)
+      TNT1 A 0 ACS_ExecuteAlways(DUH_ChickenFriendCountdown,0, 20)
       goto Spawn
 
    See:
       CHKN AABB 1 A_Chase
-      TNT1 A 0 ACS_NamedExecute("DUH_ChickenFriendCountdown",0, 4)
+      TNT1 A 0 ACS_ExecuteAlways(DUH_ChickenFriendCountdown,0, 4)
       goto See
 
    Pain:

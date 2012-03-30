@@ -40,7 +40,7 @@ actor DUH_DragonClaw : Blaster replaces Blaster
    {
    Ready:
       BLSR A 1 A_WeaponReady
-      BLSR A 0 ACS_NamedExecuteAlways("DUH_DragonClawReady",0, 1)
+      BLSR A 0 ACS_ExecuteAlways(DUH_DragonClawReady,0, 1)
       goto Ready
 
    Fire:
@@ -54,7 +54,7 @@ actor DUH_DragonClaw : Blaster replaces Blaster
    AltFire:
       BLSR BC 3
    AltHold:
-      BLSR D 1 A_FireBullets(3.0, 3.0, -1, CallACS("DUH_DragonClawDamage", true), "BlasterPuff")
+      BLSR D 1 A_FireBullets(3.0, 3.0, -1, ACS_ExecuteWithResult(DUH_DragonClawDamage, true), "BlasterPuff")
       BLSR CB 2
       BLSR A 0 A_ReFire
       goto Ready
@@ -76,7 +76,7 @@ actor DUH_DragonClawPowered : DUH_DragonClaw replaces BlasterPowered
    Fire:
       BLSR BC 3
    Hold:
-      BLSR A 0 ACS_NamedExecuteAlways("DUH_DragonClawReady",0, 4)
+      BLSR A 0 ACS_ExecuteAlways(DUH_DragonClawReady,0, 4)
       BLSR D 1 A_FireBullets(5.0, 5.0, -1, 10, "BlasterPuff")
       BLSR CB 1
       BLSR A 0 A_ReFire
@@ -85,7 +85,7 @@ actor DUH_DragonClawPowered : DUH_DragonClaw replaces BlasterPowered
    AltFire:
       BLSR BC 3
    AltHold:
-      BLSR D 1 A_FireBullets(3.0, 3.0, -1, CallACS("DUH_DragonClawDamage", false), "BlasterPuff")
+      BLSR D 1 A_FireBullets(3.0, 3.0, -1, ACS_ExecuteWithResult(DUH_DragonClawDamage, false), "BlasterPuff")
       BLSR CB 2
       BLSR A 0 A_ReFire
       goto Ready

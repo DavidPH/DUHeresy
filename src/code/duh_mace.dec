@@ -114,7 +114,7 @@ actor DUH_FiremaceMissile4
       goto Spawn
 
    Death:
-      FX02 F 4 BRIGHT ACS_NamedExecuteAlways("DUH_FiremaceDeathRing",0)
+      FX02 F 4 BRIGHT ACS_ExecuteAlways(DUH_FiremaceDeathRing,0)
       FX02 GHIJ 4 BRIGHT
       stop
    }
@@ -155,7 +155,7 @@ actor DUH_Firemace : Mace replaces Mace
    {
    Ready:
       MACE A 1 A_WeaponReady
-      TNT1 A 0 ACS_NamedExecuteAlways("DUH_FiremaceReady",0, 1)
+      TNT1 A 0 ACS_ExecuteAlways(DUH_FiremaceReady,0, 1)
       goto Ready
 
    Fire:
@@ -169,7 +169,7 @@ actor DUH_Firemace : Mace replaces Mace
    AltFire:
       MACE B 20 A_PlaySound("dsparil/rise", CHAN_WEAPON)
       MACE C 10
-      MACE C 10 ACS_NamedExecuteAlways("DUH_FiremaceAltFire",0, true)
+      MACE C 10 ACS_ExecuteAlways(DUH_FiremaceAltFire,0, true)
       MACE B 20 A_ReFire
       goto Ready
    }
@@ -190,7 +190,7 @@ actor DUH_FiremacePowered : DUH_Firemace replaces MacePowered
    Fire:
       MACE B 4
    Hold:
-      TNT1 A 0 ACS_NamedExecuteAlways("DUH_FiremaceReady",0, 12)
+      TNT1 A 0 ACS_ExecuteAlways(DUH_FiremaceReady,0, 12)
       MACE CDEF 3 A_FireCustomMissile("DUH_FiremaceMissile1")
       MACE C 4 A_ReFire
       MACE DEF 4
@@ -199,7 +199,7 @@ actor DUH_FiremacePowered : DUH_Firemace replaces MacePowered
    AltFire:
       MACE B 20 A_PlaySound("dsparil/rise", CHAN_WEAPON)
       MACE C 10
-      MACE C 10 ACS_NamedExecuteAlways("DUH_FiremaceAltFire",0, false)
+      MACE C 10 ACS_ExecuteAlways(DUH_FiremaceAltFire,0, false)
       MACE B 20 A_ReFire
       goto Ready
    }

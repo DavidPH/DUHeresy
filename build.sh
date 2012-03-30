@@ -7,6 +7,7 @@ cd "$(dirname "$0")"
 rm -rf build/temp build/DUHeresy.pk7
 mkdir build/temp
 mkdir build/temp/ACS
+mkdir build/temp/code
 
 compile_script()
 {
@@ -14,7 +15,6 @@ compile_script()
 
    DH-acc --target=ZDoom --output=object \
           -isrc/code/ -i/data/src/SELF/DH-acc/inc/ \
-          --named-scripts \
           --no-string-func \
           --out=build/temp/ACS/$1.obj src/code/$1.ds
 }
@@ -30,7 +30,8 @@ compile_script duh_wand
 compile_script duh_xbow
 
 echo 'Linking duh.o'
-DH-acc --target=ZDoom --named-scripts --out=build/temp/ACS/duh.o build/temp/ACS/*.obj
+DH-acc --target=ZDoom -obuild/temp/ACS/duh.o build/temp/ACS/*.obj --script-list=- |
+   awk '{print "const int " $2 " = " $3 ";"}' >build/temp/code/duh_def2.dec
 rm -f build/temp/ACS/*.obj
 
 cp -r -tbuild/temp src/*
