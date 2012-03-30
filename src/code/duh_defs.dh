@@ -45,6 +45,8 @@ constexpr str DUHfiremaceAmmo   = "MaceAmmo";
 // Global Functions                                                           |
 //
 
+extern __function DUH_AbsFixed(fixed f) -> fixed;
+
 extern __script DUH_ArtifactReady(int frames);
 
 extern __function DUH_FireMissile

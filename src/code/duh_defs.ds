@@ -30,6 +30,14 @@
 //
 
 //
+// DUH_AbsFixed
+//
+function DUH_AbsFixed(fixed f) -> fixed
+{
+   return f < 0 ? -f : f;
+};
+
+//
 // DUH_FireMissile
 //
 function DUH_FireMissile

@@ -41,6 +41,30 @@
 //
 
 //
+// DUH_MemberOldX
+//
+actor DUH_MemberOldX : Inventory
+{
+   Inventory.MaxAmount 65535
+}
+
+//
+// DUH_MemberOldY
+//
+actor DUH_MemberOldY : Inventory
+{
+   Inventory.MaxAmount 65535
+}
+
+//
+// DUH_MemberOldZ
+//
+actor DUH_MemberOldZ : Inventory
+{
+   Inventory.MaxAmount 65535
+}
+
+//
 // DUH_MemberShooterTID
 //
 actor DUH_MemberShooterTID : Inventory

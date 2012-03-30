@@ -26,8 +26,78 @@
 
 
 //----------------------------------------------------------------------------|
+// Global Variables                                                           |
+//
+
+constexpr int signoffset = 32768;
+
+
+//----------------------------------------------------------------------------|
 // Global Functions                                                           |
 //
+
+//
+// DUH_ElvenLaserTrailSpawn
+//
+script DUH_ElvenLaserTrailSpawn(bool final)
+{
+   constexpr int density = 32;
+
+   __variable __autoreg fixed curx = GetActorX(0);
+   __variable __autoreg fixed cury = GetActorY(0);
+   __variable __autoreg fixed curz = GetActorZ(0);
+
+   __variable __autoreg fixed oldx =
+      CheckInventory("DUH_MemberOldX") - signoffset;
+   __variable __autoreg fixed oldy =
+      CheckInventory("DUH_MemberOldY") - signoffset;
+   __variable __autoreg fixed oldz =
+      CheckInventory("DUH_MemberOldZ") - signoffset;
+
+   __variable __autoreg fixed difx = curx - oldx;
+   __variable __autoreg fixed dify = cury - oldy;
+   __variable __autoreg fixed difz = curz - oldz;
+
+   __variable __autoreg int i =
+      (DUH_AbsFixed(difx) + DUH_AbsFixed(dify) + DUH_AbsFixed(difz)) / density;
+
+   if (i)
+   {
+      difx = difx / i;
+      dify = dify / i;
+      difz = difz / i;
+   };
+
+   while (i--)
+   {
+      Spawn("DUH_ElvenLaserTrail", oldx += difx, oldy += dify, oldz += difz, 0,
+            GetActorAngle(0)*256);
+   };
+
+   if (final)
+   {
+      if (GetActorZ(0) + 4 >= GetActorCeilingZ(0) &&
+          CheckActorCeilingTexture(0, "F_SKY1"))
+      {
+         SetActorState(0, "DeathSky", false);
+      }
+      else if (GetActorZ(0) < GetActorFloorZ(0) &&
+               CheckActorFloorTexture(0, "F_SKY1"))
+      {
+         SetActorState(0, "DeathSky", false);
+      };
+   }
+   else
+   {
+      TakeInventory("DUH_MemberOldX", 65535);
+      TakeInventory("DUH_MemberOldY", 65535);
+      TakeInventory("DUH_MemberOldZ", 65535);
+
+      GiveInventory("DUH_MemberOldX", (int)curx + signoffset);
+      GiveInventory("DUH_MemberOldY", (int)cury + signoffset);
+      GiveInventory("DUH_MemberOldZ", (int)curz + signoffset);
+   };
+};
 
 //
 // DUH_ElvenWandDamage
@@ -42,6 +112,24 @@ script DUH_ElvenWandDamage(bool useammo) -> int
       TakeInventory(DUHelvenWandAmmo, ammo_usage);
 
    return damage;
+};
+
+//
+// DUH_ElvenWandFire
+//
+script DUH_ElvenWandFire(bool piercing)
+{
+   __variable __autoreg str missile =
+      piercing ? "DUH_ElvenLaserRipper" : "DUH_ElvenLaser";
+
+   __variable __autoreg int tid;
+
+   tid = DUH_FireMissile(ActivatorTID(), missile, 1, GetActorAngle(0),
+                         GetActorPitch(0), 256);
+
+   GiveActorInventory(tid, "DUH_MemberOldX", (int)GetActorX(tid) + signoffset);
+   GiveActorInventory(tid, "DUH_MemberOldY", (int)GetActorY(tid) + signoffset);
+   GiveActorInventory(tid, "DUH_MemberOldZ", (int)GetActorZ(tid) + signoffset);
 };
 
 //

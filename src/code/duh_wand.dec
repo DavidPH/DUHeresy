@@ -34,6 +34,8 @@ actor DUH_ElvenLaserTrail : MageWandSmoke
    Alpha 0.125
    RenderStyle Translucent
 
+   +CLIENTSIDEONLY
+
    states
    {
    Spawn:
@@ -51,20 +53,28 @@ actor DUH_ElvenLaser : FastProjectile
 {
    Damage 1
    Height 4
-   MissileType "DUH_ElvenLaserTrail"
    Radius 5
    Speed 256
 
+   +SKYEXPLODE
    +PAINLESS
 
    states
    {
    Spawn:
-      PUF2 A -1 bright
-      goto Spawn
+      TNT1 A 0
+      TNT1 A 1 ACS_ExecuteAlways(DUH_ElvenLaserTrailSpawn,0, false)
+   Idle:
+      PUF2 A 1 bright ACS_ExecuteAlways(DUH_ElvenLaserTrailSpawn,0, false)
+      goto Idle
 
    Death:
+      TNT1 A 1 ACS_ExecuteAlways(DUH_ElvenLaserTrailSpawn,0, true)
       PUF2 ABCDE 3 bright
+      stop
+
+   DeathSky:
+      TNT1 A 1
       stop
    }
 }
@@ -97,13 +107,13 @@ actor DUH_ElvenWand : GoldWand replaces GoldWand
    Hold:
       TNT1 A 0 A_PlaySound("weapons/wandhit")
       TNT1 A 0 A_Light(1)
-      GWND C 3 A_FireCustomMissile("DUH_ElvenLaser")
+      GWND C 3 ACS_ExecuteAlways(DUH_ElvenWandFire,0, false)
       TNT1 A 0 A_Light(2)
-      GWND C 3 A_FireCustomMissile("DUH_ElvenLaser")
+      GWND C 3 ACS_ExecuteAlways(DUH_ElvenWandFire,0, false)
       TNT1 A 0 A_Light(3)
-      GWND C 3 A_FireCustomMissile("DUH_ElvenLaserRipper")
+      GWND C 3 ACS_ExecuteAlways(DUH_ElvenWandFire,0, true)
       TNT1 A 0 A_Light(2)
-      GWND C 3 A_FireCustomMissile("DUH_ElvenLaser")
+      GWND C 3 ACS_ExecuteAlways(DUH_ElvenWandFire,0, false)
       GWND D 9 A_ReFire
       GWND A 9 A_Light0
       goto Ready
@@ -136,13 +146,13 @@ actor DUH_ElvenWandPowered : DUH_ElvenWand replaces GoldWandPowered
       TNT1 A 0 ACS_ExecuteAlways(DUH_ElvenWandReady,0, 8)
       TNT1 A 0 A_PlaySound("weapons/wandhit")
       TNT1 A 0 A_Light(1)
-      GWND C 2 A_FireCustomMissile("DUH_ElvenLaserRipper")
+      GWND C 2 ACS_ExecuteAlways(DUH_ElvenWandFire,0, true)
       TNT1 A 0 A_Light(2)
-      GWND C 2 A_FireCustomMissile("DUH_ElvenLaserRipper")
+      GWND C 2 ACS_ExecuteAlways(DUH_ElvenWandFire,0, true)
       TNT1 A 0 A_Light(3)
-      GWND C 2 A_FireCustomMissile("DUH_ElvenLaserRipper")
+      GWND C 2 ACS_ExecuteAlways(DUH_ElvenWandFire,0, true)
       TNT1 A 0 A_Light(2)
-      GWND C 2 A_FireCustomMissile("DUH_ElvenLaserRipper")
+      GWND C 2 ACS_ExecuteAlways(DUH_ElvenWandFire,0, true)
       GWND D 2 A_ReFire
       GWND A 2 A_Light0
       goto Ready
