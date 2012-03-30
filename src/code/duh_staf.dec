@@ -27,36 +27,6 @@
 //
 
 //
-// DUH_StaffPuff
-//
-actor DUH_StaffPuff : StaffPuff
-{
-}
-
-//
-// DUH_StaffPuffPain
-//
-actor DUH_StaffPuffPain : DUH_StaffPuff
-{
-   +FORCEPAIN
-}
-
-//
-// DUH_StaffPoweredPuff
-//
-actor DUH_StaffPoweredPuff : StaffPuff2
-{
-}
-
-//
-// DUH_StaffPoweredPuffPain
-//
-actor DUH_StaffPoweredPuffPain : DUH_StaffPoweredPuff
-{
-   +FORCEPAIN
-}
-
-//
 // DUH_Staff
 //
 actor DUH_Staff : Staff replaces Staff
@@ -73,20 +43,20 @@ actor DUH_Staff : Staff replaces Staff
    Fire:
       TNT1 A 0 ACS_ExecuteAlways(DUH_ArtifactReady,0, 14)
       STFF B 6
-      STFF C 8 A_CustomPunch(5, false, 0, "DUH_StaffPuff")
+      STFF C 8 A_CustomPunch(5, false, 0, "StaffPuff")
       STFF B 8 A_ReFire
       goto Ready
 
    AltFire:
       STFF A 3
-      STFF B 4 A_CustomPunch(1, false, 0, "DUH_StaffPuffPain")
+      STFF B 4 A_CustomPunch(2, false, 0, "StaffPuff")
       STFF A 3
-      STFF B 4 A_CustomPunch(1, false, 0, "DUH_StaffPuffPain")
+      STFF B 4 A_CustomPunch(2, false, 0, "StaffPuff")
       STFF A 3
-      STFF B 4 A_CustomPunch(1, false, 0, "DUH_StaffPuffPain")
+      STFF B 4 A_CustomPunch(2, false, 0, "StaffPuff")
       STFF AB 3
-      STFF C 16 A_CustomPunch(2, false, 0, "DUH_StaffPuffPain")
-      STFF B 16 A_ReFire
+      STFF C 8 A_CustomPunch(3, false, 0, "StaffPuff")
+      STFF B 8 A_ReFire
       goto Ready
    }
 }
@@ -114,21 +84,21 @@ actor DUH_StaffPowered : DUH_Staff replaces StaffPowered
    Fire:
       TNT1 AA 0 ACS_ExecuteAlways(DUH_ArtifactReady,0, 14)
       STFF G 6
-      STFF H 8 A_CustomPunch(15, false, 0, "DUH_StaffPoweredPuff")
+      STFF H 8 A_CustomPunch(15, false, 0, "StaffPuff2")
       STFF G 8 A_ReFire
       goto Ready
 
    AltFire:
-      TNT1 A 0 ACS_ExecuteAlways(DUH_ArtifactReady,0, 43)
+      TNT1 A 0 ACS_ExecuteAlways(DUH_ArtifactReady,0, 32)
       STFF F 3
-      STFF G 4 A_CustomPunch(3, false, 0, "DUH_StaffPoweredPuffPain")
+      STFF G 4 A_CustomPunch(6, false, 0, "StaffPuff2")
       STFF F 3
-      STFF G 4 A_CustomPunch(3, false, 0, "DUH_StaffPoweredPuffPain")
+      STFF G 4 A_CustomPunch(6, false, 0, "StaffPuff2")
       STFF F 3
-      STFF G 4 A_CustomPunch(3, false, 0, "DUH_StaffPoweredPuffPain")
+      STFF G 4 A_CustomPunch(6, false, 0, "StaffPuff2")
       STFF FG 3
-      STFF H 16 A_CustomPunch(6, false, 0, "DUH_StaffPoweredPuffPain")
-      STFF G 16 A_ReFire
+      STFF H 8 A_CustomPunch(9, false, 0, "StaffPuff2")
+      STFF G 8 A_ReFire
       goto Ready
    }
 }
