@@ -87,7 +87,7 @@ script DUH_ArtifactReady(int frames)
 
       inv_count = CheckInventory("ArtiHealth");
       if (inv_count && !(tic % ((35 * 4) / inv_count)))
-         HealThing(1);
+         GiveInventory("Health", 1);
 
       inv_count = CheckInventory("ArtiInvisibility");
       if (inv_count && !(tic % ((35 * 8) / inv_count)))
