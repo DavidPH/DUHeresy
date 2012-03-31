@@ -69,7 +69,7 @@ actor DUH_MemberOldZ : Inventory
 //
 actor DUH_MemberShooterTID : Inventory
 {
-   Inventory.MaxAmount 65535
+   Inventory.MaxAmount 0x7FFFFFFF
 }
 
 //

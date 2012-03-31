@@ -104,7 +104,7 @@ function DUH_MakeTID() -> int
 {
    __variable static int tid;
 
-   while (ThingCount(0, ++tid));
+   while (ThingCount(0, ++tid & 0x7FFFFFFF));
 
    return tid;
 };
