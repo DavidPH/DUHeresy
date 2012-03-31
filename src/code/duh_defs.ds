@@ -26,6 +26,13 @@
 
 
 //----------------------------------------------------------------------------|
+// Global Variables                                                           |
+//
+
+constexpr int DUHsignOffset = 0x40000000;
+
+
+//----------------------------------------------------------------------------|
 // Global Functions                                                           |
 //
 
@@ -98,6 +105,28 @@ function DUH_FireMissile
 };
 
 //
+// DUH_GetInventoryFixed
+//
+function DUH_GetInventoryFixed(int tid, str inv) -> fixed
+{
+   __variable __autoreg union {int i; fixed x;} u;
+
+   if (tid)
+   {
+      u.i = CheckActorInventory(tid, inv);
+   }
+   else
+   {
+      u.i = CheckInventory(inv);
+   };
+
+   u.i -= DUHsignOffset;
+   u.i <<= 1;
+
+   return u.x;
+};
+
+//
 // DUH_MakeTID
 //
 function DUH_MakeTID() -> int
@@ -107,6 +136,30 @@ function DUH_MakeTID() -> int
    while (ThingCount(0, ++tid & 0x7FFFFFFF));
 
    return tid;
+};
+
+//
+// DUH_SetInventoryFixed
+//
+function DUH_SetInventoryFixed(int tid, str inv, fixed val)
+{
+   __variable __autoreg union {int i; fixed x;} u;
+
+   u.x = val;
+
+   u.i >>= 1;
+   u.i += DUHsignOffset;
+
+   if (tid)
+   {
+      TakeActorInventory(tid, inv, 0x7FFFFFFF);
+      GiveActorInventory(tid, inv, u.i);
+   }
+   else
+   {
+      TakeInventory(inv, 0x7FFFFFFF);
+      GiveInventory(inv, u.i);
+   };
 };
 
 //

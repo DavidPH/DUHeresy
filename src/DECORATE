@@ -45,7 +45,7 @@
 //
 actor DUH_MemberOldX : Inventory
 {
-   Inventory.MaxAmount 65535
+   Inventory.MaxAmount 0x7FFFFFFF
 }
 
 //
@@ -53,7 +53,7 @@ actor DUH_MemberOldX : Inventory
 //
 actor DUH_MemberOldY : Inventory
 {
-   Inventory.MaxAmount 65535
+   Inventory.MaxAmount 0x7FFFFFFF
 }
 
 //
@@ -61,7 +61,7 @@ actor DUH_MemberOldY : Inventory
 //
 actor DUH_MemberOldZ : Inventory
 {
-   Inventory.MaxAmount 65535
+   Inventory.MaxAmount 0x7FFFFFFF
 }
 
 //

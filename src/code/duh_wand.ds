@@ -26,13 +26,6 @@
 
 
 //----------------------------------------------------------------------------|
-// Global Variables                                                           |
-//
-
-constexpr int signoffset = 32768;
-
-
-//----------------------------------------------------------------------------|
 // Global Functions                                                           |
 //
 
@@ -48,11 +41,11 @@ script DUH_ElvenLaserTrailSpawn(bool final)
    __variable __autoreg fixed curz = GetActorZ(0);
 
    __variable __autoreg fixed oldx =
-      CheckInventory("DUH_MemberOldX") - signoffset;
+      DUH_GetInventoryFixed(0, "DUH_MemberOldX");
    __variable __autoreg fixed oldy =
-      CheckInventory("DUH_MemberOldY") - signoffset;
+      DUH_GetInventoryFixed(0, "DUH_MemberOldY");
    __variable __autoreg fixed oldz =
-      CheckInventory("DUH_MemberOldZ") - signoffset;
+      DUH_GetInventoryFixed(0, "DUH_MemberOldZ");
 
    __variable __autoreg fixed difx = curx - oldx;
    __variable __autoreg fixed dify = cury - oldy;
@@ -89,13 +82,9 @@ script DUH_ElvenLaserTrailSpawn(bool final)
    }
    else
    {
-      TakeInventory("DUH_MemberOldX", 65535);
-      TakeInventory("DUH_MemberOldY", 65535);
-      TakeInventory("DUH_MemberOldZ", 65535);
-
-      GiveInventory("DUH_MemberOldX", (int)curx + signoffset);
-      GiveInventory("DUH_MemberOldY", (int)cury + signoffset);
-      GiveInventory("DUH_MemberOldZ", (int)curz + signoffset);
+      DUH_SetInventoryFixed(0, "DUH_MemberOldX", curx);
+      DUH_SetInventoryFixed(0, "DUH_MemberOldY", cury);
+      DUH_SetInventoryFixed(0, "DUH_MemberOldZ", curz);
    };
 };
 
@@ -127,9 +116,9 @@ script DUH_ElvenWandFire(bool piercing)
    tid = DUH_FireMissile(ActivatorTID(), missile, 1, GetActorAngle(0),
                          GetActorPitch(0), 256);
 
-   GiveActorInventory(tid, "DUH_MemberOldX", (int)GetActorX(tid) + signoffset);
-   GiveActorInventory(tid, "DUH_MemberOldY", (int)GetActorY(tid) + signoffset);
-   GiveActorInventory(tid, "DUH_MemberOldZ", (int)GetActorZ(tid) + signoffset);
+   DUH_SetInventoryFixed(tid, "DUH_MemberOldX", GetActorX(tid));
+   DUH_SetInventoryFixed(tid, "DUH_MemberOldY", GetActorY(tid));
+   DUH_SetInventoryFixed(tid, "DUH_MemberOldZ", GetActorZ(tid));
 };
 
 //

@@ -55,7 +55,11 @@ extern __function DUH_FireMissile
 (int shooter, str name, int damage, fixed angle, fixed pitch, fixed speed)
  -> int;
 
+extern __function DUH_GetInventoryFixed(int tid, str inv) -> fixed;
+
 extern __function DUH_MakeTID() -> int;
+
+extern __function DUH_SetInventoryFixed(int tid, str inv, fixed val);
 
 extern __script DUH_WeaponReady(int frames, int *tics, str ammo, int multiplier);
 
