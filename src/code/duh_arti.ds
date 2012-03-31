@@ -90,8 +90,8 @@ script DUH_ArtifactReady(int frames)
          HealThing(1);
 
       inv_count = CheckInventory("ArtiInvisibility");
-      if (inv_count && !(tic % ((35 * 1) / inv_count)))
-         GiveInventory("DUH_ArmorBonus", 8);
+      if (inv_count && !(tic % ((35 * 8) / inv_count)))
+         GiveInventory("DUH_ArmorBonus", 1);
 
       inv_count = CheckInventory("ArtiInvulnerability");
       if (inv_count && !(tic % ((35 * 1) / inv_count)))
