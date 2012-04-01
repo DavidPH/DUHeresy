@@ -33,6 +33,8 @@ actor DUH_Gauntlets : Gauntlets replaces Gauntlets
 {
    Weapon.SisterWeapon "DUH_GauntletsPowered"
 
+   -WEAPON.WIMPY_WEAPON
+
    states
    {
    Ready:

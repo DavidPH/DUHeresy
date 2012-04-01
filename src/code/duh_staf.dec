@@ -33,6 +33,8 @@ actor DUH_Staff : Staff replaces Staff
 {
    Weapon.SisterWeapon "DUH_StaffPowered"
 
+   -WEAPON.WIMPY_WEAPON
+
    states
    {
    Ready:
