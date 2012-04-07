@@ -29,6 +29,27 @@
 // Global Functions                                                           |
 //
 
+//
+// DUH_RaiseThingDelayed
+//
+script DUH_RaiseThingDelayed(int delay)
+{
+   while (delay--)
+   {
+      Delay(1);
+
+      if (GetActorProperty(0, APROP_Health) > 0)
+         return;
+   };
+
+   while (GetActorProperty(0, APROP_Health) <= 0)
+   {
+      Thing_Raise(0);
+
+      Delay(1);
+   };
+};
+
 
 ]
 // EOF

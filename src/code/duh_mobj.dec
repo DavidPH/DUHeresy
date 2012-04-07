@@ -39,8 +39,8 @@ actor DUH_Disciple : Wizard replaces Wizard
       WZRD HI 6
       WZRD J 6 A_NoBlocking
       WZRD KLM 6
-      WZRD M 2800 A_SetFloorClip
-      WZRD M -1 Thing_Raise(0)
+      WZRD M 6 A_SetFloorClip
+      WZRD M -1 ACS_ExecuteAlways(DUH_RaiseThingDelayed,0, random(2800, 3150))
       stop
 
    Raise:
@@ -67,9 +67,9 @@ actor DUH_DSparil : Sorcerer2 replaces Sorcerer2
       SDTH HIII 6
       SDTH J 6 A_NoBlocking
       SDTH K 6 A_PlaySoundEx("dsparil/bones", "Body")
-      SDTH LMNO 6
-      SDTH O 175 A_BossDeath
-      SDTH O -1 Thing_Raise(0)
+      SDTH LMN 6
+      SDTH O 6 A_BossDeath
+      SDTH O -1 ACS_ExecuteAlways(DUH_RaiseThingDelayed,0, random(175, 350))
       stop
 
    Raise:
@@ -116,15 +116,13 @@ actor DUH_FireGargoyle : HereticImpLeader replaces HereticImpLeader
       IMPX I 7 A_ImpExplode
       IMPX J 7 A_Scream
       IMPX KL 7
-      IMPX L 700
-      IMPX L -1 Thing_Raise(0)
+      IMPX L -1 ACS_ExecuteAlways(DUH_RaiseThingDelayed,0, random(700, 1050))
       stop
 
    XCrash:
       IMPX X 7
       IMPX YZ 7
-      IMPX Z 700
-      IMPX Z -1 Thing_Raise(0)
+      IMPX Z -1 ACS_ExecuteAlways(DUH_RaiseThingDelayed,0, random(700, 1050))
       stop
 
    Raise:
@@ -156,15 +154,13 @@ actor DUH_Gargoyle : HereticImp replaces HereticImp
       IMPX I 7 A_ImpExplode
       IMPX J 7 A_Scream
       IMPX KL 7
-      IMPX L 350
-      IMPX L -1 Thing_Raise(0)
+      IMPX L -1 ACS_ExecuteAlways(DUH_RaiseThingDelayed,0, random(350, 700))
       stop
 
    XCrash:
       IMPX X 7
       IMPX YZ 7
-      IMPX Z 350
-      IMPX Z -1 Thing_Raise(0)
+      IMPX Z -1 ACS_ExecuteAlways(DUH_RaiseThingDelayed,0, random(350, 700))
       stop
 
    Raise:
@@ -187,8 +183,7 @@ actor DUH_Golem : Mummy replaces Mummy
       MUMM L 5
       MUMM M 5 A_NoBlocking
       MUMM NOP 5
-      MUMM P 700
-      MUMM P -1 Thing_Raise(0)
+      MUMM P -1 ACS_ExecuteAlways(DUH_RaiseThingDelayed,0, random(700, 1050))
       stop
 
    Raise:
@@ -221,9 +216,9 @@ actor DUH_IronLich : IronLich replaces IronLich
       LICH D 7 A_Scream
       LICH EF 7
       LICH G 7 A_NoBlocking
-      LICH HI 7
-      LICH I 3150 A_BossDeath
-      LICH I -1 Thing_Raise(0)
+      LICH H 7
+      LICH I 7 A_BossDeath
+      LICH I -1 ACS_ExecuteAlways(DUH_RaiseThingDelayed,0, random(3150, 3500))
       stop
 
    Raise:
@@ -254,9 +249,8 @@ actor DUH_Maulotaur : Minotaur replaces Minotaur
       MNTR Q 5
       MNTR R 6
       MNTR S 5
-      MNTR T 6
-      MNTR T 3500 A_BossDeath
-      MNTR T -1 Thing_Raise(0)
+      MNTR T 6 A_BossDeath
+      MNTR T -1 ACS_ExecuteAlways(DUH_RaiseThingDelayed,0, random(3500, 3850))
       stop
 
    Raise:
@@ -279,8 +273,7 @@ actor DUH_Nitrogolem : MummyLeader replaces MummyLeader
       MUMM L 5
       MUMM M 5 A_NoBlocking
       MUMM NOP 5
-      MUMM P 1050
-      MUMM P -1 Thing_Raise(0)
+      MUMM P -1 ACS_ExecuteAlways(DUH_RaiseThingDelayed,0, random(1050, 1400))
       stop
 
    Raise:
@@ -314,8 +307,7 @@ actor DUH_Ophidian : Snake replaces Snake
       SNKE IJKL 5
       SNKE M 5 A_NoBlocking
       SNKE NOP 5
-      SNKE P 2450
-      SNKE P -1 Thing_Raise(0)
+      SNKE P -1 ACS_ExecuteAlways(DUH_RaiseThingDelayed,0, random(2450, 2800))
       stop
 
    Raise:
@@ -336,8 +328,7 @@ actor DUH_Sabreclaw : Clink replaces Clink
       CLNK K 5 A_Scream
       CLNK L 5 A_NoBlocking
       CLNK MNO 5
-      CLNK O 1750
-      CLNK O -1 Thing_Raise(0)
+      CLNK O -1 ACS_ExecuteAlways(DUH_RaiseThingDelayed,0, random(1750, 2100))
       stop
 
    Raise:
@@ -359,8 +350,7 @@ actor DUH_UndeadWarrior : Knight replaces Knight
       KNIG K 6
       KNIG L 6 A_NoBlocking
       KNIG MNO 6
-      KNIG O 1400
-      KNIG O -1 Thing_Raise(0)
+      KNIG O -1 ACS_ExecuteAlways(DUH_RaiseThingDelayed,0, random(1400, 1750))
       stop
 
    Raise:
@@ -394,8 +384,7 @@ actor DUH_Weredragon : Beast replaces Beast
       BEAS TUV 6
       BEAS W 6 A_NoBlocking
       BEAS XYZ 6
-      BEAS Z 2100
-      BEAS Z -1 Thing_Raise(0)
+      BEAS Z -1 ACS_ExecuteAlways(DUH_RaiseThingDelayed,0, random(2100, 2450))
       stop
 
    XDeath:
@@ -407,8 +396,7 @@ actor DUH_Weredragon : Beast replaces Beast
       BEAS O 6 A_NoBlocking
       BEAS P 5
       BEAS Q 6
-      BEAS Q 2100
-      BEAS Q -1 Thing_Raise(0)
+      BEAS Q -1 ACS_ExecuteAlways(DUH_RaiseThingDelayed,0, random(2100, 2450))
       stop
 
    Raise:
