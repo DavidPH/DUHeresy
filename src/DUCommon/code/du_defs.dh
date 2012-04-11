@@ -26,7 +26,7 @@
 
 #include "zcommon.dh"
 
-#include "duh_defs.dec"
+#include "du_defs.dec"
 
 
 //----------------------------------------------------------------------------|

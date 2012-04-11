@@ -6,39 +6,65 @@ cd "$(dirname "$0")"
 
 rm -rf build/temp build/DUHeresy.pk7
 mkdir build/temp
-mkdir build/temp/ACS
-mkdir build/temp/code
+mkdir build/temp/DU
+mkdir build/temp/DU/ACS
+mkdir build/temp/DUH
+mkdir build/temp/DUH/ACS
+mkdir build/temp/DUH/code
 
 compile_script()
 {
-   echo "Compiling $1.ds"
+   SRC="$1"
+   OBJ="$2"
+   shift 2
+
+   echo "Compiling ${SRC}"
 
    DH-acc --target=ZDoom --output=object \
-          -isrc/code/ -i/data/src/SELF/DH-acc/inc/ \
+          -isrc/DUCommon/code/ -i/data/src/SELF/DH-acc/inc/ \
           --no-string-func \
-          --out=build/temp/ACS/$1.obj src/code/$1.ds
+          "$@" -o"${OBJ}" "${SRC}"
 }
 
-compile_script duh_arti
-compile_script duh_claw
-compile_script duh_defs
-compile_script duh_hell
-compile_script duh_mace
-compile_script duh_mobj
-compile_script duh_prod
-compile_script duh_wand
-compile_script duh_xbow
+compile_script_du()
+{
+   SRC=src/DUCommon/code/"$1".ds
+   OBJ=build/temp/DU/ACS/"$1".obj
+
+   compile_script "${SRC}" "${OBJ}"
+   cp "${OBJ}" build/temp/DUH/ACS/"$1".obj
+}
+
+compile_script_duh()
+{
+   SRC=src/DUHeresy/code/"$1".ds
+   OBJ=build/temp/DUH/ACS/"$1".obj
+
+   compile_script "${SRC}" "${OBJ}" -isrc/DUHeresy/code
+}
+
+compile_script_du du_defs
+
+compile_script_duh duh_arti
+compile_script_duh duh_claw
+compile_script_duh duh_hell
+compile_script_duh duh_mace
+compile_script_duh duh_mobj
+compile_script_duh duh_prod
+compile_script_duh duh_wand
+compile_script_duh duh_xbow
 
 echo 'Linking duh.o'
-DH-acc --target=ZDoom -obuild/temp/ACS/duh.o build/temp/ACS/*.obj --script-list=- |
-   awk '{print "const int " $2 " = " $3 ";"}' >build/temp/code/duh_def2.dec
-rm -f build/temp/ACS/*.obj
+DH-acc --target=ZDoom -obuild/temp/DUH/ACS/du.o build/temp/DUH/ACS/*.obj --script-list=- |
+   awk '{print "const int " $2 " = " $3 ";"}' >build/temp/DUH/code/duh_defs.dec
+rm -f build/temp/DUH/ACS/*.obj
 
-cp -r -tbuild/temp src/*
-cp GPLv3.txt build/temp/COPYING
-cp README.txt build/temp/README
+cp -r -tbuild/temp/DUH src/DUCommon/*
+cp -r -tbuild/temp/DUH src/DUHeresy/*
+cp GPLv3.txt build/temp/DUH/COPYING
+cp README.txt build/temp/DUH/README
 
-( cd build/temp && 7z a -mx ../DUHeresy.pk7 .; )
+( cd build/temp/DUH && 7z a -mx ../../DUHeresy.pk7 .; )
 
 rm -rf build/temp
 

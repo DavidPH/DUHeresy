@@ -21,8 +21,8 @@
 //
 //-----------------------------------------------------------------------------
 
+#include "code/du_defs.dec"
 #include "code/duh_defs.dec"
-#include "code/duh_def2.dec"
 
 #include "code/duh_arti.dec"
 #include "code/duh_claw.dec"
