@@ -29,7 +29,7 @@
 // Global Variables                                                           |
 //
 
-constexpr int DUHsignOffset = 0x40000000;
+constexpr int DUsignOffset = 0x40000000;
 
 
 //----------------------------------------------------------------------------|
@@ -37,14 +37,14 @@ constexpr int DUHsignOffset = 0x40000000;
 //
 
 //
-// DUH_AbsFixed
+// DU_AbsFixed
 //
-function DUH_AbsFixed(fixed f) -> fixed
+function DU_AbsFixed(fixed f) -> fixed
 {
    return f < 0 ? -f : f;
 };
 
-function DUH_AmmoReady(int tic, str ammo, int mul)
+function DU_AmmoReady(int tic, str ammo, int mul)
 {
    __variable __autoreg int ammo_count = CheckInventory(ammo);
    __variable __autoreg int ammo_limit = GetAmmoCapacity(ammo) * mul;
@@ -55,13 +55,13 @@ function DUH_AmmoReady(int tic, str ammo, int mul)
 };
 
 //
-// DUH_FireMissile
+// DU_FireMissile
 //
-function DUH_FireMissile
+function DU_FireMissile
 (int shooter, str name, int damage, fixed angle, fixed pitch, fixed speed)
  -> int
 {
-   __variable __autoreg int tid = DUH_MakeTID();
+   __variable __autoreg int tid = DU_MakeTID();
 
    __variable __autoreg fixed velx = Cos(angle) * Cos(pitch) * speed;
    __variable __autoreg fixed vely = Sin(angle) * Cos(pitch) * speed;
@@ -107,9 +107,9 @@ function DUH_FireMissile
 };
 
 //
-// DUH_GetInventoryFixed
+// DU_GetInventoryFixed
 //
-function DUH_GetInventoryFixed(int tid, str inv) -> fixed
+function DU_GetInventoryFixed(int tid, str inv) -> fixed
 {
    __variable __autoreg union {int i; fixed x;} u;
 
@@ -122,16 +122,16 @@ function DUH_GetInventoryFixed(int tid, str inv) -> fixed
       u.i = CheckInventory(inv);
    };
 
-   u.i -= DUHsignOffset;
+   u.i -= DUsignOffset;
    u.i <<= 1;
 
    return u.x;
 };
 
 //
-// DUH_MakeTID
+// DU_MakeTID
 //
-function DUH_MakeTID() -> int
+function DU_MakeTID() -> int
 {
    __variable static int tid;
 
@@ -141,16 +141,16 @@ function DUH_MakeTID() -> int
 };
 
 //
-// DUH_SetInventoryFixed
+// DU_SetInventoryFixed
 //
-function DUH_SetInventoryFixed(int tid, str inv, fixed val)
+function DU_SetInventoryFixed(int tid, str inv, fixed val)
 {
    __variable __autoreg union {int i; fixed x;} u;
 
    u.x = val;
 
    u.i >>= 1;
-   u.i += DUHsignOffset;
+   u.i += DUsignOffset;
 
    if (tid)
    {
@@ -165,15 +165,15 @@ function DUH_SetInventoryFixed(int tid, str inv, fixed val)
 };
 
 //
-// DUH_WeaponReady
+// DU_WeaponReady
 //
-script DUH_WeaponReady(int frames, int *tics, str ammo, int multiplier)
+script DU_WeaponReady(int frames, int *tics, str ammo, int multiplier)
 {
-   DUH_ArtifactReady(frames);
+   DU_ArtifactReady(frames);
 
    while (frames--)
    {
-      DUH_AmmoReady(++tics[PlayerNumber()], ammo, multiplier);
+      DU_AmmoReady(++tics[PlayerNumber()], ammo, multiplier);
 
       if (frames) Delay(1);
    };

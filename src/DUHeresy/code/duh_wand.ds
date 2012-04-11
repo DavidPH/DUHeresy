@@ -40,19 +40,16 @@ script DUH_ElvenLaserTrailSpawn(bool final)
    __variable __autoreg fixed cury = GetActorY(0);
    __variable __autoreg fixed curz = GetActorZ(0);
 
-   __variable __autoreg fixed oldx =
-      DUH_GetInventoryFixed(0, "DUH_MemberOldX");
-   __variable __autoreg fixed oldy =
-      DUH_GetInventoryFixed(0, "DUH_MemberOldY");
-   __variable __autoreg fixed oldz =
-      DUH_GetInventoryFixed(0, "DUH_MemberOldZ");
+   __variable __autoreg fixed oldx = DU_GetInventoryFixed(0, "DUH_MemberOldX");
+   __variable __autoreg fixed oldy = DU_GetInventoryFixed(0, "DUH_MemberOldY");
+   __variable __autoreg fixed oldz = DU_GetInventoryFixed(0, "DUH_MemberOldZ");
 
    __variable __autoreg fixed difx = curx - oldx;
    __variable __autoreg fixed dify = cury - oldy;
    __variable __autoreg fixed difz = curz - oldz;
 
    __variable __autoreg int i =
-      (DUH_AbsFixed(difx) + DUH_AbsFixed(dify) + DUH_AbsFixed(difz)) / density;
+      (DU_AbsFixed(difx) + DU_AbsFixed(dify) + DU_AbsFixed(difz)) / density;
 
    if (i)
    {
@@ -82,9 +79,9 @@ script DUH_ElvenLaserTrailSpawn(bool final)
    }
    else
    {
-      DUH_SetInventoryFixed(0, "DUH_MemberOldX", curx);
-      DUH_SetInventoryFixed(0, "DUH_MemberOldY", cury);
-      DUH_SetInventoryFixed(0, "DUH_MemberOldZ", curz);
+      DU_SetInventoryFixed(0, "DUH_MemberOldX", curx);
+      DU_SetInventoryFixed(0, "DUH_MemberOldY", cury);
+      DU_SetInventoryFixed(0, "DUH_MemberOldZ", curz);
    };
 };
 
@@ -113,12 +110,12 @@ script DUH_ElvenWandFire(bool piercing)
 
    __variable __autoreg int tid;
 
-   tid = DUH_FireMissile(ActivatorTID(), missile, 1, GetActorAngle(0),
-                         GetActorPitch(0), 256);
+   tid = DU_FireMissile(ActivatorTID(), missile, 1, GetActorAngle(0),
+                        GetActorPitch(0), 256);
 
-   DUH_SetInventoryFixed(tid, "DUH_MemberOldX", GetActorX(tid));
-   DUH_SetInventoryFixed(tid, "DUH_MemberOldY", GetActorY(tid));
-   DUH_SetInventoryFixed(tid, "DUH_MemberOldZ", GetActorZ(tid));
+   DU_SetInventoryFixed(tid, "DUH_MemberOldX", GetActorX(tid));
+   DU_SetInventoryFixed(tid, "DUH_MemberOldY", GetActorY(tid));
+   DU_SetInventoryFixed(tid, "DUH_MemberOldZ", GetActorZ(tid));
 };
 
 //
@@ -128,7 +125,7 @@ script DUH_ElvenWandReady(int frames)
 {
    __variable static __array int[MAX_PLAYERS] tics;
 
-   DUH_WeaponReady(frames, tics, DUHelvenWandAmmo, 2);
+   DU_WeaponReady(frames, tics, DUHelvenWandAmmo, 2);
 };
 
 ]

@@ -51,7 +51,7 @@ script DUH_DragonClawReady(int frames)
 {
    __variable static __array int[MAX_PLAYERS] tics;
 
-   DUH_WeaponReady(frames, tics, DUHdragonClawAmmo, 4);
+   DU_WeaponReady(frames, tics, DUHdragonClawAmmo, 4);
 };
 
 ]

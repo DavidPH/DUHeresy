@@ -48,23 +48,9 @@ __function DUH_artifactTomeReady(str ammo, int cap)
 //
 
 //
-// DUH_ChickenFriendCountdown
+// DU_ArtifactReady
 //
-script DUH_ChickenFriendCountdown(int frames)
-{
-   GiveInventory("DUH_ChickenFriendCounter", frames);
-
-   while (CheckInventory("DUH_ChickenFriendCounter") >= 35)
-   {
-      TakeInventory("DUH_ChickenFriendCounter", 35);
-      DamageThing(1, 0);
-   };
-};
-
-//
-// DUH_ArtifactReady
-//
-script DUH_ArtifactReady(int frames)
+script DU_ArtifactReady(int frames)
 {
    __variable static __array int[MAX_PLAYERS] tics;
 
@@ -75,7 +61,7 @@ script DUH_ArtifactReady(int frames)
 
       __variable __autoreg int tid = ActivatorTID();
 
-      if (!tid) Thing_ChangeTID(0, tid = DUH_MakeTID());
+      if (!tid) Thing_ChangeTID(0, tid = DU_MakeTID());
 
       inv_count = CheckInventory("ArtiEgg");
       if (inv_count && !(tic % ((35 * 256) / inv_count)))
@@ -119,14 +105,28 @@ script DUH_ArtifactReady(int frames)
       if (inv_count && !(tic % ((35 * 64) / inv_count)))
          GiveInventory("ArtiTorch", 1);
 
-      DUH_AmmoReady(tic, DUHelvenWandAmmo,   20);
-      DUH_AmmoReady(tic, DUHcrossbowAmmo,    30);
-      DUH_AmmoReady(tic, DUHdragonClawAmmo,  40);
-      DUH_AmmoReady(tic, DUHhellstaffAmmo,   50);
-      DUH_AmmoReady(tic, DUHphoenixRodAmmo, 100);
-      DUH_AmmoReady(tic, DUHfiremaceAmmo,   200);
+      DU_AmmoReady(tic, DUHelvenWandAmmo,   20);
+      DU_AmmoReady(tic, DUHcrossbowAmmo,    30);
+      DU_AmmoReady(tic, DUHdragonClawAmmo,  40);
+      DU_AmmoReady(tic, DUHhellstaffAmmo,   50);
+      DU_AmmoReady(tic, DUHphoenixRodAmmo, 100);
+      DU_AmmoReady(tic, DUHfiremaceAmmo,   200);
 
       if (frames) Delay(1);
+   };
+};
+
+//
+// DUH_ChickenFriendCountdown
+//
+script DUH_ChickenFriendCountdown(int frames)
+{
+   GiveInventory("DUH_ChickenFriendCounter", frames);
+
+   while (CheckInventory("DUH_ChickenFriendCounter") >= 35)
+   {
+      TakeInventory("DUH_ChickenFriendCounter", 35);
+      DamageThing(1, 0);
    };
 };
 

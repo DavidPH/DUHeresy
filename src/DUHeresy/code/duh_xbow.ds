@@ -44,16 +44,16 @@ script DUH_CrossbowAltFire(bool useammo)
    constexpr fixed spread_step = 1.0/80.0; // 4.5 degrees
    __variable __autoreg fixed spread = 0;
 
-   DUH_FireMissile(ActivatorTID(), "DUH_CrossbowMissile3", damage, angle,
-                   pitch, 30);
+   DU_FireMissile(ActivatorTID(), "DUH_CrossbowMissile3", damage, angle,
+                  pitch, 30);
 
    while (damage >>= 1)
    {
       spread += spread_step;
-      DUH_FireMissile(ActivatorTID(), "DUH_CrossbowMissile2", damage,
-                      angle+spread, pitch, 30);
-      DUH_FireMissile(ActivatorTID(), "DUH_CrossbowMissile2", damage,
-                      angle-spread, pitch, 30);
+      DU_FireMissile(ActivatorTID(), "DUH_CrossbowMissile2", damage,
+                     angle+spread, pitch, 30);
+      DU_FireMissile(ActivatorTID(), "DUH_CrossbowMissile2", damage,
+                     angle-spread, pitch, 30);
    };
 
    if (useammo)
@@ -67,7 +67,7 @@ script DUH_CrossbowReady(int frames)
 {
    __variable static __array int[MAX_PLAYERS] tics;
 
-   DUH_WeaponReady(frames, tics, DUHcrossbowAmmo, 3);
+   DU_WeaponReady(frames, tics, DUHcrossbowAmmo, 3);
 };
 
 ]

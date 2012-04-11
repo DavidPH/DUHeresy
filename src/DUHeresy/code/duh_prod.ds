@@ -56,8 +56,8 @@ script DUH_PhoenixRodAltFire()
    __variable __autoreg int damage =
       CheckInventory("DUH_PhoenixRodFireDamage");
 
-   DUH_FireMissile(ActivatorTID(), "DUH_PhoenixRodMissile2", damage,
-                   GetActorAngle(0), GetActorPitch(0), 10);
+   DU_FireMissile(ActivatorTID(), "DUH_PhoenixRodMissile2", damage,
+                  GetActorAngle(0), GetActorPitch(0), 10);
 };
 
 //
@@ -98,7 +98,7 @@ script DUH_PhoenixRodReady(int frames)
 {
    __variable static __array int[MAX_PLAYERS] tics;
 
-   DUH_WeaponReady(frames, tics, DUHphoenixRodAmmo, 10);
+   DU_WeaponReady(frames, tics, DUHphoenixRodAmmo, 10);
 };
 
 ]

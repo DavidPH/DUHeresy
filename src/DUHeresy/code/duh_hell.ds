@@ -40,8 +40,8 @@ script DUH_HellstaffAltFire(bool useammo)
 
    __variable __autoreg int tid;
 
-   tid = DUH_FireMissile(ActivatorTID(), "DUH_HellstaffMissile2", damage,
-                         GetActorAngle(0), GetActorPitch(0), 25);
+   tid = DU_FireMissile(ActivatorTID(), "DUH_HellstaffMissile2", damage,
+                        GetActorAngle(0), GetActorPitch(0), 25);
 
    GiveActorInventory(tid, "DUH_HellstaffMissileStormTics", (ammo_count / 10) + 10);
    GiveActorInventory(tid, "DUH_MemberShooterTID", ActivatorTID());
@@ -57,7 +57,7 @@ script DUH_HellstaffReady(int frames)
 {
    __variable static __array int[MAX_PLAYERS] tics;
 
-   DUH_WeaponReady(frames, tics, DUHhellstaffAmmo, 5);
+   DU_WeaponReady(frames, tics, DUHhellstaffAmmo, 5);
 };
 
 //
@@ -80,7 +80,7 @@ script DUH_HellstaffStorm()
       __variable __autoreg fixed y = basey + RandomFixed(-64, 64);
       __variable __autoreg fixed z = basez;
 
-      __variable __autoreg int tid = DUH_MakeTID();
+      __variable __autoreg int tid = DU_MakeTID();
 
       // Hack to not kill projectile if shooting from water.
       __variable __autoreg fixed shooterx = GetActorX(shooter);
