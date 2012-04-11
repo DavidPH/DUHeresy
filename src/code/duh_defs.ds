@@ -95,6 +95,8 @@ function DUH_FireMissile
    // And here's the entire point of this function, custom damage.
    SetActorProperty(tid, APROP_Damage, damage);
 
+   // Set twice for hacky avoidance of the floor.
+   SetActorPosition(tid, x, y, z+16, false);
    SetActorPosition(tid, x, y, z, false);
    SetActorVelocity(tid, velx, vely, velz);
 
