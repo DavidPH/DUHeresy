@@ -54,16 +54,18 @@ script DUH_FiremaceAltFire(bool useammo)
 //
 script DUH_FiremaceDeathRing()
 {
-   __variable __autoreg int damage = GetActorProperty(0, APROP_Damage) + 7;
+   __variable __autoreg int damage = (GetActorProperty(0, APROP_Damage) + 7) / 2;
    __variable __autoreg int shooter = CheckInventory("DUH_MemberShooterTID");
 
    __variable __autoreg int i;
+   __variable __autoreg int j;
 
-   for (i = damage; i--;)
+   for (i = damage; i--;) for (j = damage; j--;)
    {
       __variable __autoreg fixed angle = (fixed)i / damage;
+      __variable __autoreg fixed pitch = (fixed)j / damage;
 
-      DUH_FireMissile(shooter, "DUH_FiremaceMissile5", 1, angle, 0, 15);
+      DUH_FireMissile(shooter, "DUH_FiremaceMissile5", 1, angle, pitch, 15);
    };
 };
 
