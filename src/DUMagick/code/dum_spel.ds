@@ -1,0 +1,271 @@
+//DS---------------------------------------------------------------------------
+//
+// Copyright(C) 2012 David Hill
+//
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program; if not, see <http://www.gnu.org/licenses/>.
+//
+//-----------------------------------------------------------------------------
+//
+// Spell functions and data.
+//
+//-----------------------------------------------------------------------------
+
+{
+#include "du_defs.dh"
+
+#include "dum_spel.dh"
+
+
+//----------------------------------------------------------------------------|
+// Static Variables                                                           |
+//
+
+__variable static __array SpellData const *[MAX_PLAYERS] DUMspellCurrent;
+__variable static __array bool[MAX_PLAYERS] DUMspellSelect;
+
+
+//----------------------------------------------------------------------------|
+// Global Variables                                                           |
+//
+
+//
+// DUMspellBasic
+//
+__extvar static SpellData DUMspellBasic =
+{
+   "BASIC";
+   __script void(SpellData const *spell)
+   {
+      DU_FireMissile(ActivatorTID(), "DUM_BasicBolt", 3,
+                     GetActorAngle(0), GetActorPitch(0), 15);
+   };
+   (SpellFunc)0;
+
+   &DUMspellSpread;
+   &DUMspellCircle;
+   &DUMspellBurst;
+   &DUMspellBurst;
+};
+
+//
+// DUMspellBurst
+//
+__extvar static SpellData DUMspellBurst =
+{
+   "BURST";
+   __script void(SpellData const *spell)
+   {
+      DU_FireMissile(ActivatorTID(), "DUM_BasicBolt", 3,
+                     GetActorAngle(0), GetActorPitch(0), 15);
+      Delay(3);
+      DU_FireMissile(ActivatorTID(), "DUM_BasicBolt", 3,
+                     GetActorAngle(0), GetActorPitch(0), 15);
+      Delay(3);
+      DU_FireMissile(ActivatorTID(), "DUM_BasicBolt", 3,
+                     GetActorAngle(0), GetActorPitch(0), 15);
+   };
+   (SpellFunc)0;
+
+   &DUMspellStream;
+   &DUMspellStream;
+   &DUMspellBurst;
+   &DUMspellBurst;
+};
+
+//
+// DUMspellCircle
+//
+__extvar static SpellData DUMspellCircle =
+{
+   "CIRCLE";
+   __script void(SpellData const *spell)
+   {
+      DU_FireMissile(ActivatorTID(), "DUM_BasicBolt", 3,
+                     GetActorAngle(0) + 0.000, GetActorPitch(0), 15);
+      DU_FireMissile(ActivatorTID(), "DUM_BasicBolt", 3,
+                     GetActorAngle(0) + 0.125, GetActorPitch(0), 15);
+      DU_FireMissile(ActivatorTID(), "DUM_BasicBolt", 3,
+                     GetActorAngle(0) + 0.250, GetActorPitch(0), 15);
+      DU_FireMissile(ActivatorTID(), "DUM_BasicBolt", 3,
+                     GetActorAngle(0) + 0.375, GetActorPitch(0), 15);
+      DU_FireMissile(ActivatorTID(), "DUM_BasicBolt", 3,
+                     GetActorAngle(0) + 0.500, GetActorPitch(0), 15);
+      DU_FireMissile(ActivatorTID(), "DUM_BasicBolt", 3,
+                     GetActorAngle(0) + 0.625, GetActorPitch(0), 15);
+      DU_FireMissile(ActivatorTID(), "DUM_BasicBolt", 3,
+                     GetActorAngle(0) + 0.750, GetActorPitch(0), 15);
+      DU_FireMissile(ActivatorTID(), "DUM_BasicBolt", 3,
+                     GetActorAngle(0) + 0.875, GetActorPitch(0), 15);
+   };
+   (SpellFunc)0;
+
+   &DUMspellCircle;
+   &DUMspellCircle;
+   &DUMspellCircle;
+   &DUMspellCircle;
+};
+
+//
+// DUMspellSpread
+//
+__extvar static SpellData DUMspellSpread =
+{
+   "SPREAD";
+   __script void(SpellData const *spell)
+   {
+      DU_FireMissile(ActivatorTID(), "DUM_BasicBolt", 3,
+                     GetActorAngle(0), GetActorPitch(0), 15);
+      DU_FireMissile(ActivatorTID(), "DUM_BasicBolt", 3,
+                     GetActorAngle(0) + 1.0/16.0, GetActorPitch(0), 15);
+      DU_FireMissile(ActivatorTID(), "DUM_BasicBolt", 3,
+                     GetActorAngle(0) - 1.0/16.0, GetActorPitch(0), 15);
+   };
+   (SpellFunc)0;
+
+   &DUMspellSpread;
+   &DUMspellSpread;
+   &DUMspellSpread;
+   &DUMspellSpread;
+};
+
+//
+// DUMspellStream
+//
+__extvar static SpellData DUMspellStream =
+{
+   "STREAM";
+   __script void(SpellData const *spell)
+   {
+      __variable __autoreg int i = 15;
+
+      while (i-- && (GetPlayerInput(-1, INPUT_BUTTONS) & BT_USER2))
+      {
+         DU_FireMissile(ActivatorTID(), "DUM_BasicBolt", 3,
+                     GetActorAngle(0), GetActorPitch(0), 15);
+         Delay(2);
+      };
+   };
+   (SpellFunc)0;
+
+   &DUMspellStream;
+   &DUMspellStream;
+   &DUMspellStream;
+   &DUMspellStream;
+};
+
+
+//----------------------------------------------------------------------------|
+// Global Functions                                                           |
+//
+
+//
+// DUM_SpellReady
+//
+script DUM_SpellReady __enter()
+{
+   __variable __autoreg SpellData const **spellp;
+   __variable __autoreg SpellData const *spell;
+   __variable __autoreg int buttons;
+   __variable __autoreg int p = PlayerNumber();
+
+   if (!ActivatorTID()) Thing_ChangeTID(0, DU_MakeTID());
+
+   spell = *(spellp = &DUMspellCurrent[p]);
+
+   while (true)
+   {
+      buttons = GetPlayerInput(p, INPUT_BUTTONS) &
+               ~GetPlayerInput(p, INPUT_OLDBUTTONS);
+
+      if (buttons & BT_USER1)
+      {
+         if (DUMspellSelect[p])
+         {
+            DUMspellSelect[p] = false;
+            SetPlayerProperty(0, 0, PROP_TOTALLYFROZEN);
+         }
+         else
+         {
+            spell = *spellp = &DUMspellBasic;
+            if (spell->funcSelect)
+               spell->funcSelect(spell);
+
+            DUMspellSelect[p] = true;
+            SetPlayerProperty(0, 1, PROP_TOTALLYFROZEN);
+         };
+      };
+
+      if (DUMspellSelect[p])
+      {
+         if (buttons & BT_FORWARD)
+         {
+            spell = *spellp = spell->up;
+            if (spell->funcSelect)
+               spell->funcSelect(spell);
+         };
+
+         if (buttons & BT_BACK)
+         {
+            spell = *spellp = spell->down;
+            if (spell->funcSelect)
+               spell->funcSelect(spell);
+         };
+
+         if (buttons & (BT_LEFT|BT_MOVELEFT))
+         {
+            spell = *spellp = spell->left;
+            if (spell->funcSelect)
+               spell->funcSelect(spell);
+         };
+
+         if (buttons & (BT_RIGHT|BT_MOVERIGHT))
+         {
+            spell = *spellp = spell->right;
+            if (spell->funcSelect)
+               spell->funcSelect(spell);
+         };
+
+         __printf<__printf_print>("%S\n|\n%S -- %S -- %S\n|\n%S",
+                               spell->up->name,
+            spell->left->name, spell->name, spell->right->name,
+                               spell->down->name);
+      }
+      else
+      {
+         if (buttons & BT_USER2)
+         {
+            if (spell)
+            {
+               spell->funcCast(spell);
+               spell = *spellp = 0;
+            }
+            else
+            {
+               __printf<__printf_print>("Must select spell.");
+            };
+         };
+
+         if (*spellp)
+         {
+            __printf<__printf_print>("%S", (*spellp)->name);
+         };
+      };
+
+      Delay(1);
+   };
+};
+
+}
+// EOF
+
