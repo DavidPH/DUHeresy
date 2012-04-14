@@ -21,7 +21,6 @@
 //
 //-----------------------------------------------------------------------------
 
-[
 #include "du_defs.dh"
 
 
@@ -130,6 +129,5 @@ script DUH_ChickenFriendCountdown(int frames)
    };
 };
 
-]
 // EOF
 

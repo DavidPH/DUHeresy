@@ -21,7 +21,6 @@
 //
 //-----------------------------------------------------------------------------
 
-[
 #include "du_defs.dh"
 
 
@@ -70,6 +69,5 @@ script DUH_CrossbowReady(int frames)
    DU_WeaponReady(frames, tics, DUHcrossbowAmmo, 3);
 };
 
-]
 // EOF
 

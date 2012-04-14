@@ -21,7 +21,6 @@
 //
 //-----------------------------------------------------------------------------
 
-[
 #include "du_defs.dh"
 
 
@@ -179,6 +178,5 @@ script DU_WeaponReady(int frames, int *tics, str ammo, int multiplier)
    };
 };
 
-]
 // EOF
 

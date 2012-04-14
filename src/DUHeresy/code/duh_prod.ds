@@ -21,7 +21,6 @@
 //
 //-----------------------------------------------------------------------------
 
-[
 #include "du_defs.dh"
 
 
@@ -101,6 +100,5 @@ script DUH_PhoenixRodReady(int frames)
    DU_WeaponReady(frames, tics, DUHphoenixRodAmmo, 10);
 };
 
-]
 // EOF
 

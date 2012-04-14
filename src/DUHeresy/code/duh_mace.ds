@@ -21,7 +21,6 @@
 //
 //-----------------------------------------------------------------------------
 
-[
 #include "du_defs.dh"
 
 
@@ -87,6 +86,5 @@ script DUH_FiremaceReady(int frames)
    DU_WeaponReady(frames, tics, DUHfiremaceAmmo, 20);
 };
 
-]
 // EOF
 
