@@ -30,8 +30,8 @@
 // Static Variables                                                           |
 //
 
-__variable static __array SpellData const *[MAX_PLAYERS] DUMspellCurrent;
-__variable static __array bool[MAX_PLAYERS] DUMspellSelect;
+__variable static SpellData const *[MAX_PLAYERS] DUMspellCurrent;
+__variable static bool[MAX_PLAYERS] DUMspellSelect;
 
 
 //----------------------------------------------------------------------------|

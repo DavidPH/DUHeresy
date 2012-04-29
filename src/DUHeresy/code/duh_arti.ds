@@ -51,7 +51,7 @@ __function DUH_artifactTomeReady(str ammo, int cap)
 //
 script DU_ArtifactReady(int frames)
 {
-   __variable static __array int[MAX_PLAYERS] tics;
+   __variable static int[MAX_PLAYERS] tics;
 
    while (frames--)
    {

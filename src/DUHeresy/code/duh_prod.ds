@@ -95,7 +95,7 @@ script DUH_PhoenixRodFlameTic()
 //
 script DUH_PhoenixRodReady(int frames)
 {
-   __variable static __array int[MAX_PLAYERS] tics;
+   __variable static int[MAX_PLAYERS] tics;
 
    DU_WeaponReady(frames, tics, DUHphoenixRodAmmo, 10);
 };

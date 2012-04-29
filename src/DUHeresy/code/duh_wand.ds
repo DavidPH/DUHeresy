@@ -122,7 +122,7 @@ script DUH_ElvenWandFire(bool piercing)
 //
 script DUH_ElvenWandReady(int frames)
 {
-   __variable static __array int[MAX_PLAYERS] tics;
+   __variable static int[MAX_PLAYERS] tics;
 
    DU_WeaponReady(frames, tics, DUHelvenWandAmmo, 2);
 };

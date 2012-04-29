@@ -24,7 +24,7 @@ compile_script()
 
    echo "Compiling ${SRC}"
 
-   DH-acc --target=ZDoom --output=object \
+   DH-acc --target=ZDoom -c \
           -isrc/DUCommon/code/ -i/data/src/SELF/DH-acc/inc/ \
           --no-string-func \
           "$@" -o"${OBJ}" "${SRC}"
