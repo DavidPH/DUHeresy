@@ -33,7 +33,7 @@
 //
 __function DUH_artifactTomeReady(str ammo, int cap)
 {
-   __variable __autoreg int count;
+   int count;
 
    SetAmmoCapacity(ammo,  cap);
    count = CheckInventory(ammo);
@@ -51,14 +51,14 @@ __function DUH_artifactTomeReady(str ammo, int cap)
 //
 script DU_ArtifactReady(int frames)
 {
-   __variable static int[MAX_PLAYERS] tics;
+   static int[MAX_PLAYERS] tics;
 
    while (frames--)
    {
-      __variable __autoreg int tic = ++tics[PlayerNumber()];
-      __variable __autoreg int inv_count;
+      int tic = ++tics[PlayerNumber()];
+      int inv_count;
 
-      __variable __autoreg int tid = ActivatorTID();
+      int tid = ActivatorTID();
 
       if (!tid) Thing_ChangeTID(0, tid = DU_MakeTID());
 

@@ -33,11 +33,11 @@
 //
 script DUH_HellstaffAltFire(bool useammo)
 {
-   __variable __autoreg int ammo_count = CheckInventory(DUHhellstaffAmmo);
-   __variable __autoreg int ammo_usage = (ammo_count / 100) + 1;
-   __variable __autoreg int damage = (ammo_count / 25) + ammo_usage + 1;
+   int ammo_count = CheckInventory(DUHhellstaffAmmo);
+   int ammo_usage = (ammo_count / 100) + 1;
+   int damage = (ammo_count / 25) + ammo_usage + 1;
 
-   __variable __autoreg int tid;
+   int tid;
 
    tid = DU_FireMissile(ActivatorTID(), "DUH_HellstaffMissile2", damage,
                         GetActorAngle(0), GetActorPitch(0), 25);
@@ -54,7 +54,7 @@ script DUH_HellstaffAltFire(bool useammo)
 //
 script DUH_HellstaffReady(int frames)
 {
-   __variable static int[MAX_PLAYERS] tics;
+   static int[MAX_PLAYERS] tics;
 
    DU_WeaponReady(frames, tics, DUHhellstaffAmmo, 5);
 };
@@ -64,27 +64,26 @@ script DUH_HellstaffReady(int frames)
 //
 script DUH_HellstaffStorm()
 {
-   __variable __autoreg fixed basex = GetActorX(0);
-   __variable __autoreg fixed basey = GetActorY(0);
-   __variable __autoreg fixed basez = GetActorCeilingZ(0) - 12;
+   fixed basex = GetActorX(0);
+   fixed basey = GetActorY(0);
+   fixed basez = GetActorCeilingZ(0) - 12;
 
-   __variable __autoreg int shooter = CheckInventory("DUH_MemberShooterTID");
+   int shooter = CheckInventory("DUH_MemberShooterTID");
 
-   __variable __autoreg int i =
-      CheckInventory("DUH_HellstaffMissileStormtics");
+   int i = CheckInventory("DUH_HellstaffMissileStormtics");
 
    while (i)
    {
-      __variable __autoreg fixed x = basex + RandomFixed(-64, 64);
-      __variable __autoreg fixed y = basey + RandomFixed(-64, 64);
-      __variable __autoreg fixed z = basez;
+      fixed x = basex + RandomFixed(-64, 64);
+      fixed y = basey + RandomFixed(-64, 64);
+      fixed z = basez;
 
-      __variable __autoreg int tid = DU_MakeTID();
+      int tid = DU_MakeTID();
 
       // Hack to not kill projectile if shooting from water.
-      __variable __autoreg fixed shooterx = GetActorX(shooter);
-      __variable __autoreg fixed shootery = GetActorY(shooter);
-      __variable __autoreg fixed shooterz = GetActorZ(shooter);
+      fixed shooterx = GetActorX(shooter);
+      fixed shootery = GetActorY(shooter);
+      fixed shooterz = GetActorZ(shooter);
 
       SetActorPosition(shooter, shooterx, shootery, shooterz+16, false);
 

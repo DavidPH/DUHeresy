@@ -35,20 +35,19 @@ script DUH_ElvenLaserTrailSpawn(bool final)
 {
    constexpr int density = 32;
 
-   __variable __autoreg fixed curx = GetActorX(0);
-   __variable __autoreg fixed cury = GetActorY(0);
-   __variable __autoreg fixed curz = GetActorZ(0);
+   fixed curx = GetActorX(0);
+   fixed cury = GetActorY(0);
+   fixed curz = GetActorZ(0);
 
-   __variable __autoreg fixed oldx = DU_GetInventoryFixed(0, "DUH_MemberOldX");
-   __variable __autoreg fixed oldy = DU_GetInventoryFixed(0, "DUH_MemberOldY");
-   __variable __autoreg fixed oldz = DU_GetInventoryFixed(0, "DUH_MemberOldZ");
+   fixed oldx = DU_GetInventoryFixed(0, "DUH_MemberOldX");
+   fixed oldy = DU_GetInventoryFixed(0, "DUH_MemberOldY");
+   fixed oldz = DU_GetInventoryFixed(0, "DUH_MemberOldZ");
 
-   __variable __autoreg fixed difx = curx - oldx;
-   __variable __autoreg fixed dify = cury - oldy;
-   __variable __autoreg fixed difz = curz - oldz;
+   fixed difx = curx - oldx;
+   fixed dify = cury - oldy;
+   fixed difz = curz - oldz;
 
-   __variable __autoreg int i =
-      (DU_AbsFixed(difx) + DU_AbsFixed(dify) + DU_AbsFixed(difz)) / density;
+   int i = (DU_AbsFixed(difx) + DU_AbsFixed(dify) + DU_AbsFixed(difz)) / density;
 
    if (i)
    {
@@ -89,9 +88,9 @@ script DUH_ElvenLaserTrailSpawn(bool final)
 //
 script DUH_ElvenWandDamage(bool useammo) -> int
 {
-   __variable __autoreg int ammo_count = CheckInventory(DUHelvenWandAmmo);
-   __variable __autoreg int ammo_usage = (ammo_count / 50) + 1;
-   __variable __autoreg int damage = (ammo_count / 25) + ammo_usage + 1;
+   int ammo_count = CheckInventory(DUHelvenWandAmmo);
+   int ammo_usage = (ammo_count / 50) + 1;
+   int damage = (ammo_count / 25) + ammo_usage + 1;
 
    if (useammo)
       TakeInventory(DUHelvenWandAmmo, ammo_usage);
@@ -104,13 +103,10 @@ script DUH_ElvenWandDamage(bool useammo) -> int
 //
 script DUH_ElvenWandFire(bool piercing)
 {
-   __variable __autoreg str missile =
-      piercing ? "DUH_ElvenLaserRipper" : "DUH_ElvenLaser";
+   str missile = piercing ? "DUH_ElvenLaserRipper" : "DUH_ElvenLaser";
 
-   __variable __autoreg int tid;
-
-   tid = DU_FireMissile(ActivatorTID(), missile, 1, GetActorAngle(0),
-                        GetActorPitch(0), 256);
+   int tid = DU_FireMissile(ActivatorTID(), missile, 1, GetActorAngle(0),
+      GetActorPitch(0), 256);
 
    DU_SetInventoryFixed(tid, "DUH_MemberOldX", GetActorX(tid));
    DU_SetInventoryFixed(tid, "DUH_MemberOldY", GetActorY(tid));
@@ -122,7 +118,7 @@ script DUH_ElvenWandFire(bool piercing)
 //
 script DUH_ElvenWandReady(int frames)
 {
-   __variable static int[MAX_PLAYERS] tics;
+   static int[MAX_PLAYERS] tics;
 
    DU_WeaponReady(frames, tics, DUHelvenWandAmmo, 2);
 };

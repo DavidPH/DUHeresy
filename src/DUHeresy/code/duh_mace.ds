@@ -33,11 +33,11 @@
 //
 script DUH_FiremaceAltFire(bool useammo)
 {
-   __variable __autoreg int ammo_count = CheckInventory(DUHfiremaceAmmo);
-   __variable __autoreg int ammo_usage = (ammo_count / 75) + 1;
-   __variable __autoreg int damage = (ammo_count / 25) + ammo_usage + 7;
+   int ammo_count = CheckInventory(DUHfiremaceAmmo);
+   int ammo_usage = (ammo_count / 75) + 1;
+   int damage = (ammo_count / 25) + ammo_usage + 7;
 
-   __variable __autoreg int tid;
+   int tid;
 
    tid = DU_FireMissile(ActivatorTID(), "DUH_FiremaceMissile4", damage,
                         GetActorAngle(0), GetActorPitch(0), 25);
@@ -53,16 +53,16 @@ script DUH_FiremaceAltFire(bool useammo)
 //
 script DUH_FiremaceDeathRing()
 {
-   __variable __autoreg int damage = (GetActorProperty(0, APROP_Damage) + 7) / 2;
-   __variable __autoreg int shooter = CheckInventory("DUH_MemberShooterTID");
+   int damage = (GetActorProperty(0, APROP_Damage) + 7) / 2;
+   int shooter = CheckInventory("DUH_MemberShooterTID");
 
-   __variable __autoreg int i;
-   __variable __autoreg int j;
+   int i;
+   int j;
 
    for (i = damage; i--;) for (j = damage; j--;)
    {
-      __variable __autoreg fixed angle = (fixed)i / damage;
-      __variable __autoreg fixed pitch = (fixed)j / damage;
+      fixed angle = (fixed)i / damage;
+      fixed pitch = (fixed)j / damage;
 
       DU_FireMissile(shooter, "DUH_FiremaceMissile5", 1, angle, pitch, 15);
    };
@@ -73,7 +73,7 @@ script DUH_FiremaceDeathRing()
 //
 script DUH_FiremaceMissileSound()
 {
-   SetActorProperty(0, APROP_SeeSound, "weapons/macebounce");
+   SetActorPropertyString(0, APROP_SeeSound, "weapons/macebounce");
 };
 
 //
@@ -81,7 +81,7 @@ script DUH_FiremaceMissileSound()
 //
 script DUH_FiremaceReady(int frames)
 {
-   __variable static int[MAX_PLAYERS] tics;
+   static int[MAX_PLAYERS] tics;
 
    DU_WeaponReady(frames, tics, DUHfiremaceAmmo, 20);
 };

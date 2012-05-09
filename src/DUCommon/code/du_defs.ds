@@ -45,9 +45,9 @@ function DU_AbsFixed(fixed f) -> fixed
 
 function DU_AmmoReady(int tic, str ammo, int mul)
 {
-   __variable __autoreg int ammo_count = CheckInventory(ammo);
-   __variable __autoreg int ammo_limit = GetAmmoCapacity(ammo) * mul;
-   __variable __autoreg int period;
+   int ammo_count = CheckInventory(ammo);
+   int ammo_limit = GetAmmoCapacity(ammo) * mul;
+   int period;
 
    period = ammo_count ? ammo_limit / ammo_count : ammo_limit;
    if (!(tic % period)) GiveInventory(ammo, 1);
@@ -56,19 +56,18 @@ function DU_AmmoReady(int tic, str ammo, int mul)
 //
 // DU_FireMissile
 //
-function DU_FireMissile
-(int shooter, str name, int damage, fixed angle, fixed pitch, fixed speed)
- -> int
+function int DU_FireMissile(int shooter, str name, int damage, fixed angle,
+   fixed pitch, fixed speed)
 {
-   __variable __autoreg int tid = DU_MakeTID();
+   int tid = DU_MakeTID();
 
-   __variable __autoreg fixed velx = Cos(angle) * Cos(pitch) * speed;
-   __variable __autoreg fixed vely = Sin(angle) * Cos(pitch) * speed;
-   __variable __autoreg fixed velz = Sin(1.0 - pitch) * speed;
+   fixed velx = Cos(angle) * Cos(pitch) * speed;
+   fixed vely = Sin(angle) * Cos(pitch) * speed;
+   fixed velz = Sin(1.0 - pitch) * speed;
 
-   __variable __autoreg fixed x = GetActorX(0);
-   __variable __autoreg fixed y = GetActorY(0);
-   __variable __autoreg fixed z = GetActorZ(0);
+   fixed x = GetActorX(0);
+   fixed y = GetActorY(0);
+   fixed z = GetActorZ(0);
 
    if (GetActorViewHeight(ActivatorTID()))
    {
@@ -78,9 +77,9 @@ function DU_FireMissile
    // Hack to not kill projectile if shooting from water.
    // Cache original position because the position change could fail in which
    // case saying z-16 would lower the mobj!
-   __variable __autoreg fixed shooterx = GetActorX(shooter);
-   __variable __autoreg fixed shootery = GetActorY(shooter);
-   __variable __autoreg fixed shooterz = GetActorZ(shooter);
+   fixed shooterx = GetActorX(shooter);
+   fixed shootery = GetActorY(shooter);
+   fixed shooterz = GetActorZ(shooter);
 
    SetActorPosition(shooter, shooterx, shootery, shooterz+16, false);
 
@@ -110,7 +109,7 @@ function DU_FireMissile
 //
 function DU_GetInventoryFixed(int tid, str inv) -> fixed
 {
-   __variable __autoreg union {int i; fixed x;} u;
+   union {int i; fixed x;} u;
 
    if (tid)
    {
@@ -132,9 +131,9 @@ function DU_GetInventoryFixed(int tid, str inv) -> fixed
 //
 function DU_MakeTID() -> int
 {
-   __variable static int tid;
+   static int tid;
 
-   while (ThingCount(0, ++tid & 0x7FFFFFFF));
+   while (ThingCount(0, ++tid)) (tid &= 0x7FFFFFFF);
 
    return tid;
 };
@@ -144,7 +143,7 @@ function DU_MakeTID() -> int
 //
 function DU_SetInventoryFixed(int tid, str inv, fixed val)
 {
-   __variable __autoreg union {int i; fixed x;} u;
+   union {int i; fixed x;} u;
 
    u.x = val;
 

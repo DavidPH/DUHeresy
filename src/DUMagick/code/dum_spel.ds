@@ -30,8 +30,8 @@
 // Static Variables                                                           |
 //
 
-__variable static SpellData const *[MAX_PLAYERS] DUMspellCurrent;
-__variable static bool[MAX_PLAYERS] DUMspellSelect;
+__intvar static SpellData const *[MAX_PLAYERS] DUMspellCurrent;
+__intvar static bool[MAX_PLAYERS] DUMspellSelect;
 
 
 //----------------------------------------------------------------------------|
@@ -44,12 +44,12 @@ __variable static bool[MAX_PLAYERS] DUMspellSelect;
 __extvar static SpellData DUMspellBasic =
 {
    "BASIC";
-   __script void(SpellData const *spell)
+   __script void void(SpellData const *spell)
    {
       DU_FireMissile(ActivatorTID(), "DUM_BasicBolt", 3,
                      GetActorAngle(0), GetActorPitch(0), 15);
    };
-   (SpellFunc)0;
+   nullptr;
 
    &DUMspellSpread;
    &DUMspellCircle;
@@ -63,7 +63,7 @@ __extvar static SpellData DUMspellBasic =
 __extvar static SpellData DUMspellBurst =
 {
    "BURST";
-   __script void(SpellData const *spell)
+   __script void void(SpellData const *spell)
    {
       DU_FireMissile(ActivatorTID(), "DUM_BasicBolt", 3,
                      GetActorAngle(0), GetActorPitch(0), 15);
@@ -74,7 +74,7 @@ __extvar static SpellData DUMspellBurst =
       DU_FireMissile(ActivatorTID(), "DUM_BasicBolt", 3,
                      GetActorAngle(0), GetActorPitch(0), 15);
    };
-   (SpellFunc)0;
+   nullptr;
 
    &DUMspellStream;
    &DUMspellStream;
@@ -88,7 +88,7 @@ __extvar static SpellData DUMspellBurst =
 __extvar static SpellData DUMspellCircle =
 {
    "CIRCLE";
-   __script void(SpellData const *spell)
+   __script void void(SpellData const *spell)
    {
       DU_FireMissile(ActivatorTID(), "DUM_BasicBolt", 3,
                      GetActorAngle(0) + 0.000, GetActorPitch(0), 15);
@@ -107,7 +107,7 @@ __extvar static SpellData DUMspellCircle =
       DU_FireMissile(ActivatorTID(), "DUM_BasicBolt", 3,
                      GetActorAngle(0) + 0.875, GetActorPitch(0), 15);
    };
-   (SpellFunc)0;
+   nullptr;
 
    &DUMspellCircle;
    &DUMspellCircle;
@@ -121,7 +121,7 @@ __extvar static SpellData DUMspellCircle =
 __extvar static SpellData DUMspellSpread =
 {
    "SPREAD";
-   __script void(SpellData const *spell)
+   __script void void(SpellData const *spell)
    {
       DU_FireMissile(ActivatorTID(), "DUM_BasicBolt", 3,
                      GetActorAngle(0), GetActorPitch(0), 15);
@@ -130,7 +130,7 @@ __extvar static SpellData DUMspellSpread =
       DU_FireMissile(ActivatorTID(), "DUM_BasicBolt", 3,
                      GetActorAngle(0) - 1.0/16.0, GetActorPitch(0), 15);
    };
-   (SpellFunc)0;
+   nullptr;
 
    &DUMspellSpread;
    &DUMspellSpread;
@@ -144,9 +144,9 @@ __extvar static SpellData DUMspellSpread =
 __extvar static SpellData DUMspellStream =
 {
    "STREAM";
-   __script void(SpellData const *spell)
+   __script void void(SpellData const *spell)
    {
-      __variable __autoreg int i = 15;
+      int i = 15;
 
       while (i-- && (GetPlayerInput(-1, INPUT_BUTTONS) & BT_USER2))
       {
@@ -155,7 +155,7 @@ __extvar static SpellData DUMspellStream =
          Delay(2);
       };
    };
-   (SpellFunc)0;
+   nullptr;
 
    &DUMspellStream;
    &DUMspellStream;
@@ -173,10 +173,9 @@ __extvar static SpellData DUMspellStream =
 //
 script DUM_SpellReady __enter()
 {
-   __variable __autoreg SpellData const **spellp;
-   __variable __autoreg SpellData const *spell;
-   __variable __autoreg int buttons;
-   __variable __autoreg int p = PlayerNumber();
+   SpellData const **spellp;
+   SpellData const *spell;
+   int buttons, p = PlayerNumber();
 
    if (!ActivatorTID()) Thing_ChangeTID(0, DU_MakeTID());
 
@@ -235,7 +234,7 @@ script DUM_SpellReady __enter()
                spell->funcSelect(spell);
          };
 
-         __printf<__printf_print>("%S\n|\n%S -- %S -- %S\n|\n%S",
+         __printf<__printf_print>("%s\n|\n%s -- %s -- %s\n|\n%s",
                                spell->up->name,
             spell->left->name, spell->name, spell->right->name,
                                spell->down->name);
@@ -247,7 +246,7 @@ script DUM_SpellReady __enter()
             if (spell)
             {
                spell->funcCast(spell);
-               spell = *spellp = 0;
+               spell = *spellp = nullptr;
             }
             else
             {
@@ -257,7 +256,7 @@ script DUM_SpellReady __enter()
 
          if (*spellp)
          {
-            __printf<__printf_print>("%S", (*spellp)->name);
+            __printf<__printf_print>("%s", (*spellp)->name);
          };
       };
 

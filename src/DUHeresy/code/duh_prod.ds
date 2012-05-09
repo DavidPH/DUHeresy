@@ -33,8 +33,7 @@
 //
 script DUH_PhoenixRodAltDone(bool useammo)
 {
-   __variable __autoreg int ammo_usage =
-      CheckInventory("DUH_PhoenixRodFireAmmo");
+   int ammo_usage = CheckInventory("DUH_PhoenixRodFireAmmo");
 
    if (useammo)
       TakeInventory(DUHphoenixRodAmmo, ammo_usage);
@@ -52,8 +51,7 @@ script DUH_PhoenixRodAltFire()
       return;
    };
 
-   __variable __autoreg int damage =
-      CheckInventory("DUH_PhoenixRodFireDamage");
+   int damage = CheckInventory("DUH_PhoenixRodFireDamage");
 
    DU_FireMissile(ActivatorTID(), "DUH_PhoenixRodMissile2", damage,
                   GetActorAngle(0), GetActorPitch(0), 10);
@@ -64,9 +62,9 @@ script DUH_PhoenixRodAltFire()
 //
 script DUH_PhoenixRodAltInit()
 {
-   __variable __autoreg int ammo_count = CheckInventory(DUHphoenixRodAmmo);
-   __variable __autoreg int ammo_usage = (ammo_count / 10) + 1;
-   __variable __autoreg int damage = (ammo_count / 10) + ammo_usage + 1;
+   int ammo_count = CheckInventory(DUHphoenixRodAmmo);
+   int ammo_usage = (ammo_count / 10) + 1;
+   int damage = (ammo_count / 10) + ammo_usage + 1;
 
    TakeInventory("DUH_PhoenixRodFireAmmo", 1000);
    TakeInventory("DUH_PhoenixRodFireDamage", 1000);
@@ -82,9 +80,7 @@ script DUH_PhoenixRodAltInit()
 //
 script DUH_PhoenixRodFlameTic()
 {
-   __variable __autoreg int damage;
-
-   damage = GetActorProperty(0, APROP_Damage);
+   int damage = GetActorProperty(0, APROP_Damage);
    SetActorProperty(0, APROP_Damage, --damage);
 
    if (!damage) SetActorState(0, "Done", false);
@@ -95,7 +91,7 @@ script DUH_PhoenixRodFlameTic()
 //
 script DUH_PhoenixRodReady(int frames)
 {
-   __variable static int[MAX_PLAYERS] tics;
+   static int[MAX_PLAYERS] tics;
 
    DU_WeaponReady(frames, tics, DUHphoenixRodAmmo, 10);
 };
