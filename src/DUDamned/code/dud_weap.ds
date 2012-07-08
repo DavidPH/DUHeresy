@@ -1,0 +1,99 @@
+//DS---------------------------------------------------------------------------
+//
+// Copyright(C) 2012 David Hill
+//
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program; if not, see <http://www.gnu.org/licenses/>.
+//
+//-----------------------------------------------------------------------------
+//
+// Weapon functions.
+//
+//-----------------------------------------------------------------------------
+
+#include "dud_abil.dh"
+
+
+//----------------------------------------------------------------------------|
+// Global Functions                                                           |
+//
+
+//
+// DUD_ChaingunDamage
+//
+script int DUD_ChaingunDamage()
+{
+   return 5 * DUD_GetDamageFactor(PlayerNumber(), AMMO_CLIP);
+};
+
+//
+// DUD_FireBFG
+//
+script void DUD_FireBFG()
+{
+   int damage = 100 * DUD_GetDamageFactor(PlayerNumber(), AMMO_CELL);
+   int wspeed =  25 * DUD_GetWSpeedFactor(PlayerNumber(), AMMO_CELL);
+
+   DU_FireMissile(0, "DUD_BFGBall", damage, GetActorAngle(0), GetActorPitch(0), wspeed);
+
+   TakeInventory("Cell", 40);
+};
+
+//
+// DUD_FirePlasma
+//
+script void DUD_FirePlasma()
+{
+   int damage =  5 * DUD_GetDamageFactor(PlayerNumber(), AMMO_CELL);
+   int wspeed = 25 * DUD_GetWSpeedFactor(PlayerNumber(), AMMO_CELL);
+
+   DU_FireMissile(0, "DUD_PlasmaBall", damage, GetActorAngle(0), GetActorPitch(0), wspeed);
+
+   TakeInventory("Cell", 1);
+};
+
+//
+// DUD_PistolDamage
+//
+script int DUD_PistolDamage()
+{
+   return 10 * DUD_GetDamageFactor(PlayerNumber(), AMMO_CLIP);
+};
+
+//
+// DUD_RocketLuancherFire
+//
+script void DUD_RocketLauncherFire()
+{
+   int damage =  20 * DUD_GetDamageFactor(PlayerNumber(), AMMO_RCKT);
+   int radius = 128 * DUD_GetRadiusFactor(PlayerNumber(), AMMO_RCKT);
+   int wspeed =  20 * DUD_GetWSpeedFactor(PlayerNumber(), AMMO_RCKT);
+
+   int tid = DU_FireMissile(0, "DUD_Rocket", damage, GetActorAngle(0),
+                            GetActorPitch(0), wspeed);
+
+   SetThingSpecial(tid, 0, radius, 0, 0, 0, 0);
+
+   TakeInventory("RocketAmmo", 1);
+};
+
+//
+// DUD_ShotgunPellets
+//
+script int DUD_ShotgunPellets(int base)
+{
+   return base * DUD_GetDamageFactor(PlayerNumber(), AMMO_SHEL);
+};
+
+// EOF
+

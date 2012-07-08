@@ -17,16 +17,23 @@
 //
 //-----------------------------------------------------------------------------
 //
-// Common DUHeresy defintions and general functions.
+// Common defintions and general functions.
 //
 //-----------------------------------------------------------------------------
 
-#ifndef DUH_DEFS_DH__
-#define DUH_DEFS_DH__ #
+#ifndef DU_DEFS_DH__
+#define DU_DEFS_DH__
 
 #include "zcommon.dh"
 
 #include "du_defs.dec"
+
+
+//----------------------------------------------------------------------------|
+// Macros                                                                     |
+//
+
+#define hudf __printf<__printf_hud>
 
 
 //----------------------------------------------------------------------------|
@@ -45,23 +52,22 @@ constexpr str DUHfiremaceAmmo   = "MaceAmmo";
 // Global Functions                                                           |
 //
 
-extern __function DU_AbsFixed(fixed f) -> fixed;
+extern function DU_AbsFixed(fixed f) -> fixed;
 
-extern __function DU_AmmoReady(int tic, str ammo, int mul);
+extern function DU_AmmoReady(int tic, str ammo, int mul);
 
-extern __script DU_ArtifactReady(int frames);
+extern script DU_ArtifactReady(int frames);
 
-extern __function DU_FireMissile
-(int shooter, str name, int damage, fixed angle, fixed pitch, fixed speed)
- -> int;
+extern function DU_FireMissile(int shooter, str name, int damage, fixed angle,
+                               fixed pitch, fixed speed) -> int;
 
-extern __function DU_GetInventoryFixed(int tid, str inv) -> fixed;
+extern function DU_GetInventoryFixed(int tid, str inv) -> fixed;
 
-extern __function DU_MakeTID() -> int;
+extern function DU_MakeTID() -> int;
 
-extern __function DU_SetInventoryFixed(int tid, str inv, fixed val);
+extern function DU_SetInventoryFixed(int tid, str inv, fixed val);
 
-extern __script DU_WeaponReady(int frames, int *tics, str ammo, int multiplier);
+extern script DU_WeaponReady(int frames, int *tics, str ammo, int multiplier);
 
-#endif//DUH_DEFS_DH__
+#endif//DU_DEFS_DH__
 

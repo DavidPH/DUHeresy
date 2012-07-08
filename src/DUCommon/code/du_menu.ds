@@ -1,0 +1,183 @@
+//-----------------------------------------------------------------------------
+//
+// Copyright(C) 2012 David Hill
+//
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program; if not, see <http://www.gnu.org/licenses/>.
+//
+//-----------------------------------------------------------------------------
+//
+// Generalized menu system.
+//
+//-----------------------------------------------------------------------------
+
+#include "du_menu.dh"
+
+
+//----------------------------------------------------------------------------|
+// Macros                                                                     |
+//
+
+#define BASE_MSGID 100
+
+#define menuf(...) __printf<__printf_hud>(__VA_ARGS__)
+
+
+//----------------------------------------------------------------------------|
+// Global Functions                                                           |
+//
+
+//
+// DU_MenuBegin
+//
+function DU_MenuBegin(Menu *menu)
+{
+   SetHudSize(menu->w, menu->h, 1);
+
+   menu->x = menu->w / 2;
+   menu->y = menu->h / 2;
+};
+
+//
+// DU_MenuEnd
+//
+function DU_MenuEnd(Menu *menu)
+{
+   int msgid = BASE_MSGID;
+
+   // Cursor.
+   menuf("", HUDMSG_PLAIN, msgid++, 0, 0,0, 1);
+
+   // Buttons.
+   for(MenuButton *button = menu->buttons; button; button = button->next)
+   {
+      // button->img
+      menuf("", HUDMSG_PLAIN, msgid++, 0, 0,0, 1);
+
+      // button->txt
+      menuf("", HUDMSG_PLAIN, msgid++, 0, 0,0, 1);
+   };
+
+   // Labels.
+   for(MenuLabel *label = menu->labels; label; label = label->next)
+   {
+      // label->img
+      menuf("", HUDMSG_PLAIN, msgid++, 0, 0,0, 1);
+
+      // label->txt
+      menuf("", HUDMSG_PLAIN, msgid++, 0, 0,0, 1);
+   };
+
+   // Texts.
+   for(MenuText *text = menu->texts; text; text = text->next)
+   {
+      // text->txt
+      menuf("", HUDMSG_PLAIN, msgid++, 0, 0,0, 1);
+   };
+};
+
+//
+// DU_MenuRun
+//
+function DU_MenuRun(Menu *menu)
+{
+   int msgid = BASE_MSGID;
+
+   // Poll and cap cursor movement.
+   menu->x -= GetPlayerInputFixed(-1, INPUT_YAW) * GetScreenWidth();
+   menu->y -= GetPlayerInputFixed(-1, INPUT_PITCH) * GetScreenHeight();
+
+   if (menu->x < 0)       menu->x = 0;
+   if (menu->x > menu->w) menu->x = menu->w;
+
+   if (menu->y < 0)       menu->y = 0;
+   if (menu->y > menu->h) menu->y = menu->h;
+
+   // Draw cursor.
+   SetFont("CURSOR");
+   menuf("A", HUDMSG_PLAIN, msgid++, 0, (int)menu->x+0.1, (int)menu->y+0.1, 0);
+   SetFont(menu->font);
+
+   // Draw buttons.
+   for(MenuButton *button = menu->buttons; button; button = button->next)
+   {
+      int x = button->x + button->w/2;
+      int y = button->y + button->h/2;
+
+      if(button->img[0])
+      {
+         SetFont(button->img);
+         menuf("A", HUDMSG_PLAIN, msgid++, 0, x,y, 0);
+         SetFont(menu->font);
+      }
+      else
+         menuf("", HUDMSG_PLAIN, msgid++, 0, x,y, 1);
+
+      menuf("%s", button->txt, HUDMSG_PLAIN, msgid++, button->color, x,y, 0);
+   };
+
+   // Draw labels.
+   for(MenuLabel *label = menu->labels; label; label = label->next)
+   {
+      int x = label->x + label->w/2;
+      int y = label->y + label->h/2;
+
+      if(label->img[0])
+      {
+         SetFont(label->img);
+         menuf("A", HUDMSG_PLAIN, msgid++, 0, x,y, 0);
+         SetFont(menu->font);
+      }
+      else
+         menuf("", HUDMSG_PLAIN, msgid++, 0, x,y, 1);
+
+      menuf("%s", label->txt, HUDMSG_PLAIN, msgid++, label->color, x,y, 0);
+   };
+
+   // Draw texts.
+   for(MenuText *text = menu->texts; text; text = text->next)
+   {
+      fixed x = (int)text->x + 0.1;
+      fixed y = (int)text->y + 0.1;
+
+      menuf("%s", text->txt, HUDMSG_PLAIN, msgid++, text->color, x,y, 0);
+   };
+
+   // Mouse-over events.
+   for(MenuButton *button = menu->buttons; button; button = button->next)
+   {
+      if(button->hover &&
+         menu->x >= button->x && menu->x < button->x + button->w &&
+         menu->y >= button->y && menu->y < button->y + button->h)
+      {
+         button->hover(button);
+      };
+   };
+
+   // Click events.
+   if (GetPlayerInput(-1, INPUT_BUTTONS) & ~GetPlayerInput(-1, INPUT_OLDBUTTONS) & BT_ATTACK)
+   {
+      for(MenuButton *button = menu->buttons; button; button = button->next)
+      {
+         if(button->click &&
+            menu->x >= button->x && menu->x < button->x + button->w &&
+            menu->y >= button->y && menu->y < button->y + button->h)
+         {
+            button->click(button);
+         };
+      };
+   };
+};
+
+// EOF
+

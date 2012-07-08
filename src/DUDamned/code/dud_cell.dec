@@ -1,0 +1,107 @@
+//-----------------------------------------------------------------------------
+//
+// Copyright(C) 2012 David Hill
+//
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program; if not, see <http://www.gnu.org/licenses/>.
+//
+//-----------------------------------------------------------------------------
+//
+// Cell weapon actors.
+//
+//-----------------------------------------------------------------------------
+
+
+//----------------------------------------------------------------------------|
+// Types                                                                      |
+//
+
+// Replace BFG9000 with CellPack.
+actor DUD_BFG9000Ammo : RandomSpawner replaces BFG9000 {DropItem "CellPack"}
+
+// Replace PlasmaRifle with Cell.
+actor DUD_PlasmaRifleAmmo : RandomSpawner replaces PlasmaRifle {DropItem "Cell"}
+
+//
+// DUD_BFGBall
+//
+actor DUD_BFGBall : BFGBall
+{
+   states
+   {
+   Death:
+      BFE1 AB  8 bright
+      BFE1 C   8 bright A_BFGSpray("BFGExtra", damage * 40 / 100, damage * 15 / 100)
+      BFE1 DEF 8 bright
+      stop
+   }
+}
+
+//
+// DUD_BFG9000
+//
+actor DUD_BFG9000 : BFG9000
+{
+   Weapon.AmmoGive1 0
+   Weapon.AmmoType2 "Cell"
+   Weapon.AmmoUse2 40
+
+   states
+   {
+   Fire:
+      BFGG A 20 A_BFGSound
+      BFGG B 10 A_GunFlash
+      BFGG B 10 ACS_ExecuteWithResult(DUD_FireBFG)
+      BFGG B 20 A_ReFire
+      goto Ready
+
+   Flash:
+      BFGF A 11 bright A_Light1
+      BFGF B  6 bright A_Light2
+      goto LightDone
+   }
+}
+
+//
+// DUD_PlasmaBall
+//
+actor DUD_PlasmaBall : PlasmaBall
+{
+}
+
+//
+// DUD_PlasmaRifle
+//
+actor DUD_PlasmaRifle : PlasmaRifle
+{
+   Weapon.AmmoGive1 0
+   Weapon.AmmoType2 "Cell"
+   Weapon.AmmoUse2 1
+
+   states
+   {
+   Fire:
+      PLSG A  3 ACS_ExecuteWithResult(DUD_FirePlasma)
+      PLSG B 20 A_ReFire
+      Goto Ready
+
+   Flash:
+      PLSF A 4 Bright A_Light1
+      Goto LightDone
+      PLSF B 4 Bright A_Light1
+      Goto LightDone
+   }
+}
+
+// EOF
+

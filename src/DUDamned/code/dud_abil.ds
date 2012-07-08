@@ -1,0 +1,799 @@
+//DS---------------------------------------------------------------------------
+//
+// Copyright(C) 2012 David Hill
+//
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program; if not, see <http://www.gnu.org/licenses/>.
+//
+//-----------------------------------------------------------------------------
+//
+// Ability functions.
+//
+//-----------------------------------------------------------------------------
+
+#include "dud_abil.dh"
+
+#include "du_menu.dh"
+
+#include "stdlib.dh"
+
+//----------------------------------------------------------------------------|
+// Defines                                                                    |
+//
+
+#define SCREEN_W 640
+#define SCREEN_H 400
+
+#define MENUBOX_W 64
+#define MENUBOX_H 40
+
+#define ABILITY_BUTTON(X,Y) \
+{ \
+   /* Rendering */ \
+   MENUBOX_W*(X+7); MENUBOX_H*(Y+1); /* position */ \
+   MENUBOX_W;       MENUBOX_H;       /* size */ \
+   DUDability[X][Y].nameIco;         /* text */ \
+   "";                               /* image */ \
+   CR_BRICK;                         /* text color */ \
+ \
+   /* Callbacks */ \
+   DUD_clickAbility; /* on-click */ \
+   DUD_hoverAbility; /* mouse-over */ \
+ \
+   /* Misc Data */ \
+   &DUDmenuAbility[pnum][X][Y+1]; \
+   (void *)&DUDability[X][Y]; \
+}
+
+#define ABILITY_BUTTONS(X) \
+{ \
+   ABILITY_BUTTON(X, 0); \
+   ABILITY_BUTTON(X, 1); \
+   ABILITY_BUTTON(X, 2); \
+   ABILITY_BUTTON(X, 3); \
+   ABILITY_BUTTON(X, 4); \
+   ABILITY_BUTTON(X, 5); \
+   ABILITY_BUTTON(X, 6); \
+}
+
+#define WEAPON_BUTTON(X,Y) \
+{ \
+   /* Rendering */ \
+   MENUBOX_W*(X+0); MENUBOX_H*(Y+3); /* position */ \
+   MENUBOX_W;       MENUBOX_H;       /* size */ \
+   DUDweapon[X][Y].nameIco;          /* text */ \
+   nullptr;                          /* image */ \
+   CR_BRICK;                         /* text color */ \
+ \
+   /* Callbacks */ \
+   DUD_clickWeapon; /* on-click */ \
+   DUD_hoverWeapon; /* mouse-over */ \
+ \
+   /* Misc Data */ \
+   &DUDmenuWeapon[pnum][X][Y+1]; \
+   (void *)&DUDweapon[X][Y]; \
+}
+
+#define WEAPON_BUTTONS(X) \
+{ \
+   WEAPON_BUTTON(X, 0); \
+   WEAPON_BUTTON(X, 1); \
+   WEAPON_BUTTON(X, 2); \
+}
+
+
+//----------------------------------------------------------------------------|
+// Static Prototypes                                                          |
+//
+
+__intern script DUD_clickAbility(MenuButton *button);
+__intern script DUD_clickWeapon(MenuButton *button);
+
+__intern script DUD_hoverAbility(MenuButton *button);
+__intern script DUD_hoverWeapon(MenuButton *button);
+
+
+//----------------------------------------------------------------------------|
+// Static Variables                                                           |
+//
+
+__intvar static MenuButton[MAX_PLAYERS][3][ABILMAX] DUDmenuAbility;
+__intvar static MenuButton[MAX_PLAYERS][7][WEAPMAX] DUDmenuWeapon;
+
+__intvar static Menu[MAX_PLAYERS] DUDmenu;
+
+if (!DUDmenu[0].w) for (int pnum = MAX_PLAYERS; pnum--;)
+   DUDmenu[pnum] = {640; 400; "CONFONT"; &DUDmenuAbility[pnum][0][0]; NULL; NULL;};
+
+
+//----------------------------------------------------------------------------|
+// Global Variables                                                           |
+//
+
+static dud_ability_t [3][ABILMAX]DUDability =
+{
+   // ABIL1
+   {
+      // ABIL1_AMMO
+      {
+         true;
+         {0.00; 0.00; 0.00; 0.00;};
+         {9; 3; 1; 0;};
+         {1.00; 1.00; 1.00; 1.00;};
+         {1.00; 1.00; 1.00; 1.00;};
+         {1.00; 1.00; 1.00; 1.00;};
+         0; 0;
+         "Gives basic ammo regeneration.";
+         nullptr;
+         nullptr;
+         "Ammo Regen I";
+         "AMMO-1";
+      };
+      // ABIL1_DAMAGE_CLIP
+      {
+         true;
+         {0.00; 0.00; 0.00; 0.00;};
+         {0; 0; 0; 0;};
+         {1.50; 1.00; 1.00; 1.00;};
+         {1.00; 1.00; 1.00; 1.00;};
+         {1.00; 1.00; 1.00; 1.00;};
+         0; 0;
+         "Gives damage increase to CLIP ammo weapons.";
+         nullptr;
+         nullptr;
+         "Damage-CLIP";
+         "CLIP";
+      };
+      // ABIL1_DAMAGE_SHEL
+      {
+         true;
+         {0.00; 0.00; 0.00; 0.00;};
+         {0; 0; 0; 0;};
+         {1.00; 1.50; 1.00; 1.00;};
+         {1.00; 1.00; 1.00; 1.00;};
+         {1.00; 1.00; 1.00; 1.00;};
+         0; 0;
+         "Gives damage increase to SHEL ammo weapons.";
+         nullptr;
+         nullptr;
+         "Damage-SHEL";
+         "SHEL";
+      };
+      // ABIL1_DAMAGE_RCKT
+      {
+         true;
+         {0.00; 0.00; 0.00; 0.00;};
+         {0; 0; 0; 0;};
+         {1.00; 1.00; 1.50; 1.00;};
+         {1.00; 1.00; 1.00; 1.00;};
+         {1.00; 1.00; 1.00; 1.00;};
+         0; 0;
+         "Gives damage increase to RCKT ammo weapons.";
+         nullptr;
+         nullptr;
+         "Damage-RCKT";
+         "RCKT";
+      };
+      // ABIL1_DAMAGE_CELL
+      {
+         true;
+         {0.00; 0.00; 0.00; 0.00;};
+         {0; 0; 0; 0;};
+         {1.00; 1.00; 1.00; 1.50;};
+         {1.00; 1.00; 1.00; 1.00;};
+         {1.00; 1.00; 1.00; 1.00;};
+         0; 0;
+         "Gives damage increase to CELL ammo weapons.";
+         nullptr;
+         nullptr;
+         "Damage-CELL";
+         "CELL";
+      };
+   };
+
+   // ABIL2
+   {
+      // ABIL2_AMMO
+      {
+         true;
+         {0.00; 0.00; 0.00; 0.00;};
+         {5; 3; 1; 3;};
+         {1.00; 1.00; 1.00; 1.00;};
+         {1.00; 1.00; 1.00; 1.00;};
+         {1.00; 1.00; 1.00; 1.00;};
+         0; 0;
+         "Gives ammo regeneration.";
+         nullptr;
+         nullptr;
+         "Ammo Regen II";
+         "AMMO-2";
+      };
+      // ABIL2_ARMOR
+      {
+         true;
+         {0.00; 0.00; 0.00; 0.00;};
+         {0; 0; 0; 0;};
+         {1.00; 1.00; 1.00; 1.00;};
+         {1.00; 1.00; 1.00; 1.00;};
+         {1.00; 1.00; 1.00; 1.00;};
+         1; 0;
+         "Gives armor regeneration.";
+         nullptr;
+         nullptr;
+         "Armor Regen";
+         "ARMOR";
+      };
+      // ABIL3_RADIUS
+      {
+         true;
+         {0.00; 0.00; 0.00; 0.00;};
+         {0; 0; 0; 0;};
+         {1.00; 1.00; 1.00; 1.00;};
+         {1.50; 1.50; 1.50; 1.50;};
+         {1.00; 1.00; 1.00; 1.00;};
+         0; 0;
+         "Increases explosion radius by 50%.";
+         nullptr;
+         nullptr;
+         "Explosion Radius";
+         "RADIUS";
+      };
+   };
+
+   // ABIL3
+   {
+      // ABIL3_AMMO
+      {
+         true;
+         {0.00; 0.00; 0.00; 0.00;};
+         {1; 3; 1; 9;};
+         {1.00; 1.00; 1.00; 1.00;};
+         {1.00; 1.00; 1.00; 1.00;};
+         {1.00; 1.00; 1.00; 1.00;};
+         0; 0;
+         "Gives advanced ammo regeneration.";
+         nullptr;
+         nullptr;
+         "Ammo Regen III";
+         "AMMO-3";
+      };
+      // ABIL3_HEALTH
+      {
+         true;
+         {0.00; 0.00; 0.00; 0.00;};
+         {0; 0; 0; 0;};
+         {1.00; 1.00; 1.00; 1.00;};
+         {1.00; 1.00; 1.00; 1.00;};
+         {1.00; 1.00; 1.00; 1.00;};
+         0; 1;
+         "Gives heatlh regeneration.";
+         nullptr;
+         nullptr;
+         "Health Regen";
+         "HEALTH";
+      };
+      // ABIL3_DAMAGE
+      {
+         true;
+         {0.00; 0.00; 0.00; 0.00;};
+         {0; 0; 0; 0;};
+         {1.50; 1.50; 1.50; 1.50;};
+         {1.00; 1.00; 1.00; 1.00;};
+         {1.00; 1.00; 1.00; 1.00;};
+         0; 0;
+         "Gives damage increase to all ammo weapons.";
+         nullptr;
+         nullptr;
+         "Damage-All";
+         "DAMAGE";
+      };
+      // ABIL3_BAKPAK
+      {
+         true;
+         {3.00; 3.00; 3.00; 3.00;};
+         {0; 0; 0; 0;};
+         {1.00; 1.00; 1.00; 1.00;};
+         {1.00; 1.00; 1.00; 1.00;};
+         {1.00; 1.00; 1.00; 1.00;};
+         0; 0;
+         "Increases carrying capacity.";
+         nullptr;
+         nullptr;
+         "Backpack";
+         "BAKPAK";
+      };
+   };
+};
+static dud_ability_t *[MAX_PLAYERS][3]DUDabilitySelected;
+
+static dud_ammo_t [AMMOMAX]DUDammo =
+{
+   // AMMO_CLIP
+   {
+      AMMO_CLIP;
+      180;
+      350;
+      "Clip";
+      "Clip";
+   };
+   // AMMO_SHEL
+   {
+      AMMO_SHEL;
+      60;
+      1050;
+      "Shell";
+      "Shell";
+   };
+   // AMMO_RCKT
+   {
+      AMMO_RCKT;
+      20;
+      700;
+      "Rocket";
+      "RocketAmmo";
+   };
+   // AMMO_CELL
+   {
+      AMMO_CELL;
+      240;
+      350;
+      "Cell";
+      "Cell";
+   };
+};
+
+static dud_weapon_t [7][WEAPMAX]DUDweapon =
+{
+   // WEAP1
+   {
+      // WEAP1_FIST
+      {
+         true;
+         AMMOMAX;
+         "Lets you punch zombies with your bare hands.";
+         nullptr;
+         nullptr;
+         "Fist";
+         "DUD_Fist";
+         "FIST";
+      };
+      // WEAP1_CSAW
+      {
+         true;
+         AMMOMAX;
+         "Chops up demons real quick-like.";
+         nullptr;
+         nullptr;
+         "Chainsaw";
+         "DUD_Chainsaw";
+         "C. SAW";
+      };
+   };
+
+   // WEAP2
+   {
+      // WEAP2_PIST
+      {
+         true;
+         AMMO_CLIP;
+         "Shoots bullets.";
+         nullptr;
+         nullptr;
+         "Pistol";
+         "DUD_Pistol";
+         "PISTOL";
+      };
+   };
+
+   // WEAP3
+   {
+      // WEAP3_SHTG
+      {
+         true;
+         AMMO_SHEL;
+         "Shoots shells.";
+         nullptr;
+         nullptr;
+         "Shotgun";
+         "DUD_Shotgun";
+         "SHTGUN";
+      };
+      // WEAP3_SHT2
+      {
+         true;
+         AMMO_SHEL;
+         "Shoots two shells. Slower than the shotgun, but more\npowerful.";
+         nullptr;
+         nullptr;
+         "Super Shotgun";
+         "DUD_SuperShotgun";
+         "SHT2";
+      };
+   };
+
+   // WEAP4
+   {
+      // WEAP4_CGUN
+      {
+         true;
+         AMMO_CLIP;
+         "Shoots bullets fast.";
+         nullptr;
+         nullptr;
+         "Chaingun";
+         "DUD_Chaingun";
+         "C. GUN";
+      };
+   };
+
+   // WEAP5
+   {
+      // WEAP5_RCKT
+      {
+         true;
+         AMMO_RCKT;
+         "Shoots rockets.";
+         nullptr;
+         nullptr;
+         "Rocket Launcher";
+         "DUD_RocketLauncher";
+         "ROCKET";
+      };
+   };
+
+   // WEAP6
+   {
+      // WEAP6_PLAS
+      {
+         true;
+         AMMO_CELL;
+         "Shoots plasma fast.";
+         nullptr;
+         nullptr;
+         "Plasma Rifle";
+         "DUD_PlasmaRifle";
+         "PLASMA";
+      };
+   };
+
+   // WEAP7
+   {
+      // WEAP7_BFG9
+      {
+         true;
+         AMMO_CELL;
+         "Shoots plasma.";
+         nullptr;
+         nullptr;
+         "B.F.G. 9000";
+         "DUD_BFG9000";
+         "B.F.G.";
+      };
+   };
+};
+static dud_weapon_t *[MAX_PLAYERS][7]DUDweaponSelected;
+
+if(!DUDabilitySelected[0][0]) for(int pnum = MAX_PLAYERS; pnum--;)
+{
+   DUDabilitySelected[pnum] =
+   {
+      &DUDability[0][0];
+      &DUDability[1][0];
+      &DUDability[2][0];
+   };
+
+   DUDweaponSelected[pnum] =
+   {
+      &DUDweapon[0][0];
+      &DUDweapon[1][0];
+      &DUDweapon[2][0];
+      &DUDweapon[3][0];
+      &DUDweapon[4][0];
+      &DUDweapon[5][0];
+      &DUDweapon[6][0];
+   };
+};
+
+for(int i = 3; i--;) for(int j = ABILMAX; j--;)
+   if(!DUDability[i][j].used) DUDability[i][j].nameIco = "NONE";
+
+for(int i = 7; i--;) for(int j = WEAPMAX; j--;)
+   if(!DUDweapon[i][j].used) DUDweapon[i][j].nameIco = "NONE";
+
+
+//----------------------------------------------------------------------------|
+// Static Variables Again                                                     |
+//
+
+if(!DUDmenuAbility[0][0][0].next) for(int pnum = MAX_PLAYERS; pnum--;)
+{
+   DUDmenuAbility[pnum] =
+   {
+      ABILITY_BUTTONS(0);
+      ABILITY_BUTTONS(1);
+      ABILITY_BUTTONS(2);
+   };
+
+   DUDmenuAbility[pnum][0][(int)ABILMAX-1].next = &DUDmenuAbility[pnum][1][0];
+   DUDmenuAbility[pnum][1][(int)ABILMAX-1].next = &DUDmenuAbility[pnum][2][0];
+   DUDmenuAbility[pnum][2][(int)ABILMAX-1].next = &DUDmenuWeapon[pnum][0][0];
+
+   DUDmenuWeapon[pnum] =
+   {
+      WEAPON_BUTTONS(0);
+      WEAPON_BUTTONS(1);
+      WEAPON_BUTTONS(2);
+      WEAPON_BUTTONS(3);
+      WEAPON_BUTTONS(4);
+      WEAPON_BUTTONS(5);
+      WEAPON_BUTTONS(6);
+   };
+
+   DUDmenuWeapon[pnum][0][(int)WEAPMAX-1].next = &DUDmenuWeapon[pnum][1][0];
+   DUDmenuWeapon[pnum][1][(int)WEAPMAX-1].next = &DUDmenuWeapon[pnum][2][0];
+   DUDmenuWeapon[pnum][2][(int)WEAPMAX-1].next = &DUDmenuWeapon[pnum][3][0];
+   DUDmenuWeapon[pnum][3][(int)WEAPMAX-1].next = &DUDmenuWeapon[pnum][4][0];
+   DUDmenuWeapon[pnum][4][(int)WEAPMAX-1].next = &DUDmenuWeapon[pnum][5][0];
+   DUDmenuWeapon[pnum][5][(int)WEAPMAX-1].next = &DUDmenuWeapon[pnum][6][0];
+   DUDmenuWeapon[pnum][6][(int)WEAPMAX-1].next = NULL;
+};
+
+
+//----------------------------------------------------------------------------|
+// Static Functions                                                           |
+//
+
+__intscript DUD_clickAbility(MenuButton *button)
+{
+   __printf<__printf_log>("%s", ((dud_ability_t *)button->data)->desc);
+   button->color = button->color == CR_BRICK ? CR_GOLD : CR_BRICK;
+};
+
+__intscript DUD_clickWeapon(MenuButton *button)
+{
+   __printf<__printf_log>("%s", ((dud_weapon_t *)button->data)->desc);
+   button->color = button->color == CR_BRICK ? CR_GOLD : CR_BRICK;
+};
+
+__intscript DUD_hoverAbility(MenuButton *button)
+{
+};
+
+__intscript DUD_hoverWeapon(MenuButton *button)
+{
+};
+
+
+//----------------------------------------------------------------------------|
+// Global Functions                                                           |
+//
+
+//
+// DUD_AddWeapon
+//
+function DUD_AddWeapon(int slot, dud_weapon_e weap)
+{
+   DUDweapon[slot][(int)weap].used = true;
+};
+
+//
+// DUD_DoAmmoCap
+//
+function DUD_DoAmmoCap(int pnum)
+{
+   fixed [AMMOMAX]ammoCap = {1; 1; 1; 1;};
+
+   for (dud_ability_t **end = DUDabilitySelected[pnum] + 3,
+        itr = DUDabilitySelected[pnum]; itr != end; ++itr)
+   {
+      for (int ammo = 0; ammo < AMMOMAX; ++ammo)
+      {
+         ammoCap[ammo] += (*itr)->ammoCap[ammo];
+      };
+   };
+
+   for (int ammo = 0; ammo < AMMOMAX; ++ammo)
+   {
+      SetAmmoCapacity(DUDammo[ammo].nameDec, DUDammo[ammo].cap * ammoCap[ammo]);
+
+      int count = CheckInventory(DUDammo[ammo].nameDec);
+      TakeInventory(DUDammo[ammo].nameDec, count);
+      GiveInventory(DUDammo[ammo].nameDec, count);
+   };
+};
+
+//
+// DUD_DoAmmoRegen
+//
+__function DUD_DoAmmoRegen(int pnum)
+{
+   static int [MAX_PLAYERS][AMMOMAX]ammoCount;
+   int [AMMOMAX]ammoRegen = {};
+
+   for (dud_ability_t **end = DUDabilitySelected[pnum] + 3,
+        itr = DUDabilitySelected[pnum]; itr != end; ++itr)
+   {
+      for (int ammo = 0; ammo < AMMOMAX; ++ammo)
+      {
+         ammoRegen[ammo] += (*itr)->ammoRegen[ammo];
+      };
+   };
+
+   for (int ammo = 0; ammo < AMMOMAX; ++ammo)
+   {
+      if ((ammoCount[pnum][ammo] -= ammoRegen[ammo]) < 0)
+      {
+         ammoCount[pnum][ammo] += DUDammo[ammo].regen;
+         GiveInventory(DUDammo[ammo].nameDec, 1);
+      };
+   };
+};
+
+//
+// DUD_DoArmorRegen
+//
+__function DUD_DoArmorRegen(int pnum)
+{
+   static int [MAX_PLAYERS]armorCount;
+   int armorRegen = 0;
+
+   for (dud_ability_t **end = DUDabilitySelected[pnum] + 3,
+        itr = DUDabilitySelected[pnum]; itr != end; ++itr)
+   {
+      armorRegen += (*itr)->armorRegen;
+   };
+
+   if ((armorCount[pnum] -= armorRegen) < 0)
+   {
+      armorCount[pnum] += 35;
+      GiveInventory("ArmorBonus", 1);
+   };
+};
+
+//
+// DUD_DoHealthRegen
+//
+__function DUD_DoHealthRegen(int pnum)
+{
+   static int [MAX_PLAYERS]healthCount;
+   int healthRegen = 0;
+
+   for (dud_ability_t **end = DUDabilitySelected[pnum] + 3,
+        itr = DUDabilitySelected[pnum]; itr != end; ++itr)
+   {
+      healthRegen += (*itr)->healthRegen;
+   };
+
+   if ((healthCount[pnum] -= healthRegen) < 0)
+   {
+      healthCount[pnum] += 35;
+      GiveInventory("HealthBonus", 1);
+   };
+};
+
+//
+// DUD_DoWeaponSelect
+//
+function DUD_DoWeaponSelect(int pnum)
+{
+   for (int slot = 0; slot < 7; ++slot) for (int weap = 0; weap < WEAPMAX; ++weap)
+   {
+      dud_weapon_t const *weapon = &DUDweapon[slot][weap];
+
+      if (DUDweaponSelected[pnum][slot] == weapon)
+      {
+         if (!CheckInventory(weapon->nameDec))
+            GiveInventory(weapon->nameDec, 1);
+      }
+      else
+      {
+         if (CheckInventory(weapon->nameDec))
+            TakeInventory(weapon->nameDec, 1);
+      };
+   };
+};
+
+//
+// DUD_GetDamageFactor
+//
+__function __fixed DUD_GetDamageFactor(int pnum, dud_ammo_e ammo)
+{
+   __fixed factor = 1.0;
+
+   for (dud_ability_t **end = DUDabilitySelected[pnum] + 3,
+        itr = DUDabilitySelected[pnum]; itr != end; ++itr)
+   {
+      factor *= (*itr)->damage[ammo];
+   };
+
+   return factor;
+};
+
+//
+// DUD_GetRadiusFactor
+//
+function fixed DUD_GetRadiusFactor(int pnum, dud_ammo_e ammo)
+{
+   __fixed factor = 1.0;
+
+   for (dud_ability_t **end = DUDabilitySelected[pnum] + 3,
+        itr = DUDabilitySelected[pnum]; itr != end; ++itr)
+   {
+      factor *= (*itr)->radius[ammo];
+   };
+
+   return factor;
+};
+
+//
+// DUD_GetWSpeedFactor
+//
+function fixed DUD_GetWSpeedFactor(int pnum, dud_ammo_e ammo)
+{
+   __fixed factor = 1.0;
+
+   for (dud_ability_t **end = DUDabilitySelected[pnum] + 3,
+        itr = DUDabilitySelected[pnum]; itr != end; ++itr)
+   {
+      factor *= (*itr)->wspeed[ammo];
+   };
+
+   return factor;
+};
+
+//
+// DUD_Main
+//
+__script DUD_Main() __enter
+{
+   int pnum = PlayerNumber();
+
+   while(true)
+   {
+      if(GetPlayerInput(-1, INPUT_BUTTONS) & BT_USER1)
+      {
+         if(!(GetPlayerInput(-1, INPUT_OLDBUTTONS) & BT_USER1))
+         {
+            SetPlayerProperty(0, true, PROP_TOTALLYFROZEN);
+            DU_MenuBegin(&DUDmenu[pnum]);
+         }
+         else
+         {
+            DU_MenuRun(&DUDmenu[pnum]);
+         };
+      }
+      else
+      {
+         if(GetPlayerInput(-1, INPUT_OLDBUTTONS) & BT_USER1)
+         {
+            SetPlayerProperty(0, false, PROP_TOTALLYFROZEN);
+            DU_MenuEnd(&DUDmenu[pnum]);
+         }
+         else
+         {
+            // Apply selected abilities.
+
+            DUD_DoAmmoCap(pnum);
+            DUD_DoAmmoRegen(pnum);
+            DUD_DoArmorRegen(pnum);
+            DUD_DoHealthRegen(pnum);
+            DUD_DoWeaponSelect(pnum);
+         };
+      };
+
+      Delay(1);
+   };
+};
+
+// EOF
+

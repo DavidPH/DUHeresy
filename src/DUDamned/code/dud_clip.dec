@@ -1,0 +1,114 @@
+//-----------------------------------------------------------------------------
+//
+// Copyright(C) 2012 David Hill
+//
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program; if not, see <http://www.gnu.org/licenses/>.
+//
+//-----------------------------------------------------------------------------
+//
+// Clip weapon actors.
+//
+//-----------------------------------------------------------------------------
+
+
+//----------------------------------------------------------------------------|
+// Types                                                                      |
+//
+
+// Replace Chaingun with ClipBox.
+actor DUD_ChaingunAmmo : RandomSpawner replaces Chaingun {DropItem "ClipBox"}
+
+// Replace Pistol with Clip.
+actor DUD_PistolAmmo : RandomSpawner replaces Pistol {DropItem "Clip"}
+
+//
+// DUD_Chaingun
+//
+actor DUD_Chaingun : Chaingun
+{
+   AttackSound "weapons/chngun"
+
+   Weapon.AmmoGive1 0
+   Weapon.AmmoType2 "Clip"
+   Weapon.AmmoUse2 1
+
+   states
+   {
+   Fire:
+      CHGG A  0 A_GunFlash
+      CHGG AB 4 A_FireBullets(7.5, 7.5, -1, ACS_ExecuteWithResult(DUD_ChaingunDamage), "BulletPuff")
+      CHGG B  0 A_ReFire
+      goto Ready
+
+   AltFire:
+      CHGG A  0 A_CheckReload
+      CHGG A  0 A_GunFlash
+      CHGG AB 3 A_FireBullets(7.5, 7.5, -1, ACS_ExecuteWithResult(DUD_ChaingunDamage), "BulletPuff")
+      CHGG B  0 A_ReFire
+      CHGG B  0 A_Jump(192, "AltFire")
+      goto Ready
+
+   Flash:
+      CHGF A 3 bright A_Light1
+      TNT1 A 2
+      CHGF B 2 bright A_Light1
+      goto LightDone
+
+   AltFlash:
+      CHGF A 3 bright A_Light1
+      TNT1 A 1
+      CHGF B 2 bright A_Light1
+      goto LightDone
+   }
+}
+
+//
+// DUD_Pistol
+//
+actor DUD_Pistol : Pistol
+{
+   AttackSound "weapons/pistol"
+
+   Weapon.AmmoGive1 0
+   Weapon.AmmoType2 "Clip"
+   Weapon.AmmoUse2 1
+
+   states
+   {
+   Fire:
+      PISG A 4
+      PISG B 0 A_FireBullets(5.0, 5.0, 1, ACS_ExecuteWithResult(DUD_PistolDamage), "BulletPuff")
+      PISG B 6 A_GunFlash
+      PISG C 4
+      PISG B 5 A_ReFire
+      goto Ready
+
+   AltFire:
+      PISG A 1
+   AltHold:
+      PISG B 0 A_FireBullets(7.5, 7.5, -1, ACS_ExecuteWithResult(DUD_PistolDamage), "BulletPuff")
+      PISG B 4 A_GunFlash
+      PISG C 3
+      PISG B 5 A_ReFire
+      goto Ready
+
+   Flash:
+   AltFlash:
+      PISF A 3 bright A_Light1
+      goto LightDone
+   }
+}
+
+// EOF
+
