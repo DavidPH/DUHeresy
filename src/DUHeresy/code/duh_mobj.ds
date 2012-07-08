@@ -29,6 +29,15 @@
 //
 
 //
+// DUH_DSparilDeath
+//
+script DUH_DSparilDeath()
+{
+   if(!ThingCount(T_DSPARILALONE))
+      Floor_LowerToNearest(666, 1);
+};
+
+//
 // DUH_RaiseThingDelayed
 //
 script DUH_RaiseThingDelayed(int delay)

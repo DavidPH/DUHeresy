@@ -68,7 +68,7 @@ actor DUH_DSparil : Sorcerer2 replaces Sorcerer2
       SDTH J 6 A_NoBlocking
       SDTH K 6 A_PlaySoundEx("dsparil/bones", "Body")
       SDTH LMN 6
-      SDTH O 6 A_BossDeath
+      SDTH O 6 ACS_ExecuteWithResult(DUH_DSparilDeath)
       SDTH O -1 ACS_ExecuteAlways(DUH_RaiseThingDelayed,0, random(175, 350))
       stop
 

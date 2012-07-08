@@ -24,7 +24,7 @@
 #ifndef DU_MENU_DH__
 #define DU_MENU_DH__
 
-#include "zcommon.dh"
+#include <zcommon.acs>
 
 
 //----------------------------------------------------------------------------|

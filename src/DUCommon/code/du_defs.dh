@@ -24,7 +24,7 @@
 #ifndef DU_DEFS_DH__
 #define DU_DEFS_DH__
 
-#include "zcommon.dh"
+#include <zcommon.acs>
 
 #include "du_defs.dec"
 
