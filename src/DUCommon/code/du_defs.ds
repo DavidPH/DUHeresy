@@ -133,7 +133,11 @@ function DU_MakeTID() -> int
 {
    static int tid;
 
-   while (ThingCount(0, ++tid)) (tid &= 0x7FFFFFFF);
+   do
+   {
+      if(++tid <= 0) tid = 1;
+   }
+   while(ClassifyActor(0, tid));
 
    return tid;
 };
