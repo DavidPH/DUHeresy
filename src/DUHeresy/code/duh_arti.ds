@@ -63,6 +63,7 @@ script DU_ArtifactReady(int frames)
       if (!tid) Thing_ChangeTID(0, tid = DU_MakeTID());
 
       inv_count = CheckInventory("ArtiEgg");
+      if(inv_count > 256) inv_count = 256;
       if (inv_count && !(tic % ((35 * 256) / inv_count)))
          SpawnForced("DUH_ChickenFriend", GetActorX(0), GetActorY(0),
                      GetActorZ(0), 0, GetActorAngle(0)*256);
@@ -71,14 +72,17 @@ script DU_ArtifactReady(int frames)
       SetActorPropertyFixed(0, APROP_JumpZ, inv_count + 8.0);
 
       inv_count = CheckInventory("ArtiHealth");
+      if(inv_count > 35 * 4) inv_count = 35 * 4;
       if (inv_count && !(tic % ((35 * 4) / inv_count)))
          GiveInventory("Health", 1);
 
       inv_count = CheckInventory("ArtiInvisibility");
+      if(inv_count > 35 * 8) inv_count = 35 * 8;
       if (inv_count && !(tic % ((35 * 8) / inv_count)))
          GiveInventory("DUH_ArmorBonus", 1);
 
       inv_count = CheckInventory("ArtiInvulnerability");
+      if(inv_count > 35 * 1) inv_count = 35 * 1;
       if (inv_count && !(tic % ((35 * 1) / inv_count)))
          GiveInventory("DUH_ArmorBonus", 1);
 
@@ -86,13 +90,16 @@ script DU_ArtifactReady(int frames)
       SetActorProperty(0, APROP_SpawnHealth, inv_count * 25);
 
       inv_count = CheckInventory("ArtiTeleport");
+      if(inv_count > 16) inv_count = 16;
       SetActorPropertyFixed(0, APROP_Speed, (inv_count / 10.0) + 1.0);
 
       inv_count = CheckInventory("ArtiTimeBomb");
+      if(inv_count > 35 * 16) inv_count = 35 * 16;
       if (inv_count && !(tic % ((35 * 16) / inv_count)))
          SpawnProjectile(tid, "DUH_TimeBombAura", 0, 0, 0, 0, 0);
 
       inv_count = CheckInventory("ArtiTomeOfPower") + 4;
+      if(inv_count > 65536) inv_count = 65536;
       DUH_artifactTomeReady(DUHelvenWandAmmo,  inv_count *  50);
       DUH_artifactTomeReady(DUHcrossbowAmmo,   inv_count *  25);
       DUH_artifactTomeReady(DUHdragonClawAmmo, inv_count * 100);
@@ -101,6 +108,7 @@ script DU_ArtifactReady(int frames)
       DUH_artifactTomeReady(DUHfiremaceAmmo,   inv_count *  75);
 
       inv_count = CheckInventory("ArtiTorch");
+      if(inv_count > 64) inv_count = 64;
       if (inv_count && !(tic % ((35 * 64) / inv_count)))
          GiveInventory("ArtiTorch", 1);
 

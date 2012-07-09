@@ -63,6 +63,7 @@ actor DUH_BagOfHolding : CustomInventory replaces BagOfHolding
 //
 actor DUH_ChickenFriend : Chicken
 {
+   Damage 0
    Health 300
    Speed 8
 
@@ -77,6 +78,7 @@ actor DUH_ChickenFriend : Chicken
       goto Spawn
 
    See:
+      CHKN C 0 A_CustomMeleeAttack(random[ChicAttack](5,9))
       CHKN AABB 1 A_Chase
       TNT1 A 0 ACS_ExecuteAlways(DUH_ChickenFriendCountdown,0, 4)
       goto See
@@ -92,6 +94,14 @@ actor DUH_ChickenFriend : Chicken
       CHKN A 8 A_FaceTarget
       CHKN C 10 A_CustomMeleeAttack(random[ChicAttack](5,9))
       goto See
+
+   Missile:
+      CHKN A 0 ThrustThingZ(0, 64, false, true)
+      CHKN A 0 A_Feathers
+      CHKN A 8 A_FaceTarget
+      CHKN C 0 A_Feathers
+      CHKN C 2 A_SkullAttack
+      goto Missile+3
    }
 }
 
