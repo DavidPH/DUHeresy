@@ -96,7 +96,7 @@ function int DU_FireMissile(int shooter, str name, int damage, fixed angle,
    // Set twice for hacky avoidance of the floor.
    SetActorPosition(tid, x, y, z+16, false);
    SetActorPosition(tid, x, y, z, false);
-   SetActorVelocity(tid, velx, vely, velz);
+   DU_SetActorVelocity(tid, velx, vely, velz);
 
    SetActorAngle(tid, angle);
    SetActorPitch(tid, pitch);
@@ -137,9 +137,29 @@ function DU_MakeTID() -> int
    {
       if(++tid <= 0) tid = 1;
    }
-   while(ClassifyActor(0, tid));
+   while(ClassifyActor(tid));
 
    return tid;
+};
+
+//
+// DU_SetActorVelocity
+//
+function DU_SetActorVelocity(int tid, fixed velx, fixed vely, fixed velz)
+{
+   __linespec ACS_ExecuteAlwaysFixed(int, int, fixed, fixed, fixed) @ 226;
+
+   script SetClientVelocity(fixed velx, fixed vely, fixed velz) __clientside
+      SetActorVelocity(0, velx, vely, velz);
+
+   int oldtid = ActivatorTID();
+
+   SetActivator(tid);
+
+   SetActorVelocity(0, velx, vely, velz);
+   ACS_ExecuteAlwaysFixed((int)SetClientVelocity,0, velx, vely, velz);
+
+   SetActivator(oldtid);
 };
 
 //

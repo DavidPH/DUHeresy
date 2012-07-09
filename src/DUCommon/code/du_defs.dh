@@ -65,6 +65,8 @@ extern function DU_GetInventoryFixed(int tid, str inv) -> fixed;
 
 extern function DU_MakeTID() -> int;
 
+extern function DU_SetActorVelocity(int tid, fixed x, fixed y, fixed z);
+
 extern function DU_SetInventoryFixed(int tid, str inv, fixed val);
 
 extern script DU_WeaponReady(int frames, int *tics, str ammo, int multiplier);
