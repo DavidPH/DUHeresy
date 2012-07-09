@@ -69,6 +69,7 @@ script DU_ArtifactReady(int frames)
                      GetActorZ(0), 0, GetActorAngle(0)*256);
 
       inv_count = CheckInventory("ArtiFly");
+      if(inv_count > 0x7FFF - 8) inv_count = 0x7FFF - 8;
       SetActorPropertyFixed(0, APROP_JumpZ, inv_count + 8.0);
 
       inv_count = CheckInventory("ArtiHealth");
@@ -87,6 +88,7 @@ script DU_ArtifactReady(int frames)
          GiveInventory("DUH_ArmorBonus", 1);
 
       inv_count = CheckInventory("ArtiSuperHealth") + 4;
+      if(inv_count > 0x7FFFFFFF / 25) inv_count = 0x7FFFFFFF / 25;
       SetActorProperty(0, APROP_SpawnHealth, inv_count * 25);
 
       inv_count = CheckInventory("ArtiTeleport");

@@ -26,7 +26,7 @@
 // Global Variables                                                           |
 //
 
-const int MAX_PLAYERS = 8;
+const int MAX_PLAYERS = 32;
 
 // EOF
 
