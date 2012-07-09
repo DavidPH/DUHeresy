@@ -39,7 +39,7 @@ actor DUH_Gauntlets : Gauntlets replaces Gauntlets
    {
    Ready:
       GAUN A 1 A_WeaponReady
-      TNT1 A 0 ACS_ExecuteAlways(DU_ArtifactReady,0, 1)
+      TNT1 A 0 ACS_ExecuteAlways(DUH_ArtifactReady,0, 1)
       goto Ready
 
    Fire:
@@ -56,7 +56,7 @@ actor DUH_Gauntlets : Gauntlets replaces Gauntlets
       GAUN B 4 A_Light2
       GAUN C 4
    AltHold:
-      TNT1 AAAA 0 ACS_ExecuteAlways(DU_ArtifactReady,0, 12)
+      TNT1 AAAA 0 ACS_ExecuteAlways(DUH_ArtifactReady,0, 12)
       GAUN DEF 4
       GAUN C 4 A_ReFire
       GAUN B 4 A_Light0
@@ -77,18 +77,18 @@ actor DUH_GauntletsPowered : DUH_Gauntlets replaces GauntletsPowered
    {
    Ready:
       GAUN GGGG 1 A_WeaponReady
-      TNT1 A 0 ACS_ExecuteAlways(DU_ArtifactReady,0, 4)
+      TNT1 A 0 ACS_ExecuteAlways(DUH_ArtifactReady,0, 4)
       GAUN HHHH 1 A_WeaponReady
-      TNT1 A 0 ACS_ExecuteAlways(DU_ArtifactReady,0, 4)
+      TNT1 A 0 ACS_ExecuteAlways(DUH_ArtifactReady,0, 4)
       GAUN IIII 1 A_WeaponReady
-      TNT1 A 0 ACS_ExecuteAlways(DU_ArtifactReady,0, 4)
+      TNT1 A 0 ACS_ExecuteAlways(DUH_ArtifactReady,0, 4)
       goto Ready
 
    Fire:
       GAUN J 4 A_PlayWeaponSound("weapons/gauntletsuse")
       GAUN K 4
    Hold:
-      TNT1 A 0 ACS_ExecuteAlways(DU_ArtifactReady,0, 12)
+      TNT1 A 0 ACS_ExecuteAlways(DUH_ArtifactReady,0, 12)
       GAUN LL 2 BRIGHT A_GauntletAttack(1)
       GAUN MMNN 2 BRIGHT A_GauntletAttack(0)
       GAUN K 4 A_ReFire
@@ -99,7 +99,7 @@ actor DUH_GauntletsPowered : DUH_Gauntlets replaces GauntletsPowered
       GAUN J 4 A_Light2
       GAUN K 4
    AltHold:
-      TNT1 AAAAAAAA 0 ACS_ExecuteAlways(DU_ArtifactReady,0, 12)
+      TNT1 AAAAAAAA 0 ACS_ExecuteAlways(DUH_ArtifactReady,0, 12)
       GAUN LMN 4
       GAUN K 4 A_ReFire
       GAUN J 4 A_Light0

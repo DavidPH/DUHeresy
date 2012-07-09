@@ -21,6 +21,8 @@
 //
 //-----------------------------------------------------------------------------
 
+#include "duh_arti.dh"
+
 #include "du_defs.dh"
 
 
@@ -93,7 +95,7 @@ script DUH_PhoenixRodReady(int frames)
 {
    static int[MAX_PLAYERS] tics;
 
-   DU_WeaponReady(frames, tics, DUHphoenixRodAmmo, 10);
+   DUH_WeaponReady(frames, tics, DUHphoenixRodAmmo, 10);
 };
 
 // EOF

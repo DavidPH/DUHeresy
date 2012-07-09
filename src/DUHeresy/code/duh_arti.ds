@@ -21,6 +21,8 @@
 //
 //-----------------------------------------------------------------------------
 
+#include "duh_arti.dh"
+
 #include "du_defs.dh"
 
 
@@ -47,9 +49,22 @@ __function DUH_artifactTomeReady(str ammo, int cap)
 //
 
 //
-// DU_ArtifactReady
+// DUH_AmmoReady
 //
-script DU_ArtifactReady(int frames)
+function DUH_AmmoReady(int tic, str ammo, int mul)
+{
+   int ammo_count = CheckInventory(ammo);
+   int ammo_limit = GetAmmoCapacity(ammo) * mul;
+   int period;
+
+   period = ammo_count ? ammo_limit / ammo_count : ammo_limit;
+   if(!period || !(tic % period)) GiveInventory(ammo, 1);
+};
+
+//
+// DUH_ArtifactReady
+//
+script DUH_ArtifactReady(int frames)
 {
    static int[MAX_PLAYERS] tics;
 
@@ -114,12 +129,12 @@ script DU_ArtifactReady(int frames)
       if (inv_count && !(tic % ((35 * 64) / inv_count)))
          GiveInventory("ArtiTorch", 1);
 
-      DU_AmmoReady(tic, DUHelvenWandAmmo,   20);
-      DU_AmmoReady(tic, DUHcrossbowAmmo,    30);
-      DU_AmmoReady(tic, DUHdragonClawAmmo,  40);
-      DU_AmmoReady(tic, DUHhellstaffAmmo,   50);
-      DU_AmmoReady(tic, DUHphoenixRodAmmo, 100);
-      DU_AmmoReady(tic, DUHfiremaceAmmo,   200);
+      DUH_AmmoReady(tic, DUHelvenWandAmmo,   20);
+      DUH_AmmoReady(tic, DUHcrossbowAmmo,    30);
+      DUH_AmmoReady(tic, DUHdragonClawAmmo,  40);
+      DUH_AmmoReady(tic, DUHhellstaffAmmo,   50);
+      DUH_AmmoReady(tic, DUHphoenixRodAmmo, 100);
+      DUH_AmmoReady(tic, DUHfiremaceAmmo,   200);
 
       if (frames) Delay(1);
    };
@@ -136,6 +151,21 @@ script DUH_ChickenFriendCountdown(int frames)
    {
       TakeInventory("DUH_ChickenFriendCounter", 35);
       DamageThing(1, 0);
+   };
+};
+
+//
+// DUH_WeaponReady
+//
+script DUH_WeaponReady(int frames, int *tics, str ammo, int multiplier)
+{
+   DUH_ArtifactReady(frames);
+
+   while(frames--)
+   {
+      DUH_AmmoReady(++tics[PlayerNumber()], ammo, multiplier);
+
+      if(frames) Delay(1);
    };
 };
 

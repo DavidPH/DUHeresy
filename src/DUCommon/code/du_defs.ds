@@ -43,16 +43,6 @@ function DU_AbsFixed(fixed f) -> fixed
    return f < 0 ? -f : f;
 };
 
-function DU_AmmoReady(int tic, str ammo, int mul)
-{
-   int ammo_count = CheckInventory(ammo);
-   int ammo_limit = GetAmmoCapacity(ammo) * mul;
-   int period;
-
-   period = ammo_count ? ammo_limit / ammo_count : ammo_limit;
-   if (!(tic % period)) GiveInventory(ammo, 1);
-};
-
 //
 // DU_FireMissile
 //
@@ -183,21 +173,6 @@ function DU_SetInventoryFixed(int tid, str inv, fixed val)
    {
       TakeInventory(inv, 0x7FFFFFFF);
       GiveInventory(inv, u.i);
-   };
-};
-
-//
-// DU_WeaponReady
-//
-script DU_WeaponReady(int frames, int *tics, str ammo, int multiplier)
-{
-   DU_ArtifactReady(frames);
-
-   while (frames--)
-   {
-      DU_AmmoReady(++tics[PlayerNumber()], ammo, multiplier);
-
-      if (frames) Delay(1);
    };
 };
 

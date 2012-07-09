@@ -37,26 +37,10 @@
 
 
 //----------------------------------------------------------------------------|
-// Global Variables                                                           |
-//
-
-constexpr str DUHelvenWandAmmo  = "GoldWandAmmo";
-constexpr str DUHcrossbowAmmo   = "CrossbowAmmo";
-constexpr str DUHdragonClawAmmo = "BlasterAmmo";
-constexpr str DUHhellstaffAmmo  = "SkullRodAmmo";
-constexpr str DUHphoenixRodAmmo = "PhoenixRodAmmo";
-constexpr str DUHfiremaceAmmo   = "MaceAmmo";
-
-
-//----------------------------------------------------------------------------|
 // Global Functions                                                           |
 //
 
 extern function DU_AbsFixed(fixed f) -> fixed;
-
-extern function DU_AmmoReady(int tic, str ammo, int mul);
-
-extern script DU_ArtifactReady(int frames);
 
 extern function DU_FireMissile(int shooter, str name, int damage, fixed angle,
                                fixed pitch, fixed speed) -> int;
@@ -68,8 +52,6 @@ extern function DU_MakeTID() -> int;
 extern function DU_SetActorVelocity(int tid, fixed x, fixed y, fixed z);
 
 extern function DU_SetInventoryFixed(int tid, str inv, fixed val);
-
-extern script DU_WeaponReady(int frames, int *tics, str ammo, int multiplier);
 
 #endif//DU_DEFS_DH__
 

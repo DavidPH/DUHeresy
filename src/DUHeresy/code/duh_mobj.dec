@@ -59,6 +59,26 @@ actor DUH_DSparil : Sorcerer2 replaces Sorcerer2
 
    states
    {
+   Melee:
+      SOR2 R 3 A_Srcr2Decide
+      SOR2 R 3 A_Srcr2Decide
+      SOR2 R 3 A_Srcr2Decide
+      SOR2 S 9 A_FaceTarget
+      SOR2 T 9 A_CustomMeleeAttack(20 * random(1, 8), "dsparil/attack")
+      goto See
+
+   Missile:
+      SOR2 R 9 A_Srcr2Decide
+      SOR2 S 9 A_FaceTarget
+      SOR2 T 9 A_Srcr2Attack
+      goto See
+
+   Pain:
+      SOR2 Q 3
+      SOR2 Q 3 A_Srcr2Decide
+      SOR2 Q 3 A_Pain
+      goto See
+
    Death:
       SDTH AB 8
       SDTH C 8 A_PlaySoundEx("dsparil/scream", "Body")

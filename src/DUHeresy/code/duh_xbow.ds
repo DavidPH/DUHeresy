@@ -21,6 +21,8 @@
 //
 //-----------------------------------------------------------------------------
 
+#include "duh_arti.dh"
+
 #include "du_defs.dh"
 
 
@@ -66,7 +68,7 @@ script DUH_CrossbowReady(int frames)
 {
    static int[MAX_PLAYERS] tics;
 
-   DU_WeaponReady(frames, tics, DUHcrossbowAmmo, 3);
+   DUH_WeaponReady(frames, tics, DUHcrossbowAmmo, 3);
 };
 
 // EOF

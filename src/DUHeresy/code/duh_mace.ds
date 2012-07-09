@@ -21,6 +21,8 @@
 //
 //-----------------------------------------------------------------------------
 
+#include "duh_arti.dh"
+
 #include "du_defs.dh"
 
 
@@ -83,7 +85,7 @@ script DUH_FiremaceReady(int frames)
 {
    static int[MAX_PLAYERS] tics;
 
-   DU_WeaponReady(frames, tics, DUHfiremaceAmmo, 20);
+   DUH_WeaponReady(frames, tics, DUHfiremaceAmmo, 20);
 };
 
 // EOF

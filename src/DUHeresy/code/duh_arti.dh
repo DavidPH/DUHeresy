@@ -1,4 +1,4 @@
-//DS---------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
 //
 // Copyright(C) 2012 David Hill
 //
@@ -17,43 +17,37 @@
 //
 //-----------------------------------------------------------------------------
 //
-// Dragon Claw functions.
+// Artifact functions.
 //
 //-----------------------------------------------------------------------------
 
-#include "duh_arti.dh"
+#ifndef DU_DUH_ARTI__
+#define DU_DUH_ARTI__
 
-#include "du_defs.dh"
+#include <zcommon.acs>
+
+
+//----------------------------------------------------------------------------|
+// Global Variables                                                           |
+//
+
+constexpr str DUHelvenWandAmmo  = "GoldWandAmmo";
+constexpr str DUHcrossbowAmmo   = "CrossbowAmmo";
+constexpr str DUHdragonClawAmmo = "BlasterAmmo";
+constexpr str DUHhellstaffAmmo  = "SkullRodAmmo";
+constexpr str DUHphoenixRodAmmo = "PhoenixRodAmmo";
+constexpr str DUHfiremaceAmmo   = "MaceAmmo";
 
 
 //----------------------------------------------------------------------------|
 // Global Functions                                                           |
 //
 
-//
-// DUH_DragonClawDamage
-//
-script DUH_DragonClawDamage(bool useammo) -> int
-{
-   int ammo_count = CheckInventory(DUHdragonClawAmmo);
-   int ammo_usage = (ammo_count / 100) + 1;
-   int damage = (ammo_count / 50) + ammo_usage + 5;
+extern function DUH_AmmoReady(int tic, str ammo, int mul);
 
-   if (useammo)
-      TakeInventory(DUHdragonClawAmmo, ammo_usage);
+extern script DUH_ArtifactReady(int frames);
 
-   return damage;
-};
+extern script DUH_WeaponReady(int frames, int *tics, str ammo, int multiplier);
 
-//
-// DUH_DragonClawReady
-//
-script DUH_DragonClawReady(int frames)
-{
-   static int[MAX_PLAYERS] tics;
-
-   DUH_WeaponReady(frames, tics, DUHdragonClawAmmo, 4);
-};
-
-// EOF
+#endif//DU_DUH_ARTI__
 
