@@ -31,7 +31,7 @@
 //
 // DUD_ChaingunDamage
 //
-script int DUD_ChaingunDamage()
+__extscript "ACS" int DUD_ChaingunDamage()
 {
    return 5 * DUD_GetDamageFactor(PlayerNumber(), AMMO_CLIP);
 };
@@ -39,7 +39,7 @@ script int DUD_ChaingunDamage()
 //
 // DUD_FireBFG
 //
-script void DUD_FireBFG()
+__extscript "ACS" void DUD_FireBFG()
 {
    int damage = 100 * DUD_GetDamageFactor(PlayerNumber(), AMMO_CELL);
    int wspeed =  25 * DUD_GetWSpeedFactor(PlayerNumber(), AMMO_CELL);
@@ -52,7 +52,7 @@ script void DUD_FireBFG()
 //
 // DUD_FirePlasma
 //
-script void DUD_FirePlasma()
+__extscript "ACS" void DUD_FirePlasma()
 {
    int damage =  5 * DUD_GetDamageFactor(PlayerNumber(), AMMO_CELL);
    int wspeed = 25 * DUD_GetWSpeedFactor(PlayerNumber(), AMMO_CELL);
@@ -65,7 +65,7 @@ script void DUD_FirePlasma()
 //
 // DUD_PistolDamage
 //
-script int DUD_PistolDamage()
+__extscript "ACS" int DUD_PistolDamage()
 {
    return 10 * DUD_GetDamageFactor(PlayerNumber(), AMMO_CLIP);
 };
@@ -73,7 +73,7 @@ script int DUD_PistolDamage()
 //
 // DUD_RocketLuancherFire
 //
-script void DUD_RocketLauncherFire()
+__extscript "ACS" void DUD_RocketLauncherFire()
 {
    int damage =  20 * DUD_GetDamageFactor(PlayerNumber(), AMMO_RCKT);
    int radius = 128 * DUD_GetRadiusFactor(PlayerNumber(), AMMO_RCKT);
@@ -90,7 +90,7 @@ script void DUD_RocketLauncherFire()
 //
 // DUD_ShotgunPellets
 //
-script int DUD_ShotgunPellets(int base)
+__extscript "ACS" int DUD_ShotgunPellets(int base)
 {
    return base * DUD_GetDamageFactor(PlayerNumber(), AMMO_SHEL);
 };

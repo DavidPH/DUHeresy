@@ -110,10 +110,13 @@ __intern script DUD_hoverWeapon(MenuButton *button);
 __intvar static MenuButton[MAX_PLAYERS][3][ABILMAX] DUDmenuAbility;
 __intvar static MenuButton[MAX_PLAYERS][7][WEAPMAX] DUDmenuWeapon;
 
+__intvar static MenuText[MAX_PLAYERS] DUDmenuName;
+__intvar static MenuText[MAX_PLAYERS] DUDmenuDesc;
+
 __intvar static Menu[MAX_PLAYERS] DUDmenu;
 
 if (!DUDmenu[0].w) for (int pnum = MAX_PLAYERS; pnum--;)
-   DUDmenu[pnum] = {640; 400; "CONFONT"; &DUDmenuAbility[pnum][0][0]; NULL; NULL;};
+   DUDmenu[pnum] = {640; 400; "CONFONT"; &DUDmenuAbility[pnum][0][0]; NULL; &DUDmenuName[pnum];};
 
 
 //----------------------------------------------------------------------------|
@@ -517,6 +520,7 @@ for(int i = 7; i--;) for(int j = WEAPMAX; j--;)
 
 if(!DUDmenuAbility[0][0][0].next) for(int pnum = MAX_PLAYERS; pnum--;)
 {
+   // Abilities menu stuff.
    DUDmenuAbility[pnum] =
    {
       ABILITY_BUTTONS(0);
@@ -528,6 +532,11 @@ if(!DUDmenuAbility[0][0][0].next) for(int pnum = MAX_PLAYERS; pnum--;)
    DUDmenuAbility[pnum][1][(int)ABILMAX-1].next = &DUDmenuAbility[pnum][2][0];
    DUDmenuAbility[pnum][2][(int)ABILMAX-1].next = &DUDmenuWeapon[pnum][0][0];
 
+   DUDmenuAbility[pnum][0][0].color = CR_GOLD;
+   DUDmenuAbility[pnum][1][0].color = CR_GOLD;
+   DUDmenuAbility[pnum][2][0].color = CR_GOLD;
+
+   // Weapons menu stuff.
    DUDmenuWeapon[pnum] =
    {
       WEAPON_BUTTONS(0);
@@ -546,6 +555,18 @@ if(!DUDmenuAbility[0][0][0].next) for(int pnum = MAX_PLAYERS; pnum--;)
    DUDmenuWeapon[pnum][4][(int)WEAPMAX-1].next = &DUDmenuWeapon[pnum][5][0];
    DUDmenuWeapon[pnum][5][(int)WEAPMAX-1].next = &DUDmenuWeapon[pnum][6][0];
    DUDmenuWeapon[pnum][6][(int)WEAPMAX-1].next = NULL;
+
+   DUDmenuWeapon[pnum][0][0].color = CR_GOLD;
+   DUDmenuWeapon[pnum][1][0].color = CR_GOLD;
+   DUDmenuWeapon[pnum][2][0].color = CR_GOLD;
+   DUDmenuWeapon[pnum][3][0].color = CR_GOLD;
+   DUDmenuWeapon[pnum][4][0].color = CR_GOLD;
+   DUDmenuWeapon[pnum][5][0].color = CR_GOLD;
+   DUDmenuWeapon[pnum][6][0].color = CR_GOLD;
+
+   // Miscellaneous menu stuff.
+   DUDmenuName[pnum] = {0; MENUBOX_H * 6 +  8; NULL; CR_BRICK; &DUDmenuDesc[pnum];};
+   DUDmenuDesc[pnum] = {0; MENUBOX_H * 6 + 24; NULL; CR_BRICK; NULL;};
 };
 
 
@@ -555,22 +576,58 @@ if(!DUDmenuAbility[0][0][0].next) for(int pnum = MAX_PLAYERS; pnum--;)
 
 __intscript DUD_clickAbility(MenuButton *button)
 {
-   __printf<__printf_log>("%s", ((dud_ability_t *)button->data)->desc);
-   button->color = button->color == CR_BRICK ? CR_GOLD : CR_BRICK;
+   int pnum = PlayerNumber(), slot;
+
+   dud_ability_t  *ability = (dud_ability_t *)button->data;
+   dud_ability_t **select;
+
+   // Figure out which slot number this ability is for.
+   for(slot = 0; ability >= &DUDability[slot+1][0]; ++slot);
+
+   select = &DUDabilitySelected[pnum][slot];
+
+   // Clear old ability's button.
+   DUDmenuAbility[pnum][slot][*select - &DUDability[slot][0]].color = CR_BRICK;
+
+   // Make this button's ability selected.
+   button->color = CR_GOLD;
+   *select = ability;
 };
 
 __intscript DUD_clickWeapon(MenuButton *button)
 {
-   __printf<__printf_log>("%s", ((dud_weapon_t *)button->data)->desc);
-   button->color = button->color == CR_BRICK ? CR_GOLD : CR_BRICK;
+   int pnum = PlayerNumber(), slot;
+
+   dud_weapon_t  *weapon = (dud_weapon_t *)button->data;
+   dud_weapon_t **select;
+
+   // Figure out which slot number this weapon is for.
+   for(slot = 0; weapon >= &DUDweapon[slot+1][0]; ++slot);
+
+   select = &DUDweaponSelected[pnum][slot];
+
+   // Clear old weapon's button.
+   DUDmenuWeapon[pnum][slot][*select - &DUDweapon[slot][0]].color = CR_BRICK;
+
+   // Make this button's ability selected.
+   button->color = CR_GOLD;
+   *select = weapon;
 };
 
 __intscript DUD_hoverAbility(MenuButton *button)
 {
+   int pnum = PlayerNumber();
+
+   DUDmenuName[pnum].txt = ((dud_ability_t *)button->data)->name;
+   DUDmenuDesc[pnum].txt = ((dud_ability_t *)button->data)->desc;
 };
 
 __intscript DUD_hoverWeapon(MenuButton *button)
 {
+   int pnum = PlayerNumber();
+
+   DUDmenuName[pnum].txt = ((dud_weapon_t *)button->data)->name;
+   DUDmenuDesc[pnum].txt = ((dud_weapon_t *)button->data)->desc;
 };
 
 
@@ -754,7 +811,7 @@ function fixed DUD_GetWSpeedFactor(int pnum, dud_ammo_e ammo)
 //
 // DUD_Main
 //
-__script DUD_Main() __enter
+__extscript "ACS" DUD_Main() __enter
 {
    int pnum = PlayerNumber();
 
