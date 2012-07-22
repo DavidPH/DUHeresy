@@ -4,7 +4,7 @@ set -e
 
 cd "$(dirname "$0")"
 
-rm -rf build/temp build/DUHeresy.pk7
+rm -rf build/temp build/DUDamned.pk7 build/DUHeresy.pk7 build/DUMagick.pk7
 mkdir build/temp
 mkdir build/temp/DU
 mkdir build/temp/DU/ACS
