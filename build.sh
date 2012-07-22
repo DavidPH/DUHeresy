@@ -85,7 +85,9 @@ compile_script_duh duh_prod
 compile_script_duh duh_wand
 compile_script_duh duh_xbow
 
+compile_script_dum dum_main
 compile_script_dum dum_spel
+compile_script_dum dum_stan
 
 
 # DUDamned.pk7

@@ -1,0 +1,144 @@
+//DS---------------------------------------------------------------------------
+//
+// Copyright(C) 2012 David Hill
+//
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program; if not, see <http://www.gnu.org/licenses/>.
+//
+//-----------------------------------------------------------------------------
+//
+// Top-level menu driver and input handler.
+//
+//-----------------------------------------------------------------------------
+
+#include "dum_spel.dh"
+#include "dum_stan.dh"
+
+
+//----------------------------------------------------------------------------|
+// Types                                                                      |
+//
+
+//
+// MenuState
+//
+enum MenuState
+{
+   MS_NONE,
+   MS_HUD,
+   MS_SPELL,
+   MS_STANCE,
+};
+
+
+//----------------------------------------------------------------------------|
+// Global Functions                                                           |
+//
+
+//
+// DUM_MainMenu
+//
+script DUM_MainMenu() __enter
+{
+   int buttons, oldbuttons, newbuttons = 0;
+   int pnum = PlayerNumber();
+   MenuState ms = MS_HUD;
+
+   if(pnum < 0) return;
+
+   while(true)
+   {
+      oldbuttons = newbuttons;
+      newbuttons = GetPlayerInput(pnum, INPUT_BUTTONS);
+      buttons = newbuttons & ~oldbuttons;
+
+      switch(ms)
+      {
+      case MS_NONE:
+         break;
+
+      case MS_HUD:
+         if(buttons & BT_USER1)
+         {
+            SetPlayerProperty(0, true, PROP_TOTALLYFROZEN);
+
+            switch(PlayerClass(pnum))
+            {
+            case CLASS_FIGHTER:
+               ms = MS_STANCE;
+               break;
+
+            case CLASS_CLERIC:
+            case CLASS_MAGE:
+               if(!DUMspellSelect[pnum])
+                  DUMspellSelect[pnum] = &DUMspellBasic;
+               ms = MS_SPELL;
+               break;
+            };
+         }
+         else
+         {
+            SetPlayerProperty(0, false, PROP_TOTALLYFROZEN);
+
+            // Cast spell.
+            if(buttons & BT_USER2)
+            {
+               SpellData **spell = &DUMspellSelect[pnum];
+
+               if(*spell)
+               {
+                  // Clear spell text, if any.
+                  __printf("");
+
+                  if((*spell)->funcCast)
+                     (*spell)->funcCast(*spell);
+
+                  *spell = nullptr;
+               }
+               else
+                  __printf("No spell selected.");
+            };
+
+            // TODO: Draw HUD.
+         };
+         break;
+
+      case MS_SPELL:
+         if(buttons & BT_USER1)
+         {
+            // Clear menu.
+            __printf("");
+            ms = MS_HUD;
+         }
+         else
+            DUM_SpellMenu(buttons);
+         break;
+
+      case MS_STANCE:
+         if(buttons & BT_USER1)
+         {
+            // Clear menu.
+            __printf("");
+            ms = MS_HUD;
+         }
+         else
+            DUM_StanceMenu(buttons);
+         break;
+      };
+
+      Delay(1);
+   };
+};
+
+// EOF
+

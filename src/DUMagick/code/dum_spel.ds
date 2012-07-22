@@ -21,22 +21,14 @@
 //
 //-----------------------------------------------------------------------------
 
-#include "du_defs.dh"
-
 #include "dum_spel.dh"
-
-
-//----------------------------------------------------------------------------|
-// Static Variables                                                           |
-//
-
-__intvar static SpellData const *[MAX_PLAYERS] DUMspellCurrent;
-__intvar static bool[MAX_PLAYERS] DUMspellSelect;
 
 
 //----------------------------------------------------------------------------|
 // Global Variables                                                           |
 //
+
+__variable static SpellData *[MAX_PLAYERS] DUMspellSelect;
 
 //
 // DUMspellBasic
@@ -49,6 +41,7 @@ __extvar static SpellData DUMspellBasic =
       DU_FireMissile(ActivatorTID(), "DUM_BasicBolt", 3,
                      GetActorAngle(0), GetActorPitch(0), 15);
    };
+   nullptr;
    nullptr;
 
    &DUMspellSpread;
@@ -74,6 +67,7 @@ __extvar static SpellData DUMspellBurst =
       DU_FireMissile(ActivatorTID(), "DUM_BasicBolt", 3,
                      GetActorAngle(0), GetActorPitch(0), 15);
    };
+   nullptr;
    nullptr;
 
    &DUMspellStream;
@@ -108,6 +102,7 @@ __extvar static SpellData DUMspellCircle =
                      GetActorAngle(0) + 0.875, GetActorPitch(0), 15);
    };
    nullptr;
+   nullptr;
 
    &DUMspellCircle;
    &DUMspellCircle;
@@ -130,6 +125,7 @@ __extvar static SpellData DUMspellSpread =
       DU_FireMissile(ActivatorTID(), "DUM_BasicBolt", 3,
                      GetActorAngle(0) - 1.0/16.0, GetActorPitch(0), 15);
    };
+   nullptr;
    nullptr;
 
    &DUMspellSpread;
@@ -156,6 +152,7 @@ __extvar static SpellData DUMspellStream =
       };
    };
    nullptr;
+   nullptr;
 
    &DUMspellStream;
    &DUMspellStream;
@@ -169,99 +166,44 @@ __extvar static SpellData DUMspellStream =
 //
 
 //
-// DUM_SpellReady
+// DUM_SpellMenu
 //
-script DUM_SpellReady() __enter
+function DUM_SpellMenu(int buttons)
 {
-   SpellData const **spellp;
-   SpellData const *spell;
-   int buttons, p = PlayerNumber();
+   SpellData **spell = &DUMspellSelect[PlayerNumber()];
 
-   if (!ActivatorTID()) Thing_ChangeTID(0, DU_MakeTID());
-
-   spell = *(spellp = &DUMspellCurrent[p]);
-
-   while (true)
+   if(buttons & BT_FORWARD)
    {
-      buttons = GetPlayerInput(p, INPUT_BUTTONS) &
-               ~GetPlayerInput(p, INPUT_OLDBUTTONS);
-
-      if (buttons & BT_USER1)
-      {
-         if (DUMspellSelect[p])
-         {
-            DUMspellSelect[p] = false;
-            SetPlayerProperty(0, 0, PROP_TOTALLYFROZEN);
-         }
-         else
-         {
-            spell = *spellp = &DUMspellBasic;
-            if (spell->funcSelect)
-               spell->funcSelect(spell);
-
-            DUMspellSelect[p] = true;
-            SetPlayerProperty(0, 1, PROP_TOTALLYFROZEN);
-         };
-      };
-
-      if (DUMspellSelect[p])
-      {
-         if (buttons & BT_FORWARD)
-         {
-            spell = *spellp = spell->up;
-            if (spell->funcSelect)
-               spell->funcSelect(spell);
-         };
-
-         if (buttons & BT_BACK)
-         {
-            spell = *spellp = spell->down;
-            if (spell->funcSelect)
-               spell->funcSelect(spell);
-         };
-
-         if (buttons & (BT_LEFT|BT_MOVELEFT))
-         {
-            spell = *spellp = spell->left;
-            if (spell->funcSelect)
-               spell->funcSelect(spell);
-         };
-
-         if (buttons & (BT_RIGHT|BT_MOVERIGHT))
-         {
-            spell = *spellp = spell->right;
-            if (spell->funcSelect)
-               spell->funcSelect(spell);
-         };
-
-         __printf<__printf_print>("%s\n|\n%s -- %s -- %s\n|\n%s",
-                               spell->up->name,
-            spell->left->name, spell->name, spell->right->name,
-                               spell->down->name);
-      }
-      else
-      {
-         if (buttons & BT_USER2)
-         {
-            if (spell)
-            {
-               spell->funcCast(spell);
-               spell = *spellp = nullptr;
-            }
-            else
-            {
-               __printf<__printf_print>("Must select spell.");
-            };
-         };
-
-         if (*spellp)
-         {
-            __printf<__printf_print>("%s", (*spellp)->name);
-         };
-      };
-
-      Delay(1);
+      *spell = (*spell)->up;
+      if((*spell)->funcSelect)
+         (*spell)->funcSelect(*spell);
    };
+
+   if(buttons & BT_BACK)
+   {
+      *spell = (*spell)->down;
+      if((*spell)->funcSelect)
+         (*spell)->funcSelect(*spell);
+   };
+
+   if(buttons & (BT_LEFT|BT_MOVELEFT))
+   {
+      *spell = (*spell)->left;
+      if((*spell)->funcSelect)
+         (*spell)->funcSelect(*spell);
+   };
+
+   if(buttons & (BT_RIGHT|BT_MOVERIGHT))
+   {
+      *spell = (*spell)->right;
+      if((*spell)->funcSelect)
+         (*spell)->funcSelect(*spell);
+   };
+
+   __printf("%s\n|\n%s -- %s -- %s\n|\n%s",
+                            (*spell)->up->name,
+      (*spell)->left->name, (*spell)->name, (*spell)->right->name,
+                            (*spell)->down->name);
 };
 
 // EOF

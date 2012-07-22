@@ -17,12 +17,12 @@
 //
 //-----------------------------------------------------------------------------
 //
-// Spell functions and data.
+// Stance functions and data.
 //
 //-----------------------------------------------------------------------------
 
-#ifndef DUM_SPEL_DH__
-#define DUM_SPEL_DH__
+#ifndef DUM_STAN_DH__
+#define DUM_STAN_DH__
 
 #include "du_defs.dh"
 
@@ -31,24 +31,16 @@
 // Types                                                                      |
 //
 
-struct SpellData;
-
-typedef __script_t(SpellData const *spell) SpellFunc;
-
 //
-// SpellData
+// StanceType
 //
-struct SpellData
+enum StanceType
 {
-   str name;
-   SpellFunc funcCast;
-   SpellFunc funcSelect;
-   SpellFunc funcPassive;
+   STANCE_STANDARD,
+   STANCE_OFFENSIVE,
+   STANCE_DEFENSIVE,
 
-   SpellData *up;
-   SpellData *down;
-   SpellData *left;
-   SpellData *right;
+   STANCEMAX
 };
 
 
@@ -56,20 +48,16 @@ struct SpellData
 // Global Variables                                                           |
 //
 
-extern __variable static SpellData *[MAX_PLAYERS] DUMspellSelect;
+extern __variable static str[STANCEMAX] DUMstanceName;
 
-extern __variable static SpellData DUMspellBasic;
-extern __variable static SpellData DUMspellBurst;
-extern __variable static SpellData DUMspellCircle;
-extern __variable static SpellData DUMspellSpread;
-extern __variable static SpellData DUMspellStream;
+extern __variable static StanceType[MAX_PLAYERS] DUMstanceSelect;
 
 
 //----------------------------------------------------------------------------|
 // Global Functions                                                           |
 //
 
-extern function DUM_SpellMenu(int buttons);
+extern function DUM_StanceMenu(int buttons);
 
-#endif//DUM_SPEL_DH__
+#endif//DUM_STAN_DH__
 
