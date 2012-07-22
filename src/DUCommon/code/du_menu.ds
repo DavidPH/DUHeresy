@@ -94,8 +94,8 @@ function DU_MenuRun(Menu *menu)
    int msgid = BASE_MSGID;
 
    // Poll and cap cursor movement.
-   menu->x -= GetPlayerInputFixed(-1, INPUT_YAW) * GetScreenWidth();
-   menu->y -= GetPlayerInputFixed(-1, INPUT_PITCH) * GetScreenHeight();
+   menu->x -= GetPlayerInputFixed(-1, INPUT_YAW)   * menu->w * 3;
+   menu->y -= GetPlayerInputFixed(-1, INPUT_PITCH) * menu->w * 3;
 
    if (menu->x < 0)       menu->x = 0;
    if (menu->x > menu->w) menu->x = menu->w;
