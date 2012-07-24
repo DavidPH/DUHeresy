@@ -236,7 +236,7 @@ static dud_ability_t [3][ABILMAX]DUDability =
          "Armor Regen";
          "ARMOR";
       };
-      // ABIL3_RADIUS
+      // ABIL2_RADIUS
       {
          true;
          {0.00; 0.00; 0.00; 0.00;};
@@ -250,6 +250,21 @@ static dud_ability_t [3][ABILMAX]DUDability =
          nullptr;
          "Explosion Radius";
          "RADIUS";
+      };
+      // ABIL2_PSPEED
+      {
+         true;
+         {0.00; 0.00; 0.00; 0.00;};
+         {0; 0; 0; 0;};
+         {1.00; 1.00; 1.00; 1.00;};
+         {1.00; 1.00; 1.00; 1.00;};
+         {2.00; 2.00; 2.00; 2.00;};
+         0; 0;
+         "Increases projectile speed by 100%.";
+         nullptr;
+         nullptr;
+         "Projectile Speed";
+         "PSPEED";
       };
    };
 
@@ -299,21 +314,6 @@ static dud_ability_t [3][ABILMAX]DUDability =
          nullptr;
          "Damage-All";
          "DAMAGE";
-      };
-      // ABIL3_BAKPAK
-      {
-         true;
-         {3.00; 3.00; 3.00; 3.00;};
-         {0; 0; 0; 0;};
-         {1.00; 1.00; 1.00; 1.00;};
-         {1.00; 1.00; 1.00; 1.00;};
-         {1.00; 1.00; 1.00; 1.00;};
-         0; 0;
-         "Increases carrying capacity.";
-         nullptr;
-         nullptr;
-         "Backpack";
-         "BAKPAK";
       };
    };
 };
@@ -648,7 +648,9 @@ function DUD_AddWeapon(int slot, dud_weapon_e weap)
 //
 function DUD_DoAmmoCap(int pnum)
 {
-   fixed [AMMOMAX]ammoCap = {1; 1; 1; 1;};
+   fixed ammoBase = 1 + CheckInventory("DUD_Backpack") * 0.5;
+
+   fixed[AMMOMAX] ammoCap = {ammoBase; ammoBase; ammoBase; ammoBase;};
 
    for (dud_ability_t **end = DUDabilitySelected[pnum] + 3,
         itr = DUDabilitySelected[pnum]; itr != end; ++itr)
@@ -777,6 +779,19 @@ __function __fixed DUD_GetDamageFactor(int pnum, dud_ammo_e ammo)
 };
 
 //
+// DUD_GetPSpeedFactor
+//
+function fixed DUD_GetPSpeedFactor(int pnum, dud_ammo_e ammo)
+{
+   fixed factor = 1.0;
+
+   for(dud_ability_t **itr = DUDabilitySelected[pnum], end = itr + 3; itr != end; ++itr)
+      factor *= (*itr)->pspeed[ammo];
+
+   return factor;
+};
+
+//
 // DUD_GetRadiusFactor
 //
 function fixed DUD_GetRadiusFactor(int pnum, dud_ammo_e ammo)
@@ -787,22 +802,6 @@ function fixed DUD_GetRadiusFactor(int pnum, dud_ammo_e ammo)
         itr = DUDabilitySelected[pnum]; itr != end; ++itr)
    {
       factor *= (*itr)->radius[ammo];
-   };
-
-   return factor;
-};
-
-//
-// DUD_GetWSpeedFactor
-//
-function fixed DUD_GetWSpeedFactor(int pnum, dud_ammo_e ammo)
-{
-   __fixed factor = 1.0;
-
-   for (dud_ability_t **end = DUDabilitySelected[pnum] + 3,
-        itr = DUDabilitySelected[pnum]; itr != end; ++itr)
-   {
-      factor *= (*itr)->wspeed[ammo];
    };
 
    return factor;

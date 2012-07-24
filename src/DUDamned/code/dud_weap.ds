@@ -42,9 +42,9 @@ __extscript "ACS" int DUD_ChaingunDamage()
 __extscript "ACS" void DUD_FireBFG()
 {
    int damage = 100 * DUD_GetDamageFactor(PlayerNumber(), AMMO_CELL);
-   int wspeed =  25 * DUD_GetWSpeedFactor(PlayerNumber(), AMMO_CELL);
+   int pspeed =  25 * DUD_GetPSpeedFactor(PlayerNumber(), AMMO_CELL);
 
-   DU_FireMissile(0, "DUD_BFGBall", damage, GetActorAngle(0), GetActorPitch(0), wspeed);
+   DU_FireMissile(0, "DUD_BFGBall", damage, GetActorAngle(0), GetActorPitch(0), pspeed);
 
    TakeInventory("Cell", 40);
 };
@@ -55,9 +55,9 @@ __extscript "ACS" void DUD_FireBFG()
 __extscript "ACS" void DUD_FirePlasma()
 {
    int damage =  5 * DUD_GetDamageFactor(PlayerNumber(), AMMO_CELL);
-   int wspeed = 25 * DUD_GetWSpeedFactor(PlayerNumber(), AMMO_CELL);
+   int pspeed = 25 * DUD_GetPSpeedFactor(PlayerNumber(), AMMO_CELL);
 
-   DU_FireMissile(0, "DUD_PlasmaBall", damage, GetActorAngle(0), GetActorPitch(0), wspeed);
+   DU_FireMissile(0, "DUD_PlasmaBall", damage, GetActorAngle(0), GetActorPitch(0), pspeed);
 
    TakeInventory("Cell", 1);
 };
@@ -77,10 +77,10 @@ __extscript "ACS" void DUD_RocketLauncherFire()
 {
    int damage =  20 * DUD_GetDamageFactor(PlayerNumber(), AMMO_RCKT);
    int radius = 128 * DUD_GetRadiusFactor(PlayerNumber(), AMMO_RCKT);
-   int wspeed =  20 * DUD_GetWSpeedFactor(PlayerNumber(), AMMO_RCKT);
+   int pspeed =  20 * DUD_GetPSpeedFactor(PlayerNumber(), AMMO_RCKT);
 
    int tid = DU_FireMissile(0, "DUD_Rocket", damage, GetActorAngle(0),
-                            GetActorPitch(0), wspeed);
+                            GetActorPitch(0), pspeed);
 
    SetThingSpecial(tid, 0, radius, 0, 0, 0, 0);
 

@@ -36,6 +36,26 @@
 //
 
 //
+// DUD_Backpack
+//
+// Dummy item used by DS to set ammo cap.
+//
+actor DUD_Backpack : Inventory replaces Backpack
+{
+   Inventory.MaxAmount 6
+   Inventory.PickupMessage "$GOTBACKPACK"
+
+   Height 26
+
+   states
+   {
+   Spawn:
+      BPAK A -1
+      stop
+   }
+}
+
+//
 // DUD_Player
 //
 actor DUD_Player : DoomPlayer

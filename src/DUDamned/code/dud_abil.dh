@@ -22,7 +22,7 @@
 //-----------------------------------------------------------------------------
 
 #ifndef DUD_ABIL_DH__
-#define DUD_ABIL_DH__ #
+#define DUD_ABIL_DH__
 
 #include "du_defs.dh"
 
@@ -41,12 +41,12 @@ enum dud_ability_e
 
    ABIL2_AMMO = 0,
    ABIL2_ARMOR,
-   ABIL3_RADIUS,
+   ABIL2_RADIUS,
+   ABIL2_PSPEED,
 
    ABIL3_AMMO = 0,
    ABIL3_HEALTH,
    ABIL3_DAMAGE,
-   ABIL3_BAKPAK,
 
    ABILMAX = 7
 };
@@ -92,7 +92,7 @@ struct dud_ability_t
    int   [AMMOMAX]ammoRegen;
    fixed [AMMOMAX]damage;
    fixed [AMMOMAX]radius;
-   fixed [AMMOMAX]wspeed;
+   fixed [AMMOMAX]pspeed;
    int            armorRegen, healthRegen;
    str            desc;
    str            icon;
@@ -149,8 +149,8 @@ extern __variable static dud_weapon_t *[MAX_PLAYERS][7]DUDweaponSelected;
 extern function DUD_AddWeapon(int slot, dud_weapon_e weap);
 
 extern function fixed DUD_GetDamageFactor(int pnum, dud_ammo_e ammo);
+extern function fixed DUD_GetPSpeedFactor(int pnum, dud_ammo_e ammo);
 extern function fixed DUD_GetRadiusFactor(int pnum, dud_ammo_e ammo);
-extern function fixed DUD_GetWSpeedFactor(int pnum, dud_ammo_e ammo);
 
 #endif//DUD_ABIL_DH__
 
