@@ -123,243 +123,134 @@ if (!DUDmenu[0].w) for (int pnum = MAX_PLAYERS; pnum--;)
 // Global Variables                                                           |
 //
 
-static dud_ability_t [3][ABILMAX]DUDability =
+static dud_ability_t [3][ABILMAX]DUDability;
+if(!DUDability[0][0].used)
 {
-   // ABIL1
+   dud_ability_t *ability;
+
+   for(ability = &DUDability[0][0]; ability != &DUDability[3][ABILMAX]; ++ability)
    {
-      // ABIL1_AMMO
+      *ability =
       {
-         true;
-         {0.00; 0.00; 0.00; 0.00;};
-         {9; 3; 1; 0;};
-         {1.00; 1.00; 1.00; 1.00;};
-         {1.00; 1.00; 1.00; 1.00;};
-         {1.00; 1.00; 1.00; 1.00;};
-         0; 0;
-         1.00; 1.00;
-         "Gives basic ammo regeneration.";
-         nullptr;
-         nullptr;
-         "Ammo Regen I";
-         "AMMO-1";
-      };
-      // ABIL1_DAMAGE_CLIP
-      {
-         true;
+         false;
          {0.00; 0.00; 0.00; 0.00;};
          {0; 0; 0; 0;};
-         {1.50; 1.00; 1.00; 1.00;};
          {1.00; 1.00; 1.00; 1.00;};
-         {1.00; 1.00; 1.00; 1.00;};
-         0; 0;
-         1.00; 1.00;
-         "Gives damage increase to CLIP ammo weapons.";
-         nullptr;
-         nullptr;
-         "Damage-CLIP";
-         "CLIP";
-      };
-      // ABIL1_DAMAGE_SHEL
-      {
-         true;
-         {0.00; 0.00; 0.00; 0.00;};
-         {0; 0; 0; 0;};
-         {1.00; 1.50; 1.00; 1.00;};
          {1.00; 1.00; 1.00; 1.00;};
          {1.00; 1.00; 1.00; 1.00;};
          0; 0;
          1.00; 1.00;
-         "Gives damage increase to SHEL ammo weapons.";
          nullptr;
          nullptr;
-         "Damage-SHEL";
-         "SHEL";
-      };
-      // ABIL1_DAMAGE_RCKT
-      {
-         true;
-         {0.00; 0.00; 0.00; 0.00;};
-         {0; 0; 0; 0;};
-         {1.00; 1.00; 1.50; 1.00;};
-         {1.00; 1.00; 1.00; 1.00;};
-         {1.00; 1.00; 1.00; 1.00;};
-         0; 0;
-         1.00; 1.00;
-         "Gives damage increase to RCKT ammo weapons.";
          nullptr;
          nullptr;
-         "Damage-RCKT";
-         "RCKT";
-      };
-      // ABIL1_DAMAGE_CELL
-      {
-         true;
-         {0.00; 0.00; 0.00; 0.00;};
-         {0; 0; 0; 0;};
-         {1.00; 1.00; 1.00; 1.50;};
-         {1.00; 1.00; 1.00; 1.00;};
-         {1.00; 1.00; 1.00; 1.00;};
-         0; 0;
-         1.00; 1.00;
-         "Gives damage increase to CELL ammo weapons.";
-         nullptr;
-         nullptr;
-         "Damage-CELL";
-         "CELL";
+         "NONE";
       };
    };
+
+   // ABIL1
+
+   // ABIL1_AMMO
+   (ability = &DUDability[0][ABIL1_AMMO])->used = true;
+   ability->ammoRegen = {9; 3; 1; 0;};
+   ability->desc = "Gives basic ammo regeneration.";
+   ability->name = "Ammo Regen I";
+   ability->nameIco = "AMMO-1";
+
+   // ABIL1_DAMAGE_CLIP
+   (ability = &DUDability[0][ABIL1_DAMAGE_CLIP])->used = true;
+   ability->damage = {1.50; 1.00; 1.00; 1.00;};
+   ability->desc = "Gives damage increase to CLIP ammo weapons.";
+   ability->name = "Damage-CLIP";
+   ability->nameIco = "CLIP";
+
+   // ABIL1_DAMAGE_SHEL
+   (ability = &DUDability[0][ABIL1_DAMAGE_SHEL])->used = true;
+   ability->damage = {1.00; 1.50; 1.00; 1.00;};
+   ability->desc = "Gives damage increase to SHEL ammo weapons.";
+   ability->name = "Damage-SHEL";
+   ability->nameIco = "SHEL";
+
+   // ABIL1_DAMAGE_RCKT
+   (ability = &DUDability[0][ABIL1_DAMAGE_RCKT])->used = true;
+   ability->damage = {1.00; 1.00; 1.50; 1.00;};
+   ability->desc = "Gives damage increase to RCKT ammo weapons.";
+   ability->name = "Damage-RCKT";
+   ability->nameIco = "RCKT";
+
+   // ABIL1_DAMAGE_CELL
+   (ability = &DUDability[0][ABIL1_DAMAGE_CELL])->used = true;
+   ability->damage = {1.00; 1.00; 1.00; 1.50;};
+   ability->desc = "Gives damage increase to CELL ammo weapons.";
+   ability->name = "Damage-CELL";
+   ability->nameIco = "CELL";
 
    // ABIL2
-   {
-      // ABIL2_AMMO
-      {
-         true;
-         {0.00; 0.00; 0.00; 0.00;};
-         {5; 3; 1; 3;};
-         {1.00; 1.00; 1.00; 1.00;};
-         {1.00; 1.00; 1.00; 1.00;};
-         {1.00; 1.00; 1.00; 1.00;};
-         0; 0;
-         1.00; 1.00;
-         "Gives ammo regeneration.";
-         nullptr;
-         nullptr;
-         "Ammo Regen II";
-         "AMMO-2";
-      };
-      // ABIL2_ARMOR
-      {
-         true;
-         {0.00; 0.00; 0.00; 0.00;};
-         {0; 0; 0; 0;};
-         {1.00; 1.00; 1.00; 1.00;};
-         {1.00; 1.00; 1.00; 1.00;};
-         {1.00; 1.00; 1.00; 1.00;};
-         1; 0;
-         1.00; 1.00;
-         "Gives armor regeneration.";
-         nullptr;
-         nullptr;
-         "Armor Regen";
-         "ARMOR";
-      };
-      // ABIL2_RADIUS
-      {
-         true;
-         {0.00; 0.00; 0.00; 0.00;};
-         {0; 0; 0; 0;};
-         {1.00; 1.00; 1.00; 1.00;};
-         {1.50; 1.50; 1.50; 1.50;};
-         {1.00; 1.00; 1.00; 1.00;};
-         0; 0;
-         1.00; 1.00;
-         "Increases explosion radius by 50%.";
-         nullptr;
-         nullptr;
-         "Explosion Radius";
-         "RADIUS";
-      };
-      // ABIL2_PSPEED
-      {
-         true;
-         {0.00; 0.00; 0.00; 0.00;};
-         {0; 0; 0; 0;};
-         {1.00; 1.00; 1.00; 1.00;};
-         {1.00; 1.00; 1.00; 1.00;};
-         {2.00; 2.00; 2.00; 2.00;};
-         0; 0;
-         1.00; 1.00;
-         "Increases projectile speed by 100%.";
-         nullptr;
-         nullptr;
-         "Projectile Speed";
-         "PSPEED";
-      };
-   };
+
+   // ABIL2_AMMO
+   (ability = &DUDability[1][ABIL2_AMMO])->used = true;
+   ability->ammoRegen = {5; 3; 1; 3;};
+   ability->desc = "Gives ammo regeneration.";
+   ability->name = "Ammo Regen II";
+   ability->nameIco = "AMMO-2";
+
+   // ABIL2_ARMOR
+   (ability = &DUDability[1][ABIL2_ARMOR])->used = true;
+   ability->armorRegen = 1;
+   ability->desc = "Gives armor regeneration.";
+   ability->name = "Armor Regen";
+   ability->nameIco = "ARMOR";
+
+   // ABIL2_RADIUS
+   (ability = &DUDability[1][ABIL2_RADIUS])->used = true;
+   ability->radius = {1.50; 1.50; 1.50; 1.50;};
+   ability->desc = "Increases explosion radius by 50%.";
+   ability->name = "Explosion Radius";
+   ability->nameIco = "RADIUS";
+
+   // ABIL2_PSPEED
+   (ability = &DUDability[1][ABIL2_PSPEED])->used = true;
+   ability->pspeed = {2.00; 2.00; 2.00; 2.00;};
+   ability->desc = "Increases projectile speed by 100%.";
+   ability->name = "Projectile Speed";
+   ability->nameIco = "PSPEED";
 
    // ABIL3
-   {
-      // ABIL3_AMMO
-      {
-         true;
-         {0.00; 0.00; 0.00; 0.00;};
-         {1; 3; 1; 9;};
-         {1.00; 1.00; 1.00; 1.00;};
-         {1.00; 1.00; 1.00; 1.00;};
-         {1.00; 1.00; 1.00; 1.00;};
-         0; 0;
-         1.00; 1.00;
-         "Gives advanced ammo regeneration.";
-         nullptr;
-         nullptr;
-         "Ammo Regen III";
-         "AMMO-3";
-      };
-      // ABIL3_HEALTH
-      {
-         true;
-         {0.00; 0.00; 0.00; 0.00;};
-         {0; 0; 0; 0;};
-         {1.00; 1.00; 1.00; 1.00;};
-         {1.00; 1.00; 1.00; 1.00;};
-         {1.00; 1.00; 1.00; 1.00;};
-         0; 1;
-         1.00; 1.00;
-         "Gives heatlh regeneration.";
-         nullptr;
-         nullptr;
-         "Health Regen";
-         "HEALTH";
-      };
-      // ABIL3_DAMAGE
-      {
-         true;
-         {0.00; 0.00; 0.00; 0.00;};
-         {0; 0; 0; 0;};
-         {1.50; 1.50; 1.50; 1.50;};
-         {1.00; 1.00; 1.00; 1.00;};
-         {1.00; 1.00; 1.00; 1.00;};
-         0; 0;
-         1.00; 1.00;
-         "Gives damage increase to all ammo weapons.";
-         nullptr;
-         nullptr;
-         "Damage-All";
-         "DAMAGE";
-      };
-      // ABIL3_SPEED
-      {
-         true;
-         {0.00; 0.00; 0.00; 0.00;};
-         {0; 0; 0; 0;};
-         {1.00; 1.00; 1.00; 1.00;};
-         {1.00; 1.00; 1.00; 1.00;};
-         {1.00; 1.00; 1.00; 1.00;};
-         0; 0;
-         1.50; 1.00;
-         "Increases movement speed.";
-         nullptr;
-         nullptr;
-         "Speed";
-         "SPEED";
-      };
-      // ABIL3_JUMP
-      {
-         true;
-         {0.00; 0.00; 0.00; 0.00;};
-         {0; 0; 0; 0;};
-         {1.00; 1.00; 1.00; 1.00;};
-         {1.00; 1.00; 1.00; 1.00;};
-         {1.00; 1.00; 1.00; 1.00;};
-         0; 0;
-         1.00; 1.75;
-         "Increases jump height.";
-         nullptr;
-         nullptr;
-         "Jump";
-         "JUMP";
-      };
-   };
+
+   // ABIL3_AMMO
+   (ability = &DUDability[2][ABIL3_AMMO])->used = true;
+   ability->ammoRegen = {1; 3; 1; 9;};
+   ability->desc = "Gives advanced ammo regeneration.";
+   ability->name = "Ammo Regen III";
+   ability->nameIco = "AMMO-3";
+
+   // ABIL3_HEALTH
+   (ability = &DUDability[2][ABIL3_HEALTH])->used = true;
+   ability->healthRegen = 1;
+   ability->desc = "Gives health regeneration.";
+   ability->name = "Health Regen";
+   ability->nameIco = "HEALTH";
+
+   // ABIL3_DAMAGE
+   (ability = &DUDability[2][ABIL3_DAMAGE])->used = true;
+   ability->damage = {1.50; 1.50; 1.50; 1.50;};
+   ability->desc = "Gives damage increase to all ammo weapons.";
+   ability->name = "Damage-All";
+   ability->nameIco = "DAMAGE";
+
+   // ABIL3_SPEED
+   (ability = &DUDability[2][ABIL3_SPEED])->used = true;
+   ability->speed = 1.50;
+   ability->desc = "Increases movement speed.";
+   ability->name = "Speed";
+   ability->nameIco = "SPEED";
+
+   // ABIL3_JUMP
+   (ability = &DUDability[2][ABIL3_JUMP])->used = true;
+   ability->jumpz = 1.75;
+   ability->desc = "Increases jump height";
+   ability->name = "Jump";
+   ability->nameIco = "JUMP";
 };
 static dud_ability_t *[MAX_PLAYERS][3]DUDabilitySelected;
 
@@ -550,9 +441,6 @@ if(!DUDabilitySelected[0][0]) for(int pnum = MAX_PLAYERS; pnum--;)
       &DUDweapon[6][0];
    };
 };
-
-for(int i = 3; i--;) for(int j = ABILMAX; j--;)
-   if(!DUDability[i][j].used) DUDability[i][j].nameIco = "NONE";
 
 for(int i = 7; i--;) for(int j = WEAPMAX; j--;)
    if(!DUDweapon[i][j].used) DUDweapon[i][j].nameIco = "NONE";
