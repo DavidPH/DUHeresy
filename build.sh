@@ -90,49 +90,42 @@ compile_script_dum dum_spel
 compile_script_dum dum_stan
 
 
-# DUDamned.pk7
-echo 'Linking dud.o'
-DH-acc --target=ZDoom --script-list=- \
-   -obuild/temp/DUD/ACS/du.o build/temp/DUD/ACS/*.obj |
-   awk '{print "const int " $1 " = " $2 ";"}' >build/temp/DUD/code/dud_defs.dec
-rm -f build/temp/DUD/ACS/*.obj
+link_script()
+{
+   LOWER="$1" ; UPPER="$2"
 
-cp -r -tbuild/temp/DUD src/DUCommon/*
-cp -r -tbuild/temp/DUD src/DUDamned/*
-cp GPLv3.txt build/temp/DUD/COPYING
-cp README.txt build/temp/DUD/README
+   echo "Linking ${LOWER}.o"
 
-( cd build/temp/DUD && 7z a -mx ../../DUDamned.pk7 .; )
+   DH-acc --target=ZDoom --script-list=- --script-start=256 \
+      -obuild/temp/"${UPPER}"/ACS/du.o build/temp/"${UPPER}"/ACS/*.obj |
+      awk '{print "const int " $1 " = " $2 ";"}' >build/temp/"${UPPER}"/code/"${LOWER}_defs.dec"
 
+   rm -f build/temp/"${UPPER}"/ACS/*.obj
+}
 
-# DUHeresy.pk7
-echo 'Linking duh.o'
-DH-acc --target=ZDoom --script-list=- \
-   -obuild/temp/DUH/ACS/du.o build/temp/DUH/ACS/*.obj |
-   awk '{print "const int " $1 " = " $2 ";"}' >build/temp/DUH/code/duh_defs.dec
-rm -f build/temp/DUH/ACS/*.obj
-
-cp -r -tbuild/temp/DUH src/DUCommon/*
-cp -r -tbuild/temp/DUH src/DUHeresy/*
-cp GPLv3.txt build/temp/DUH/COPYING
-cp README.txt build/temp/DUH/README
-
-( cd build/temp/DUH && 7z a -mx ../../DUHeresy.pk7 .; )
+link_script dud DUD
+link_script duh DUH
+link_script dum DUM
 
 
-# DUMagick.pk7
-echo 'Linking dum.o'
-DH-acc --target=ZDoom --script-start=300 --script-list=- \
-   -obuild/temp/DUM/ACS/du.o build/temp/DUM/ACS/*.obj |
-   awk '{print "const int " $1 " = " $2 ";"}' >build/temp/DUM/code/dum_defs.dec
-rm -f build/temp/DUM/ACS/*.obj
+build_mod()
+{
+   NAME="$1"
+   SHRT="$2"
 
-cp -r -tbuild/temp/DUM src/DUCommon/*
-cp -r -tbuild/temp/DUM src/DUMagick/*
-cp GPLv3.txt build/temp/DUM/COPYING
-cp README.txt build/temp/DUM/README
+   echo "Building ${NAME}.pk7"
 
-( cd build/temp/DUM && 7z a -mx ../../DUMagick.pk7 .; )
+   cp -r -tbuild/temp/"${SHRT}" src/DUCommon/*
+   cp -r -tbuild/temp/"${SHRT}" src/"${NAME}"/*
+   cp GPLv3.txt build/temp/"${SHRT}"/COPYING
+   cp README.txt build/temp/"${SHRT}"/README
+
+   ( cd build/temp/"${SHRT}" && 7z a -mx ../../"${NAME}.pk7" . >/dev/null ; )
+}
+
+build_mod DUDamned DUD
+build_mod DUHeresy DUH
+build_mod DUMagick DUM
 
 
 rm -rf build/temp
