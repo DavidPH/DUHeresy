@@ -33,7 +33,7 @@
 //
 // DUH_HellstaffAltFire
 //
-script DUH_HellstaffAltFire(bool useammo)
+__extscript "ACS" DUH_HellstaffAltFire(bool useammo)
 {
    int ammo_count = CheckInventory(DUHhellstaffAmmo);
    int ammo_usage = (ammo_count / 100) + 1;
@@ -54,7 +54,7 @@ script DUH_HellstaffAltFire(bool useammo)
 //
 // DUH_HellstaffReady
 //
-script DUH_HellstaffReady(int frames)
+__extscript "ACS" DUH_HellstaffReady(int frames)
 {
    static int[MAX_PLAYERS] tics;
 
@@ -64,7 +64,7 @@ script DUH_HellstaffReady(int frames)
 //
 // DUH_HellstaffStorm
 //
-script DUH_HellstaffStorm()
+__extscript "ACS" DUH_HellstaffStorm()
 {
    fixed basex = GetActorX(0);
    fixed basey = GetActorY(0);

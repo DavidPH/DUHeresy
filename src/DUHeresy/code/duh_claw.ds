@@ -33,7 +33,7 @@
 //
 // DUH_DragonClawDamage
 //
-script DUH_DragonClawDamage(bool useammo) -> int
+__extscript "ACS" DUH_DragonClawDamage(bool useammo) -> int
 {
    int ammo_count = CheckInventory(DUHdragonClawAmmo);
    int ammo_usage = (ammo_count / 100) + 1;
@@ -48,7 +48,7 @@ script DUH_DragonClawDamage(bool useammo) -> int
 //
 // DUH_DragonClawReady
 //
-script DUH_DragonClawReady(int frames)
+__extscript "ACS" DUH_DragonClawReady(int frames)
 {
    static int[MAX_PLAYERS] tics;
 

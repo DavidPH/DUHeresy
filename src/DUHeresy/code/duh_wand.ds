@@ -33,7 +33,7 @@
 //
 // DUH_ElvenLaserTrailSpawn
 //
-script DUH_ElvenLaserTrailSpawn(bool final)
+__extscript "ACS" DUH_ElvenLaserTrailSpawn(bool final)
 {
    constexpr int density = 32;
 
@@ -88,7 +88,7 @@ script DUH_ElvenLaserTrailSpawn(bool final)
 //
 // DUH_ElvenWandDamage
 //
-script DUH_ElvenWandDamage(bool useammo) -> int
+__extscript "ACS" DUH_ElvenWandDamage(bool useammo) -> int
 {
    int ammo_count = CheckInventory(DUHelvenWandAmmo);
    int ammo_usage = (ammo_count / 50) + 1;
@@ -103,7 +103,7 @@ script DUH_ElvenWandDamage(bool useammo) -> int
 //
 // DUH_ElvenWandFire
 //
-script DUH_ElvenWandFire(bool piercing)
+__extscript "ACS" DUH_ElvenWandFire(bool piercing)
 {
    str missile = piercing ? "DUH_ElvenLaserRipper" : "DUH_ElvenLaser";
 
@@ -118,7 +118,7 @@ script DUH_ElvenWandFire(bool piercing)
 //
 // DUH_ElvenWandReady
 //
-script DUH_ElvenWandReady(int frames)
+__extscript "ACS" DUH_ElvenWandReady(int frames)
 {
    static int[MAX_PLAYERS] tics;
 

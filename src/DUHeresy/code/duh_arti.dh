@@ -45,9 +45,9 @@ constexpr str DUHfiremaceAmmo   = "MaceAmmo";
 
 extern function DUH_AmmoReady(int tic, str ammo, int mul);
 
-extern script DUH_ArtifactReady(int frames);
+extern "ACS" script DUH_ArtifactReady(int frames);
 
-extern script DUH_WeaponReady(int frames, int *tics, str ammo, int multiplier);
+extern "ACS" script DUH_WeaponReady(int frames, int *tics, str ammo, int multiplier);
 
 #endif//DU_DUH_ARTI__
 

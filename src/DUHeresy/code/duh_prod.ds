@@ -33,7 +33,7 @@
 //
 // DUH_PhoenixRodAltDone
 //
-script DUH_PhoenixRodAltDone(bool useammo)
+__extscript "ACS" DUH_PhoenixRodAltDone(bool useammo)
 {
    int ammo_usage = CheckInventory("DUH_PhoenixRodFireAmmo");
 
@@ -44,7 +44,7 @@ script DUH_PhoenixRodAltDone(bool useammo)
 //
 // DUH_PhoenixRodAltFire
 //
-script DUH_PhoenixRodAltFire()
+__extscript "ACS" DUH_PhoenixRodAltFire()
 {
    TakeInventory("DUH_PhoenixRodFireTics", 1);
    if (!CheckInventory("DUH_PhoenixRodFireTics"))
@@ -62,7 +62,7 @@ script DUH_PhoenixRodAltFire()
 //
 // DUH_PhoenixRodAltInit
 //
-script DUH_PhoenixRodAltInit()
+__extscript "ACS" DUH_PhoenixRodAltInit()
 {
    int ammo_count = CheckInventory(DUHphoenixRodAmmo);
    int ammo_usage = (ammo_count / 10) + 1;
@@ -80,7 +80,7 @@ script DUH_PhoenixRodAltInit()
 //
 // DUH_PhoenixRodFlameTic
 //
-script DUH_PhoenixRodFlameTic()
+__extscript "ACS" DUH_PhoenixRodFlameTic()
 {
    int damage = GetActorProperty(0, APROP_Damage);
    SetActorProperty(0, APROP_Damage, --damage);
@@ -91,7 +91,7 @@ script DUH_PhoenixRodFlameTic()
 //
 // DUH_PhoenixRodReady
 //
-script DUH_PhoenixRodReady(int frames)
+__extscript "ACS" DUH_PhoenixRodReady(int frames)
 {
    static int[MAX_PLAYERS] tics;
 

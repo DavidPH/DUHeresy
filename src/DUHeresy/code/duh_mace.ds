@@ -33,7 +33,7 @@
 //
 // DUH_FiremaceAltFire
 //
-script DUH_FiremaceAltFire(bool useammo)
+__extscript "ACS" DUH_FiremaceAltFire(bool useammo)
 {
    int ammo_count = CheckInventory(DUHfiremaceAmmo);
    int ammo_usage = (ammo_count / 75) + 1;
@@ -53,7 +53,7 @@ script DUH_FiremaceAltFire(bool useammo)
 //
 // DUH_FiremaceDeathRing
 //
-script DUH_FiremaceDeathRing()
+__extscript "ACS" DUH_FiremaceDeathRing()
 {
    int damage = (GetActorProperty(0, APROP_Damage) + 7) / 2;
    int shooter = CheckInventory("DUH_MemberShooterTID");
@@ -73,7 +73,7 @@ script DUH_FiremaceDeathRing()
 //
 // DUH_FiremaceMissileSound
 //
-script DUH_FiremaceMissileSound()
+__extscript "ACS" DUH_FiremaceMissileSound()
 {
    SetActorPropertyString(0, APROP_SeeSound, "weapons/macebounce");
 };
@@ -81,7 +81,7 @@ script DUH_FiremaceMissileSound()
 //
 // DUH_FiremaceReady
 //
-script DUH_FiremaceReady(int frames)
+__extscript "ACS" DUH_FiremaceReady(int frames)
 {
    static int[MAX_PLAYERS] tics;
 

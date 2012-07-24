@@ -48,7 +48,7 @@ enum MenuState
 //
 // DUM_MainMenu
 //
-script DUM_MainMenu() __enter
+__extscript "ACS" DUM_MainMenu() __enter
 {
    int buttons, oldbuttons, newbuttons = 0;
    int pnum = PlayerNumber();
