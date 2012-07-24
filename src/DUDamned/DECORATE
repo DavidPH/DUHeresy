@@ -56,6 +56,29 @@ actor DUD_Backpack : Inventory replaces Backpack
 }
 
 //
+// DUD_Berserk
+//
+actor DUD_Berserk : Inventory replaces Berserk
+{
+   Inventory.Amount 1
+   Inventory.InterHubAmount 0
+   Inventory.MaxAmount 4
+   Inventory.PickupMessage "$GOTBERSERK"
+   Inventory.PickupSound "misc/p_pkup"
+
+   +INVENTORY.ALWAYSPICKUP
+
+   +COUNTITEM
+
+   states
+   {
+   Spawn:
+      PSTR A -1
+      stop
+   }
+}
+
+//
 // DUD_Player
 //
 actor DUD_Player : DoomPlayer

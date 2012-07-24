@@ -38,6 +38,18 @@ actor DUD_Chainsaw : Chainsaw
 //
 actor DUD_Fist : Fist
 {
+   +WEAPON.NOALERT
+
+   states
+   {
+   Fire:
+      PUNG B 4
+      PUNG C 4 A_CustomPunch(ACS_ExecuteWithResult(DUD_FistDamage), true)
+      PUNG D 5
+      PUNG C 4
+      PUNG B 5 A_ReFire
+      goto Ready
+   }
 }
 
 // EOF

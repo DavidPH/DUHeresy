@@ -98,6 +98,16 @@ __extscript "ACS" void DUD_FirePlasma()
 };
 
 //
+// DUD_FistDamage
+//
+__extscript "ACS" int DUD_FistDamage()
+{
+   int base = CheckInventory("DUD_Berserk") * 5 + 2;
+
+   return Random(base, base * 10);
+};
+
+//
 // DUD_PistolDamage
 //
 __extscript "ACS" int DUD_PistolDamage()
