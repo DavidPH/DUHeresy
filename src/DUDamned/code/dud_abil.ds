@@ -185,6 +185,15 @@ if(!DUDability[0][0].used)
    ability->name = "Damage-CELL";
    ability->nameIco = "CELL";
 
+   // ABIL1_BERSERK
+   (ability = &DUDability[0][ABIL1_BERSERK])->used = true;
+   ability->healthRegen = 15;
+   ability->speed = 1.125;
+   ability->jumpz = 1.25;
+   ability->desc = "Increases movement speed, jump height, fist damage,\nand health regen.";
+   ability->name = "Berserk Pack";
+   ability->nameIco = "BERSERK";
+
    // ABIL2
 
    // ABIL2_AMMO
@@ -657,15 +666,15 @@ __function DUD_DoArmorRegen(int pnum)
 __function DUD_DoHealthRegen(int pnum)
 {
    static int [MAX_PLAYERS]healthCount;
-   int healthRegen = CheckInventory("DUD_Berserk") * 15;
+   int healthRegen = 0;
 
-   for (dud_ability_t **end = DUDabilitySelected[pnum] + 3,
-        itr = DUDabilitySelected[pnum]; itr != end; ++itr)
-   {
+   for(dud_ability_t **itr = DUDabilitySelected[pnum], end = itr + 3; itr != end; ++itr)
       healthRegen += (*itr)->healthRegen;
-   };
 
-   if ((healthCount[pnum] -= healthRegen) < 0)
+   for(int i = CheckInventory("DUD_Berserk"); i--;)
+      healthRegen += DUDability[0][ABIL1_BERSERK].healthRegen;
+
+   while((healthCount[pnum] -= healthRegen) < 0)
    {
       healthCount[pnum] += 35*60;
       GiveInventory("HealthBonus", 1);
@@ -677,10 +686,13 @@ __function DUD_DoHealthRegen(int pnum)
 //
 __function DUD_DoJumpHeight(int pnum)
 {
-   fixed jumpz = 8.0 + (CheckInventory("DUD_Berserk") * 0.5);
+   fixed jumpz = 8.0;
 
    for(dud_ability_t **itr = DUDabilitySelected[pnum], end = itr + 3; itr != end; ++itr)
       jumpz *= (*itr)->jumpz;
+
+   for(int i = CheckInventory("DUD_Berserk"); i--;)
+      jumpz *= DUDability[0][ABIL1_BERSERK].jumpz;
 
    SetActorPropertyFixed(0, APROP_JumpZ, jumpz);
 };
@@ -690,10 +702,13 @@ __function DUD_DoJumpHeight(int pnum)
 //
 __function DUD_DoRunSpeed(int pnum)
 {
-   fixed speed = 1.0 + (CheckInventory("DUD_Berserk") * (1.0/16));
+   fixed speed = 1.0;
 
    for(dud_ability_t **itr = DUDabilitySelected[pnum], end = itr + 3; itr != end; ++itr)
       speed *= (*itr)->speed;
+
+   for(int i = CheckInventory("DUD_Berserk"); i--;)
+      speed *= DUDability[0][ABIL1_BERSERK].speed;
 
    SetActorPropertyFixed(0, APROP_Speed, speed);
 };

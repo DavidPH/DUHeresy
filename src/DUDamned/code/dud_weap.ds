@@ -104,6 +104,9 @@ __extscript "ACS" int DUD_FistDamage()
 {
    int base = CheckInventory("DUD_Berserk") * 5 + 2;
 
+   if(DUDabilitySelected[PlayerNumber()][0] == &DUDability[0][ABIL1_BERSERK])
+      base += 5;
+
    return Random(base, base * 10);
 };
 
