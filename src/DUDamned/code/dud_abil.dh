@@ -47,6 +47,8 @@ enum dud_ability_e
    ABIL3_AMMO = 0,
    ABIL3_HEALTH,
    ABIL3_DAMAGE,
+   ABIL3_SPEED,
+   ABIL3_JUMP,
 
    ABILMAX = 7
 };
@@ -94,6 +96,7 @@ struct dud_ability_t
    fixed [AMMOMAX]radius;
    fixed [AMMOMAX]pspeed;
    int            armorRegen, healthRegen;
+   fixed          speed, jumpz;
    str            desc;
    str            icon;
    str            iconDim;

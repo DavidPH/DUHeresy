@@ -136,6 +136,7 @@ static dud_ability_t [3][ABILMAX]DUDability =
          {1.00; 1.00; 1.00; 1.00;};
          {1.00; 1.00; 1.00; 1.00;};
          0; 0;
+         1.00; 1.00;
          "Gives basic ammo regeneration.";
          nullptr;
          nullptr;
@@ -151,6 +152,7 @@ static dud_ability_t [3][ABILMAX]DUDability =
          {1.00; 1.00; 1.00; 1.00;};
          {1.00; 1.00; 1.00; 1.00;};
          0; 0;
+         1.00; 1.00;
          "Gives damage increase to CLIP ammo weapons.";
          nullptr;
          nullptr;
@@ -166,6 +168,7 @@ static dud_ability_t [3][ABILMAX]DUDability =
          {1.00; 1.00; 1.00; 1.00;};
          {1.00; 1.00; 1.00; 1.00;};
          0; 0;
+         1.00; 1.00;
          "Gives damage increase to SHEL ammo weapons.";
          nullptr;
          nullptr;
@@ -181,6 +184,7 @@ static dud_ability_t [3][ABILMAX]DUDability =
          {1.00; 1.00; 1.00; 1.00;};
          {1.00; 1.00; 1.00; 1.00;};
          0; 0;
+         1.00; 1.00;
          "Gives damage increase to RCKT ammo weapons.";
          nullptr;
          nullptr;
@@ -196,6 +200,7 @@ static dud_ability_t [3][ABILMAX]DUDability =
          {1.00; 1.00; 1.00; 1.00;};
          {1.00; 1.00; 1.00; 1.00;};
          0; 0;
+         1.00; 1.00;
          "Gives damage increase to CELL ammo weapons.";
          nullptr;
          nullptr;
@@ -215,6 +220,7 @@ static dud_ability_t [3][ABILMAX]DUDability =
          {1.00; 1.00; 1.00; 1.00;};
          {1.00; 1.00; 1.00; 1.00;};
          0; 0;
+         1.00; 1.00;
          "Gives ammo regeneration.";
          nullptr;
          nullptr;
@@ -230,6 +236,7 @@ static dud_ability_t [3][ABILMAX]DUDability =
          {1.00; 1.00; 1.00; 1.00;};
          {1.00; 1.00; 1.00; 1.00;};
          1; 0;
+         1.00; 1.00;
          "Gives armor regeneration.";
          nullptr;
          nullptr;
@@ -245,6 +252,7 @@ static dud_ability_t [3][ABILMAX]DUDability =
          {1.50; 1.50; 1.50; 1.50;};
          {1.00; 1.00; 1.00; 1.00;};
          0; 0;
+         1.00; 1.00;
          "Increases explosion radius by 50%.";
          nullptr;
          nullptr;
@@ -260,6 +268,7 @@ static dud_ability_t [3][ABILMAX]DUDability =
          {1.00; 1.00; 1.00; 1.00;};
          {2.00; 2.00; 2.00; 2.00;};
          0; 0;
+         1.00; 1.00;
          "Increases projectile speed by 100%.";
          nullptr;
          nullptr;
@@ -279,6 +288,7 @@ static dud_ability_t [3][ABILMAX]DUDability =
          {1.00; 1.00; 1.00; 1.00;};
          {1.00; 1.00; 1.00; 1.00;};
          0; 0;
+         1.00; 1.00;
          "Gives advanced ammo regeneration.";
          nullptr;
          nullptr;
@@ -294,6 +304,7 @@ static dud_ability_t [3][ABILMAX]DUDability =
          {1.00; 1.00; 1.00; 1.00;};
          {1.00; 1.00; 1.00; 1.00;};
          0; 1;
+         1.00; 1.00;
          "Gives heatlh regeneration.";
          nullptr;
          nullptr;
@@ -309,11 +320,44 @@ static dud_ability_t [3][ABILMAX]DUDability =
          {1.00; 1.00; 1.00; 1.00;};
          {1.00; 1.00; 1.00; 1.00;};
          0; 0;
+         1.00; 1.00;
          "Gives damage increase to all ammo weapons.";
          nullptr;
          nullptr;
          "Damage-All";
          "DAMAGE";
+      };
+      // ABIL3_SPEED
+      {
+         true;
+         {0.00; 0.00; 0.00; 0.00;};
+         {0; 0; 0; 0;};
+         {1.00; 1.00; 1.00; 1.00;};
+         {1.00; 1.00; 1.00; 1.00;};
+         {1.00; 1.00; 1.00; 1.00;};
+         0; 0;
+         1.50; 1.00;
+         "Increases movement speed.";
+         nullptr;
+         nullptr;
+         "Speed";
+         "SPEED";
+      };
+      // ABIL3_JUMP
+      {
+         true;
+         {0.00; 0.00; 0.00; 0.00;};
+         {0; 0; 0; 0;};
+         {1.00; 1.00; 1.00; 1.00;};
+         {1.00; 1.00; 1.00; 1.00;};
+         {1.00; 1.00; 1.00; 1.00;};
+         0; 0;
+         1.00; 1.75;
+         "Increases jump height.";
+         nullptr;
+         nullptr;
+         "Jump";
+         "JUMP";
       };
    };
 };
@@ -741,6 +785,32 @@ __function DUD_DoHealthRegen(int pnum)
 };
 
 //
+// DUD_DoJumpHeight
+//
+__function DUD_DoJumpHeight(int pnum)
+{
+   fixed jumpz = 8.0;
+
+   for(dud_ability_t **itr = DUDabilitySelected[pnum], end = itr + 3; itr != end; ++itr)
+      jumpz *= (*itr)->jumpz;
+
+   SetActorPropertyFixed(0, APROP_JumpZ, jumpz);
+};
+
+//
+// DUD_DoRunSpeed
+//
+__function DUD_DoRunSpeed(int pnum)
+{
+   fixed speed = 1.0;
+
+   for(dud_ability_t **itr = DUDabilitySelected[pnum], end = itr + 3; itr != end; ++itr)
+      speed *= (*itr)->speed;
+
+   SetActorPropertyFixed(0, APROP_Speed, speed);
+};
+
+//
 // DUD_DoWeaponSelect
 //
 function DUD_DoWeaponSelect(int pnum)
@@ -843,6 +913,8 @@ __extscript "ACS" DUD_Main() __enter
             DUD_DoAmmoRegen(pnum);
             DUD_DoArmorRegen(pnum);
             DUD_DoHealthRegen(pnum);
+            DUD_DoJumpHeight(pnum);
+            DUD_DoRunSpeed(pnum);
             DUD_DoWeaponSelect(pnum);
          };
       };
