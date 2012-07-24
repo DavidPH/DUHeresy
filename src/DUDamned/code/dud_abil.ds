@@ -646,7 +646,7 @@ __function DUD_DoArmorRegen(int pnum)
 
    if ((armorCount[pnum] -= armorRegen) < 0)
    {
-      armorCount[pnum] += 35;
+      armorCount[pnum] += 35*60;
       GiveInventory("ArmorBonus", 1);
    };
 };
