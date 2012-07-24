@@ -78,7 +78,7 @@ actor DUD_Chaingun : Chaingun
 //
 actor DUD_Dakka : FastProjectile
 {
-   Damage 2
+   Damage 1
    Height 8
    Obituary "$OB_MPDAKKAGUN"
    Radius 8

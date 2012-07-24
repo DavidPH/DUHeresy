@@ -54,9 +54,11 @@ __extscript "ACS" void DUD_FireBFG()
 //
 __extscript "ACS" void DUD_FireDGun()
 {
-   static int count;
+   static int[MAX_PLAYERS] counts;
 
-   int damage =  2 * DUD_GetDamageFactor(PlayerNumber(), AMMO_CLIP);
+   int *count = &counts[PlayerNumber()];
+
+   int damage =  1 * DUD_GetDamageFactor(PlayerNumber(), AMMO_CLIP);
    int pspeed = 80 * DUD_GetPSpeedFactor(PlayerNumber(), AMMO_CLIP);
 
    fixed angle = GetActorAngle(0) + RandomFixed(-1.0/256, 1.0/256);
@@ -66,7 +68,7 @@ __extscript "ACS" void DUD_FireDGun()
 
    tid = DU_FireMissile(0, "DUD_Dakka", damage, angle, pitch, pspeed);
 
-   switch(count++)
+   switch((*count)++)
    {
    default:
    case 0: case 1: SetActorState(tid, "SpawnD"); break;
@@ -76,9 +78,9 @@ __extscript "ACS" void DUD_FireDGun()
    case 8: case 9: SetActorState(tid, "SpawnA"); break;
    };
 
-   if(count == 10) count = 0;
+   if(*count == 10) *count = 0;
 
-   if(count & 1)
+   if(*count & 1)
       TakeInventory("Clip", 1);
 };
 
