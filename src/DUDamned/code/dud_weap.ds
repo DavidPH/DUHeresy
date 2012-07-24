@@ -50,6 +50,39 @@ __extscript "ACS" void DUD_FireBFG()
 };
 
 //
+// DUD_FireDGun
+//
+__extscript "ACS" void DUD_FireDGun()
+{
+   static int count;
+
+   int damage =  2 * DUD_GetDamageFactor(PlayerNumber(), AMMO_CLIP);
+   int pspeed = 80 * DUD_GetPSpeedFactor(PlayerNumber(), AMMO_CLIP);
+
+   fixed angle = GetActorAngle(0) + RandomFixed(-1.0/256, 1.0/256);
+   fixed pitch = GetActorPitch(0) + RandomFixed(-1.0/256, 1.0/256);
+
+   int tid;
+
+   tid = DU_FireMissile(0, "DUD_Dakka", damage, angle, pitch, pspeed);
+
+   switch(count++)
+   {
+   default:
+   case 0: case 1: SetActorState(tid, "SpawnD"); break;
+   case 2: case 3: SetActorState(tid, "SpawnA"); break;
+   case 4: case 5: SetActorState(tid, "SpawnK"); break;
+   case 6: case 7: SetActorState(tid, "SpawnK"); break;
+   case 8: case 9: SetActorState(tid, "SpawnA"); break;
+   };
+
+   if(count == 10) count = 0;
+
+   if(count & 1)
+      TakeInventory("Clip", 1);
+};
+
+//
 // DUD_FirePlasma
 //
 __extscript "ACS" void DUD_FirePlasma()

@@ -74,6 +74,92 @@ actor DUD_Chaingun : Chaingun
 }
 
 //
+// DUD_Dakka
+//
+actor DUD_Dakka : FastProjectile
+{
+   Damage 2
+   Height 8
+   Obituary "$OB_MPDAKKAGUN"
+   Radius 8
+ //SeeSound "weapons/shotgf"
+   Speed 80
+
+   States
+   {
+   Spawn:
+   SpawnA:
+      DAKA A -1 bright
+      stop
+
+   SpawnD:
+      DAKA D -1 bright
+      stop
+
+   SpawnK:
+      DAKA K -1 bright
+      stop
+
+   Death:
+      DAKA DAKKA 2 bright
+      stop
+   }
+}
+
+//
+// DUD_Dakkagun
+//
+actor DUD_Dakkagun : Weapon
+{
+   Weapon.AmmoType1 "Clip"
+   Weapon.AmmoType2 "Clip"
+   Weapon.AmmoUse1 1
+   Weapon.AmmoUse2 1
+   Weapon.SelectionOrder 700
+
+   Inventory.PickupMessage "$GOTDAKKAGUN"
+
+   Obituary "$OB_MPDAKKAGUN"
+
+   +WEAPON.AMMO_OPTIONAL
+
+   States
+   {
+   Spawn:
+      DGUN A -1
+      stop
+
+   Select:
+      DAKG A 1 A_Raise
+      goto Select
+
+   Ready:
+      DAKG A 1 A_WeaponReady
+      goto Ready
+
+   Deselect:
+      DAKG A 1 A_Lower
+      goto Deselect
+
+   Fire:
+      DAKG A 1 A_JumpIfInventory("Clip", 1, "Hold")
+      DAKG A 0 A_ClearReFire
+      goto Ready
+   Hold:
+      CHGG A  0 A_GunFlash
+      CHGG A  0 A_PlaySound("weapons/shotgf")
+      CHGG AB 2 ACS_ExecuteWithResult(DUD_FireDGun)
+      CHGG B  0 A_ReFire
+      goto Ready
+
+   Flash:
+      CHGF A 3 Bright A_Light1
+      CHGF B 2 Bright A_Light1
+      goto LightDone
+   }
+}
+
+//
 // DUD_Pistol
 //
 actor DUD_Pistol : Pistol

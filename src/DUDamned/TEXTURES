@@ -1,0 +1,35 @@
+//-----------------------------------------------------------------------------
+//
+// DavidPH's Unending Damned texture definitions.
+//
+//-----------------------------------------------------------------------------
+
+sprite DAKAA0, 8, 7 {patch STCFN065, 0, 0 offset 4, 4}
+sprite DAKAD0, 8, 7 {patch STCFN068, 0, 0 offset 4, 4}
+sprite DAKAK0, 8, 7 {patch STCFN075, 0, 0 offset 4, 4}
+
+sprite DAKGA0, 114, 83
+{
+   patch CHGGA0,  0,  0
+   patch DAKAD0, 27, 17
+   patch DAKAA0, 39, 10
+   patch DAKAK0, 54,  8
+   patch DAKAK0, 69, 10
+   patch DAKAA0, 81, 17
+   offset -104, -117
+}
+
+sprite DGUNA0, 54, 16
+{
+   patch MGUNA0,  0, 0
+   patch DAKAD0,  4, 4
+   patch DAKAA0, 14, 4
+   patch DAKAK0, 24, 4
+   patch DAKAK0, 34, 4
+   patch DAKAA0, 44, 4
+
+   offset 25, 18
+}
+
+// EOF
+
