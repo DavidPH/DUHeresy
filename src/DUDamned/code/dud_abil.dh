@@ -68,6 +68,7 @@ enum dud_weapon_e
 {
    WEAP1_FIST = 0,
    WEAP1_CSAW,
+   WEAP1_CFIST,
 
    WEAP2_PIST = 0,
 
@@ -75,6 +76,7 @@ enum dud_weapon_e
    WEAP3_SHT2,
 
    WEAP4_CGUN = 0,
+   WEAP4_DGUN,
 
    WEAP5_RCKT = 0,
 

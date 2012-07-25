@@ -27,6 +27,36 @@
 //
 
 //
+// DUD_Chainfist
+//
+actor DUD_Chainfist : Fist
+{
+   Inventory.PickupMessage "$GOTCHAINFIST"
+
+   Weapon.UpSound "weapons/sawup"
+   Weapon.ReadySound "weapons/sawidle"
+
+   Obituary "$OB_MPCHAINFIST"
+   Tag "Chainfist"
+
+   -WEAPON.WIMPY_WEAPON
+
+   states
+   {
+   Fire:
+      PUNG B  4
+      PUNG C  4 A_CustomPunch(ACS_ExecuteWithResult(DUD_FistDamage) * 2, true)
+      CFIS DE 2
+   Hold:
+      CFIS FG 4 A_Saw("weapons/sawfull", "weapons/sawhit", 1)
+      CFIS ED 2 A_ReFire
+      PUNG C  4
+      PUNG B  5
+      goto Ready
+   }
+}
+
+//
 // DUD_Chainsaw
 //
 actor DUD_Chainsaw : Chainsaw
@@ -39,6 +69,7 @@ actor DUD_Chainsaw : Chainsaw
 actor DUD_Fist : Fist
 {
    +WEAPON.NOALERT
+   -WEAPON.WIMPY_WEAPON
 
    states
    {

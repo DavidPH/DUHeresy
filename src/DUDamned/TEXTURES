@@ -4,6 +4,41 @@
 //
 //-----------------------------------------------------------------------------
 
+sprite CFISH0, 17, 35 {patch SAWGC0, -34, 0 {flipx}}
+sprite CFISI0, 17, 34 {patch SAWGD0, -34, 0 {flipx}}
+
+sprite CFISD0, 147, 86
+{
+   patch CFISH0, 120, 0
+   patch PUNGD0, 0, 10
+
+   offset -36, -82
+}
+
+sprite CFISE0, 147, 96
+{
+   patch CFISH0, 120, 0
+   patch PUNGD0, 0, 20
+
+   offset -36, -72
+}
+
+sprite CFISF0, 147, 106
+{
+   patch CFISH0, 120, 0
+   patch PUNGD0, 0, 30
+
+   offset -36, -62
+}
+
+sprite CFISG0, 147, 106
+{
+   patch CFISI0, 120, 0
+   patch PUNGD0, 0, 30
+
+   offset -36, -62
+}
+
 sprite DAKAA0, 8, 7 {patch STCFN065, 0, 0 offset 4, 4}
 sprite DAKAD0, 8, 7 {patch STCFN068, 0, 0 offset 4, 4}
 sprite DAKAK0, 8, 7 {patch STCFN075, 0, 0 offset 4, 4}

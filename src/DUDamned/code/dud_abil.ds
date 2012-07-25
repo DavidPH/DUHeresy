@@ -325,6 +325,17 @@ static dud_weapon_t [7][WEAPMAX]DUDweapon =
          "DUD_Chainsaw";
          "C. SAW";
       };
+      // WEAP1_CFIST
+      {
+         true;
+         AMMOMAX;
+         "Smash and chop with the finest of them.";
+         nullptr;
+         nullptr;
+         "Chainfist";
+         "DUD_Chainfist";
+         "C. FIST";
+      };
    };
 
    // WEAP2
@@ -380,6 +391,17 @@ static dud_weapon_t [7][WEAPMAX]DUDweapon =
          "Chaingun";
          "DUD_Chaingun";
          "C. GUN";
+      };
+      // WEAP4_DGUN
+      {
+         true;
+         AMMO_CLIP;
+         "Shoots dakka.";
+         nullptr;
+         nullptr;
+         "Dakkagun";
+         "DUD_Dakkagun";
+         "DAKKA";
       };
    };
 

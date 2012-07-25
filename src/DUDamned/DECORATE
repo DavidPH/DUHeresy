@@ -46,7 +46,7 @@ actor DUD_Player : DoomPlayer
    Player.StartItem DUD_Pistol
    Player.StartItem Clip, 50
 
-   Player.WeaponSlot 1, DUD_Fist, DUD_Chainsaw
+   Player.WeaponSlot 1, DUD_Fist, DUD_Chainsaw, DUD_Chainfist
    Player.WeaponSlot 2, DUD_Pistol
    Player.WeaponSlot 3, DUD_Shotgun, DUD_SuperShotgun
    Player.WeaponSlot 4, DUD_Chaingun, DUD_Dakkagun
