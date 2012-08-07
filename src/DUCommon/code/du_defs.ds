@@ -147,7 +147,7 @@ function DU_SetActorVelocity(int tid, fixed velx, fixed vely, fixed velz)
    SetActivator(tid);
 
    SetActorVelocity(0, velx, vely, velz);
-   ACS_ExecuteAlwaysFixed((int)SetClientVelocity,0, velx, vely, velz);
+   ACS_ExecuteAlwaysFixed((int)&SetClientVelocity,0, velx, vely, velz);
 
    SetActivator(oldtid);
 };

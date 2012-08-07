@@ -19,6 +19,8 @@ mkdir build/temp/DUM/ACS
 mkdir build/temp/DUM/code
 
 
+ACC_DIR=/data/src/SELF/DH-acc
+
 compile_script()
 {
    SRC="$1"
@@ -28,10 +30,21 @@ compile_script()
    echo "Compiling ${SRC}"
 
    DH-acc --target=ZDoom -c \
-          -isrc/DUCommon/code/ -i/data/src/SELF/DH-acc/inc/ \
+          -isrc/DUCommon/code/ -i"${ACC_DIR}"/inc/ \
           --no-string-func \
           -D__LIBDS_NOLIB \
           "$@" -o"${OBJ}" "${SRC}"
+}
+
+compile_script_std()
+{
+   SRC="${ACC_DIR}"/lib/"$1".ds
+   OBJ=build/temp/DU/ACS/"$1".obj
+
+   compile_script "${SRC}" "${OBJ}"
+   cp "${OBJ}" build/temp/DUD/ACS/"$1".obj
+   cp "${OBJ}" build/temp/DUH/ACS/"$1".obj
+   cp "${OBJ}" build/temp/DUM/ACS/"$1".obj
 }
 
 compile_script_du()
@@ -69,6 +82,9 @@ compile_script_dum()
    compile_script "${SRC}" "${OBJ}" -isrc/DUMagick/code/
 }
 
+
+compile_script_std stdlib
+compile_script_std string
 
 compile_script_du du_defs
 compile_script_du du_menu
