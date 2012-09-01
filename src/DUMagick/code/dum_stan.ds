@@ -56,7 +56,7 @@ function DUM_StanceMenu(int buttons)
    if(buttons & (BT_RIGHT|BT_MOVERIGHT))
       *stance = STANCE_STANDARD;
 
-   __printf("OFFENSIVE\n|\nSTANDARD -- %s -- STANDARD\n|\nDEFENSIVE", DUMstanceName[*stance]);
+   __printf("OFFENSIVE\n|\nSTANDARD -- %s -- STANDARD\n|\nDEFENSIVE\n", DUMstanceName[*stance]);
 };
 
 // EOF

@@ -56,33 +56,33 @@ function DU_MenuEnd(Menu *menu)
    int msgid = BASE_MSGID;
 
    // Cursor.
-   menuf("", HUDMSG_PLAIN, msgid++, 0, 0,0, 1);
+   menuf("\n", HUDMSG_PLAIN, msgid++, 0, 0,0, 1);
 
    // Buttons.
    for(MenuButton *button = menu->buttons; button; button = button->next)
    {
       // button->img
-      menuf("", HUDMSG_PLAIN, msgid++, 0, 0,0, 1);
+      menuf("\n", HUDMSG_PLAIN, msgid++, 0, 0,0, 1);
 
       // button->txt
-      menuf("", HUDMSG_PLAIN, msgid++, 0, 0,0, 1);
+      menuf("\n", HUDMSG_PLAIN, msgid++, 0, 0,0, 1);
    };
 
    // Labels.
    for(MenuLabel *label = menu->labels; label; label = label->next)
    {
       // label->img
-      menuf("", HUDMSG_PLAIN, msgid++, 0, 0,0, 1);
+      menuf("\n", HUDMSG_PLAIN, msgid++, 0, 0,0, 1);
 
       // label->txt
-      menuf("", HUDMSG_PLAIN, msgid++, 0, 0,0, 1);
+      menuf("\n", HUDMSG_PLAIN, msgid++, 0, 0,0, 1);
    };
 
    // Texts.
    for(MenuText *text = menu->texts; text; text = text->next)
    {
       // text->txt
-      menuf("", HUDMSG_PLAIN, msgid++, 0, 0,0, 1);
+      menuf("\n", HUDMSG_PLAIN, msgid++, 0, 0,0, 1);
    };
 };
 
@@ -105,7 +105,7 @@ function DU_MenuRun(Menu *menu)
 
    // Draw cursor.
    SetFont("CURSOR");
-   menuf("A", HUDMSG_PLAIN, msgid++, 0, (int)menu->x+0.1, (int)menu->y+0.1, 0);
+   menuf("A\n", HUDMSG_PLAIN, msgid++, 0, (int)menu->x+0.1, (int)menu->y+0.1, 0);
    SetFont(menu->font);
 
    // Draw buttons.
@@ -117,13 +117,13 @@ function DU_MenuRun(Menu *menu)
       if(button->img[0])
       {
          SetFont(button->img);
-         menuf("A", HUDMSG_PLAIN, msgid++, 0, x,y, 0);
+         menuf("A\n", HUDMSG_PLAIN, msgid++, 0, x,y, 0);
          SetFont(menu->font);
       }
       else
-         menuf("", HUDMSG_PLAIN, msgid++, 0, x,y, 1);
+         menuf("\n", HUDMSG_PLAIN, msgid++, 0, x,y, 1);
 
-      menuf("%s", button->txt, HUDMSG_PLAIN, msgid++, button->color, x,y, 0);
+      menuf("%s\n", button->txt, HUDMSG_PLAIN, msgid++, button->color, x,y, 0);
    };
 
    // Draw labels.
@@ -135,13 +135,13 @@ function DU_MenuRun(Menu *menu)
       if(label->img[0])
       {
          SetFont(label->img);
-         menuf("A", HUDMSG_PLAIN, msgid++, 0, x,y, 0);
+         menuf("A\n", HUDMSG_PLAIN, msgid++, 0, x,y, 0);
          SetFont(menu->font);
       }
       else
-         menuf("", HUDMSG_PLAIN, msgid++, 0, x,y, 1);
+         menuf("\n", HUDMSG_PLAIN, msgid++, 0, x,y, 1);
 
-      menuf("%s", label->txt, HUDMSG_PLAIN, msgid++, label->color, x,y, 0);
+      menuf("%s\n", label->txt, HUDMSG_PLAIN, msgid++, label->color, x,y, 0);
    };
 
    // Draw texts.
@@ -150,7 +150,7 @@ function DU_MenuRun(Menu *menu)
       fixed x = (int)text->x + 0.1;
       fixed y = (int)text->y + 0.1;
 
-      menuf("%s", text->txt, HUDMSG_PLAIN, msgid++, text->color, x,y, 0);
+      menuf("%s\n", text->txt, HUDMSG_PLAIN, msgid++, text->color, x,y, 0);
    };
 
    // Mouse-over events.

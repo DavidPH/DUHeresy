@@ -98,7 +98,7 @@ __extscript "ACS" DUM_MainMenu() __enter
                if(*spell)
                {
                   // Clear spell text, if any.
-                  __printf("");
+                  __printf("\n");
 
                   if((*spell)->funcCast)
                      (*spell)->funcCast(*spell);
@@ -106,7 +106,7 @@ __extscript "ACS" DUM_MainMenu() __enter
                   *spell = nullptr;
                }
                else
-                  __printf("No spell selected.");
+                  __printf("No spell selected.\n");
             };
 
             // TODO: Draw HUD.
@@ -117,7 +117,7 @@ __extscript "ACS" DUM_MainMenu() __enter
          if(buttons & BT_USER1)
          {
             // Clear menu.
-            __printf("");
+            __printf("\n");
             ms = MS_HUD;
          }
          else
@@ -128,7 +128,7 @@ __extscript "ACS" DUM_MainMenu() __enter
          if(buttons & BT_USER1)
          {
             // Clear menu.
-            __printf("");
+            __printf("\n");
             ms = MS_HUD;
          }
          else

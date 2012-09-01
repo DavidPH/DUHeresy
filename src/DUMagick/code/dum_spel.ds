@@ -200,7 +200,7 @@ function DUM_SpellMenu(int buttons)
          (*spell)->funcSelect(*spell);
    };
 
-   __printf("%s\n|\n%s -- %s -- %s\n|\n%s",
+   __printf("%s\n|\n%s -- %s -- %s\n|\n%s\n",
                             (*spell)->up->name,
       (*spell)->left->name, (*spell)->name, (*spell)->right->name,
                             (*spell)->down->name);
