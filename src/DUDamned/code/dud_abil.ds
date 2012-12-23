@@ -624,13 +624,23 @@ function DUD_DoAmmoCap(int pnum)
       };
    };
 
-   for (int ammo = 0; ammo < AMMOMAX; ++ammo)
+   for(register int ammo = 0; ammo < AMMOMAX; ++ammo)
    {
-      SetAmmoCapacity(DUDammo[ammo].nameDec, DUDammo[ammo].cap * ammoCap[ammo]);
+      register int cap = DUDammo[ammo].cap * ammoCap[ammo];
+      register str nameDec = DUDammo[ammo].nameDec;
 
-      int count = CheckInventory(DUDammo[ammo].nameDec);
-      TakeInventory(DUDammo[ammo].nameDec, count);
-      GiveInventory(DUDammo[ammo].nameDec, count);
+      // If cap already correct, don't adjust.
+      if(GetAmmoCapacity(nameDec) == cap) continue;
+
+      SetAmmoCapacity(nameDec, cap);
+
+      // Don't keep now-excess ammo.
+      register int count = CheckInventory(nameDec);
+      if(count > cap)
+      {
+         TakeInventory(nameDec, count);
+         GiveInventory(nameDec, count);
+      };
    };
 };
 

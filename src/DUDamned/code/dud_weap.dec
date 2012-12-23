@@ -26,6 +26,9 @@
 // Types                                                                      |
 //
 
+// Replace Chainsaw pickup with Berserk.
+actor DUD_ChainsawBerserk : RandomSpawner replaces Chainsaw {DropItem "DUD_Berserk"}
+
 //
 // DUD_Chainfist
 //
