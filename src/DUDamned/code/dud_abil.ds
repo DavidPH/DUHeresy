@@ -433,6 +433,17 @@ static dud_weapon_t [7][WEAPMAX]DUDweapon =
          "DUD_PlasmaRifle";
          "PLASMA";
       };
+      // WEAP6_LASG
+      {
+         true;
+         AMMO_CELL;
+         "Shoots plasma hitscans. No affiliation with 40K. Nope.";
+         nullptr;
+         nullptr;
+         "Lasgun";
+         "DUD_Lasgun";
+         "LASGUN";
+      };
    };
 
    // WEAP7
@@ -447,6 +458,17 @@ static dud_weapon_t [7][WEAPMAX]DUDweapon =
          "B.F.G. 9000";
          "DUD_BFG9000";
          "B.F.G.";
+      };
+      // WEAP7_RAIL
+      {
+         true;
+         AMMO_CELL;
+         "Shoots piercing plasma.";
+         nullptr;
+         nullptr;
+         "Rail Rifle";
+         "DUD_RailRifle";
+         "RAIL";
       };
    };
 };

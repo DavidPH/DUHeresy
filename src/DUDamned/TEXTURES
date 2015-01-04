@@ -66,5 +66,60 @@ sprite DGUNA0, 54, 16
    offset 25, 18
 }
 
+//
+// Lasgun
+//
+
+sprite LASGA0, 79, 80
+{
+   patch SHTGA0,  -1,  0
+   patch BFGGA0, -45, 20
+
+   offset -121, -88
+}
+
+sprite LASGB0, 79, 80
+{
+   patch SHTGA0,  -1,  0
+   patch BFGGB0, -45, 20
+
+   offset -121, -88
+}
+
+sprite LGUNA0, 63, 12
+{
+   patch SHOTA0, 0, 0
+
+   offset 31, 17
+}
+
+//
+// Rail Rifle
+//
+
+sprite RAILA0, 84, 75
+{
+   patch SHTGA0, 0,  0
+   patch PLSGA0, 1, 14
+
+   offset -122, -107
+}
+
+sprite RAILB0, 191, 121
+{
+   patch SHTGB0,  0,  0
+   patch PLSGB0, 15, 10
+
+   offset -43, -47
+}
+
+sprite RRIFA0, 63, 16
+{
+   patch SHOTA0, 0, 4
+   patch PLASA0, 0, 0
+
+   offset 27, 19
+}
+
 // EOF
 

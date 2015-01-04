@@ -51,8 +51,8 @@ actor DUD_Player : DoomPlayer
    Player.WeaponSlot 3, DUD_Shotgun, DUD_SuperShotgun
    Player.WeaponSlot 4, DUD_Chaingun, DUD_Dakkagun
    Player.WeaponSlot 5, DUD_RocketLauncher
-   Player.WeaponSlot 6, DUD_PlasmaRifle
-   Player.WeaponSlot 7, DUD_BFG9000
+   Player.WeaponSlot 6, DUD_PlasmaRifle, DUD_Lasgun
+   Player.WeaponSlot 7, DUD_BFG9000, DUD_RailRifle
 
    -FLOORCLIP
 }

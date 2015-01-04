@@ -73,6 +73,42 @@ actor DUD_BFG9000 : BFG9000
 }
 
 //
+// DUD_Lasgun
+//
+actor DUD_Lasgun : PlasmaRifle
+{
+   Weapon.AmmoGive1 0
+   Weapon.AmmoUse1 2
+   Weapon.AmmoType2 "Cell"
+   Weapon.AmmoUse2 2
+
+   states
+   {
+   Spawn:
+      LGUN A -1
+      stop
+
+   Select:
+      LASG A 1 A_Raise
+      goto Select
+
+   Ready:
+      LASG A 1 A_WeaponReady
+      goto Ready
+
+   Deselect:
+      LASG A 1 A_Lower
+      goto Deselect
+
+   Fire:
+      LASG B 4 A_RailAttack(ACS_ExecuteWithResult(DUD_LasgunDamage), 0, true, "none", "red", RGF_NOPIERCING)
+      LASG A 8
+      LASG A 0 A_ReFire
+      goto Ready
+   }
+}
+
+//
 // DUD_PlasmaBall
 //
 actor DUD_PlasmaBall : PlasmaBall
@@ -100,6 +136,54 @@ actor DUD_PlasmaRifle : PlasmaRifle
       Goto LightDone
       PLSF B 4 Bright A_Light1
       Goto LightDone
+   }
+}
+
+//
+// DUD_RailRifle
+//
+actor DUD_RailRifle : PlasmaRifle
+{
+   Weapon.AmmoGive1 0
+   Weapon.AmmoUse1 5
+   Weapon.AmmoType2 "Cell"
+   Weapon.AmmoUse2 5
+
+   states
+   {
+   Spawn:
+      RRIF A -1
+      stop
+
+   Select:
+      RAIL A 1 A_Raise
+      goto Select
+
+   Ready:
+      RAIL A 1 A_WeaponReady
+      goto Ready
+
+   Deselect:
+      RAIL A 1 A_Lower
+      goto Deselect
+
+   Fire:
+      RAIL A  0 A_GunFlash
+      RAIL A  4 A_RailAttack(ACS_ExecuteWithResult(DUD_RailRifleDamage), 0, true)
+      RAIL B 16 A_ReFire
+      goto Ready
+
+   Flash:
+      PLSF A 1 bright A_Light1
+      PLSF B 1 bright A_Light1
+      goto LightDone
+
+   Hold:
+      RAIL A  8
+      RAIL A  0 A_GunFlash
+      RAIL A  4 A_RailAttack(ACS_ExecuteWithResult(DUD_RailRifleDamage), 0, false)
+      RAIL B 44 A_ClearReFire
+      goto Ready
    }
 }
 

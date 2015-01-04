@@ -111,6 +111,14 @@ __extscript "ACS" int DUD_FistDamage()
 };
 
 //
+// DUD_LasgunDamage
+//
+__extscript "ACS" int DUD_LasgunDamage()
+{
+   return 50 * DUD_GetDamageFactor(PlayerNumber(), AMMO_CELL);
+};
+
+//
 // DUD_PistolDamage
 //
 __extscript "ACS" int DUD_PistolDamage()
@@ -119,7 +127,15 @@ __extscript "ACS" int DUD_PistolDamage()
 };
 
 //
-// DUD_RocketLuancherFire
+// DUD_RailRifleDamage
+//
+__extscript "ACS" int DUD_RailRifleDamage()
+{
+   return 100 * DUD_GetDamageFactor(PlayerNumber(), AMMO_CELL);
+};
+
+//
+// DUD_RocketLauncherFire
 //
 __extscript "ACS" void DUD_RocketLauncherFire()
 {

@@ -81,8 +81,10 @@ enum dud_weapon_e
    WEAP5_RCKT = 0,
 
    WEAP6_PLAS = 0,
+   WEAP6_LASG,
 
    WEAP7_BFG9 = 0,
+   WEAP7_RAIL,
 
    WEAPMAX = 3
 };
