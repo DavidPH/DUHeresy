@@ -1,19 +1,8 @@
 //-----------------------------------------------------------------------------
 //
-// Copyright(C) 2012 David Hill
+// Copyright (C) 2012-2015 David Hill
 //
-// This program is free software; you can redistribute it and/or modify
-// it under the terms of the GNU General Public License as published by
-// the Free Software Foundation; either version 3 of the License, or
-// (at your option) any later version.
-//
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-//
-// You should have received a copy of the GNU General Public License
-// along with this program; if not, see <http://www.gnu.org/licenses/>.
+// See COPYING for license information.
 //
 //-----------------------------------------------------------------------------
 //
@@ -72,11 +61,11 @@ actor DUH_Crossbow : Crossbow replaces Crossbow
    {
    Ready:
       CRBW AAAAAA 1 A_WeaponReady
-      TNT1 A 0 ACS_ExecuteAlways(DUH_CrossbowReady,0, 6)
+      CRBW B 0 ACS_NamedExecuteAlways("DUH_CrossbowReady",0, 6)
       CRBW BBBBBB 1 A_WeaponReady
-      TNT1 A 0 ACS_ExecuteAlways(DUH_CrossbowReady,0, 6)
+      CRBW C 0 ACS_NamedExecuteAlways("DUH_CrossbowReady",0, 6)
       CRBW CCCCCC 1 A_WeaponReady
-      TNT1 A 0 ACS_ExecuteAlways(DUH_CrossbowReady,0, 6)
+      CRBW A 0 ACS_NamedExecuteAlways("DUH_CrossbowReady",0, 6)
       goto Ready
 
    Fire:
@@ -87,7 +76,7 @@ actor DUH_Crossbow : Crossbow replaces Crossbow
       goto Ready
 
    AltFire:
-      CRBW D 6 ACS_ExecuteAlways(DUH_CrossbowAltFire,0, true)
+      CRBW D 6 ACS_NamedExecuteAlways("DUH_CrossbowAltFire",0, true)
       CRBW EFGH 3
       CRBW AB 4
       CRBW C 5 A_ReFire
@@ -109,15 +98,15 @@ actor DUH_CrossbowPowered : DUH_Crossbow replaces CrossbowPowered
    {
    Ready:
       CRBW AA 1 A_WeaponReady
-      TNT1 A 0 ACS_ExecuteAlways(DUH_CrossbowReady,0, 2)
+      CRBW B 0 ACS_NamedExecuteAlways("DUH_CrossbowReady",0, 2)
       CRBW BB 1 A_WeaponReady
-      TNT1 A 0 ACS_ExecuteAlways(DUH_CrossbowReady,0, 2)
+      CRBW C 0 ACS_NamedExecuteAlways("DUH_CrossbowReady",0, 2)
       CRBW CC 1 A_WeaponReady
-      TNT1 A 0 ACS_ExecuteAlways(DUH_CrossbowReady,0, 2)
+      CRBW A 0 ACS_NamedExecuteAlways("DUH_CrossbowReady",0, 2)
       goto Ready
 
    Fire:
-      TNT1 A 0 ACS_ExecuteAlways(DUH_CrossbowReady,0, 15)
+      CRBW D 0 ACS_NamedExecuteAlways("DUH_CrossbowReady",0, 15)
       CRBW D 4 A_FireCustomMissile("DUH_CrossbowMissile1")
       CRBW EFGH 1
       CRBW AB 2
@@ -125,7 +114,7 @@ actor DUH_CrossbowPowered : DUH_Crossbow replaces CrossbowPowered
       goto Ready
 
    AltFire:
-      CRBW D 6 ACS_ExecuteAlways(DUH_CrossbowAltFire,0, false)
+      CRBW D 6 ACS_NamedExecuteAlways("DUH_CrossbowAltFire",0, false)
       CRBW EFGH 3
       CRBW AB 4
       CRBW C 5 A_ReFire

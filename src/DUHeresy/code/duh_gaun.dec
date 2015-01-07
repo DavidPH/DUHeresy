@@ -1,19 +1,8 @@
 //-----------------------------------------------------------------------------
 //
-// Copyright(C) 2012 David Hill
+// Copyright (C) 2012-2015 David Hill
 //
-// This program is free software; you can redistribute it and/or modify
-// it under the terms of the GNU General Public License as published by
-// the Free Software Foundation; either version 3 of the License, or
-// (at your option) any later version.
-//
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-//
-// You should have received a copy of the GNU General Public License
-// along with this program; if not, see <http://www.gnu.org/licenses/>.
+// See COPYING for license information.
 //
 //-----------------------------------------------------------------------------
 //
@@ -39,7 +28,7 @@ actor DUH_Gauntlets : Gauntlets replaces Gauntlets
    {
    Ready:
       GAUN A 1 A_WeaponReady
-      TNT1 A 0 ACS_ExecuteAlways(DUH_ArtifactReady,0, 1)
+      GAUN A 0 ACS_NamedExecuteAlways("DUH_ArtifactReady",0, 1)
       goto Ready
 
    Fire:
@@ -56,11 +45,11 @@ actor DUH_Gauntlets : Gauntlets replaces Gauntlets
       GAUN B 4 A_Light2
       GAUN C 4
    AltHold:
-      TNT1 AAAA 0 ACS_ExecuteAlways(DUH_ArtifactReady,0, 12)
+      GAUN DDDD 0 ACS_NamedExecuteAlways("DUH_ArtifactReady",0, 12)
       GAUN DEF 4
       GAUN C 4 A_ReFire
       GAUN B 4 A_Light0
-     goto Ready
+      goto Ready
    }
 }
 
@@ -77,18 +66,18 @@ actor DUH_GauntletsPowered : DUH_Gauntlets replaces GauntletsPowered
    {
    Ready:
       GAUN GGGG 1 A_WeaponReady
-      TNT1 A 0 ACS_ExecuteAlways(DUH_ArtifactReady,0, 4)
+      GAUN H 0 ACS_NamedExecuteAlways("DUH_ArtifactReady",0, 4)
       GAUN HHHH 1 A_WeaponReady
-      TNT1 A 0 ACS_ExecuteAlways(DUH_ArtifactReady,0, 4)
+      GAUN I 0 ACS_NamedExecuteAlways("DUH_ArtifactReady",0, 4)
       GAUN IIII 1 A_WeaponReady
-      TNT1 A 0 ACS_ExecuteAlways(DUH_ArtifactReady,0, 4)
+      GAUN G 0 ACS_NamedExecuteAlways("DUH_ArtifactReady",0, 4)
       goto Ready
 
    Fire:
       GAUN J 4 A_PlayWeaponSound("weapons/gauntletsuse")
       GAUN K 4
    Hold:
-      TNT1 A 0 ACS_ExecuteAlways(DUH_ArtifactReady,0, 12)
+      GAUN L 0 ACS_NamedExecuteAlways("DUH_ArtifactReady",0, 12)
       GAUN LL 2 BRIGHT A_GauntletAttack(1)
       GAUN MMNN 2 BRIGHT A_GauntletAttack(0)
       GAUN K 4 A_ReFire
@@ -99,7 +88,7 @@ actor DUH_GauntletsPowered : DUH_Gauntlets replaces GauntletsPowered
       GAUN J 4 A_Light2
       GAUN K 4
    AltHold:
-      TNT1 AAAAAAAA 0 ACS_ExecuteAlways(DUH_ArtifactReady,0, 12)
+      GAUN LLLLLLLL 0 ACS_NamedExecuteAlways("DUH_ArtifactReady",0, 12)
       GAUN LMN 4
       GAUN K 4 A_ReFire
       GAUN J 4 A_Light0

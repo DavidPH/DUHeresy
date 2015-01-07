@@ -1,19 +1,8 @@
 //-----------------------------------------------------------------------------
 //
-// Copyright(C) 2012 David Hill
+// Copyright (C) 2012-2015 David Hill
 //
-// This program is free software; you can redistribute it and/or modify
-// it under the terms of the GNU General Public License as published by
-// the Free Software Foundation; either version 3 of the License, or
-// (at your option) any later version.
-//
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-//
-// You should have received a copy of the GNU General Public License
-// along with this program; if not, see <http://www.gnu.org/licenses/>.
+// See COPYING for license information.
 //
 //-----------------------------------------------------------------------------
 //
@@ -39,11 +28,11 @@ actor DUH_Staff : Staff replaces Staff
    {
    Ready:
       STFF A 1 A_WeaponReady
-      TNT1 AA 0 ACS_ExecuteAlways(DUH_ArtifactReady,0, 1)
+      STFF A 0 ACS_NamedExecuteAlways("DUH_ArtifactReady",0, 2)
       goto Ready
 
    Fire:
-      TNT1 A 0 ACS_ExecuteAlways(DUH_ArtifactReady,0, 14)
+      STFF B 0 ACS_NamedExecuteAlways("DUH_ArtifactReady",0, 14)
       STFF B 6
       STFF C 8 A_CustomPunch(5, false, 0, "StaffPuff")
       STFF B 8 A_ReFire
@@ -76,22 +65,22 @@ actor DUH_StaffPowered : DUH_Staff replaces StaffPowered
    {
    Ready:
       STFF DDDD 1 A_WeaponReady
-      TNT1 AAAA 0 ACS_ExecuteAlways(DUH_ArtifactReady,0, 4)
+      STFF EEEE 0 ACS_NamedExecuteAlways("DUH_ArtifactReady",0, 4)
       STFF EEEE 1 A_WeaponReady
-      TNT1 AAAA 0 ACS_ExecuteAlways(DUH_ArtifactReady,0, 4)
+      STFF FFFF 0 ACS_NamedExecuteAlways("DUH_ArtifactReady",0, 4)
       STFF FFFF 1 A_WeaponReady
-      TNT1 AAAA 0 ACS_ExecuteAlways(DUH_ArtifactReady,0, 4)
+      STFF DDDD 0 ACS_NamedExecuteAlways("DUH_ArtifactReady",0, 4)
       goto Ready
 
    Fire:
-      TNT1 AA 0 ACS_ExecuteAlways(DUH_ArtifactReady,0, 14)
+      STFF GG 0 ACS_NamedExecuteAlways("DUH_ArtifactReady",0, 14)
       STFF G 6
       STFF H 8 A_CustomPunch(15, false, 0, "StaffPuff2")
       STFF G 8 A_ReFire
       goto Ready
 
    AltFire:
-      TNT1 A 0 ACS_ExecuteAlways(DUH_ArtifactReady,0, 32)
+      STFF F 0 ACS_NamedExecuteAlways("DUH_ArtifactReady",0, 32)
       STFF F 3
       STFF G 4 A_CustomPunch(6, false, 0, "StaffPuff2")
       STFF F 3

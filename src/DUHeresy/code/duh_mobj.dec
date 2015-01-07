@@ -1,19 +1,8 @@
 //-----------------------------------------------------------------------------
 //
-// Copyright(C) 2012 David Hill
+// Copyright (C) 2012-2015 David Hill
 //
-// This program is free software; you can redistribute it and/or modify
-// it under the terms of the GNU General Public License as published by
-// the Free Software Foundation; either version 3 of the License, or
-// (at your option) any later version.
-//
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-//
-// You should have received a copy of the GNU General Public License
-// along with this program; if not, see <http://www.gnu.org/licenses/>.
+// See COPYING for license information.
 //
 //-----------------------------------------------------------------------------
 //
@@ -40,7 +29,8 @@ actor DUH_Disciple : Wizard replaces Wizard
       WZRD J 6 A_NoBlocking
       WZRD KLM 6
       WZRD M 6 A_SetFloorClip
-      WZRD M -1 ACS_ExecuteAlways(DUH_RaiseThingDelayed,0, random(2800, 3150))
+      WZRD M -1 ACS_NamedExecuteAlways("DUH_RaiseThingDelayed",0,
+         Random(2800, 3150))
       stop
 
    Raise:
@@ -64,7 +54,7 @@ actor DUH_DSparil : Sorcerer2 replaces Sorcerer2
       SOR2 R 3 A_Srcr2Decide
       SOR2 R 3 A_Srcr2Decide
       SOR2 S 9 A_FaceTarget
-      SOR2 T 9 A_CustomMeleeAttack(20 * random(1, 8), "dsparil/attack")
+      SOR2 T 9 A_CustomMeleeAttack(20 * Random(1, 8), "dsparil/attack")
       goto See
 
    Missile:
@@ -88,8 +78,8 @@ actor DUH_DSparil : Sorcerer2 replaces Sorcerer2
       SDTH J 6 A_NoBlocking
       SDTH K 6 A_PlaySoundEx("dsparil/bones", "Body")
       SDTH LMN 6
-      SDTH O 6 ACS_ExecuteWithResult(DUH_DSparilDeath)
-      SDTH O -1 ACS_ExecuteAlways(DUH_RaiseThingDelayed,0, random(175, 350))
+      SDTH O 6 ACS_NamedExecuteWithResult("DUH_DSparilDeath")
+      SDTH O -1 ACS_NamedExecuteAlways("DUH_RaiseThingDelayed",0, Random(175, 350))
       stop
 
    Raise:
@@ -136,13 +126,15 @@ actor DUH_FireGargoyle : HereticImpLeader replaces HereticImpLeader
       IMPX I 7 A_ImpExplode
       IMPX J 7 A_Scream
       IMPX KL 7
-      IMPX L -1 ACS_ExecuteAlways(DUH_RaiseThingDelayed,0, random(700, 1050))
+      IMPX L -1 ACS_NamedExecuteAlways("DUH_RaiseThingDelayed",0,
+         Random(700, 1050))
       stop
 
    XCrash:
       IMPX X 7
       IMPX YZ 7
-      IMPX Z -1 ACS_ExecuteAlways(DUH_RaiseThingDelayed,0, random(700, 1050))
+      IMPX Z -1 ACS_NamedExecuteAlways("DUH_RaiseThingDelayed",0,
+         Random(700, 1050))
       stop
 
    Raise:
@@ -174,13 +166,15 @@ actor DUH_Gargoyle : HereticImp replaces HereticImp
       IMPX I 7 A_ImpExplode
       IMPX J 7 A_Scream
       IMPX KL 7
-      IMPX L -1 ACS_ExecuteAlways(DUH_RaiseThingDelayed,0, random(350, 700))
+      IMPX L -1 ACS_NamedExecuteAlways("DUH_RaiseThingDelayed",0,
+         Random(350, 700))
       stop
 
    XCrash:
       IMPX X 7
       IMPX YZ 7
-      IMPX Z -1 ACS_ExecuteAlways(DUH_RaiseThingDelayed,0, random(350, 700))
+      IMPX Z -1 ACS_NamedExecuteAlways("DUH_RaiseThingDelayed",0,
+         Random(350, 700))
       stop
 
    Raise:
@@ -203,7 +197,8 @@ actor DUH_Golem : Mummy replaces Mummy
       MUMM L 5
       MUMM M 5 A_NoBlocking
       MUMM NOP 5
-      MUMM P -1 ACS_ExecuteAlways(DUH_RaiseThingDelayed,0, random(700, 1050))
+      MUMM P -1 ACS_NamedExecuteAlways("DUH_RaiseThingDelayed",0,
+         Random(700, 1050))
       stop
 
    Raise:
@@ -238,7 +233,8 @@ actor DUH_IronLich : IronLich replaces IronLich
       LICH G 7 A_NoBlocking
       LICH H 7
       LICH I 7 A_BossDeath
-      LICH I -1 ACS_ExecuteAlways(DUH_RaiseThingDelayed,0, random(3150, 3500))
+      LICH I -1 ACS_NamedExecuteAlways("DUH_RaiseThingDelayed",0,
+         Random(3150, 3500))
       stop
 
    Raise:
@@ -270,7 +266,8 @@ actor DUH_Maulotaur : Minotaur replaces Minotaur
       MNTR R 6
       MNTR S 5
       MNTR T 6 A_BossDeath
-      MNTR T -1 ACS_ExecuteAlways(DUH_RaiseThingDelayed,0, random(3500, 3850))
+      MNTR T -1 ACS_NamedExecuteAlways("DUH_RaiseThingDelayed",0,
+         Random(3500, 3850))
       stop
 
    Raise:
@@ -293,7 +290,8 @@ actor DUH_Nitrogolem : MummyLeader replaces MummyLeader
       MUMM L 5
       MUMM M 5 A_NoBlocking
       MUMM NOP 5
-      MUMM P -1 ACS_ExecuteAlways(DUH_RaiseThingDelayed,0, random(1050, 1400))
+      MUMM P -1 ACS_NamedExecuteAlways("DUH_RaiseThingDelayed",0,
+         Random(1050, 1400))
       stop
 
    Raise:
@@ -327,7 +325,8 @@ actor DUH_Ophidian : Snake replaces Snake
       SNKE IJKL 5
       SNKE M 5 A_NoBlocking
       SNKE NOP 5
-      SNKE P -1 ACS_ExecuteAlways(DUH_RaiseThingDelayed,0, random(2450, 2800))
+      SNKE P -1 ACS_NamedExecuteAlways("DUH_RaiseThingDelayed",0,
+         Random(2450, 2800))
       stop
 
    Raise:
@@ -348,7 +347,8 @@ actor DUH_Sabreclaw : Clink replaces Clink
       CLNK K 5 A_Scream
       CLNK L 5 A_NoBlocking
       CLNK MNO 5
-      CLNK O -1 ACS_ExecuteAlways(DUH_RaiseThingDelayed,0, random(1750, 2100))
+      CLNK O -1 ACS_NamedExecuteAlways("DUH_RaiseThingDelayed",0,
+         Random(1750, 2100))
       stop
 
    Raise:
@@ -370,7 +370,8 @@ actor DUH_UndeadWarrior : Knight replaces Knight
       KNIG K 6
       KNIG L 6 A_NoBlocking
       KNIG MNO 6
-      KNIG O -1 ACS_ExecuteAlways(DUH_RaiseThingDelayed,0, random(1400, 1750))
+      KNIG O -1 ACS_NamedExecuteAlways("DUH_RaiseThingDelayed",0,
+         Random(1400, 1750))
       stop
 
    Raise:
@@ -404,7 +405,8 @@ actor DUH_Weredragon : Beast replaces Beast
       BEAS TUV 6
       BEAS W 6 A_NoBlocking
       BEAS XYZ 6
-      BEAS Z -1 ACS_ExecuteAlways(DUH_RaiseThingDelayed,0, random(2100, 2450))
+      BEAS Z -1 ACS_NamedExecuteAlways("DUH_RaiseThingDelayed",0,
+         Random(2100, 2450))
       stop
 
    XDeath:
@@ -416,7 +418,8 @@ actor DUH_Weredragon : Beast replaces Beast
       BEAS O 6 A_NoBlocking
       BEAS P 5
       BEAS Q 6
-      BEAS Q -1 ACS_ExecuteAlways(DUH_RaiseThingDelayed,0, random(2100, 2450))
+      BEAS Q -1 ACS_NamedExecuteAlways("DUH_RaiseThingDelayed",0,
+         Random(2100, 2450))
       stop
 
    Raise:

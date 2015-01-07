@@ -1,19 +1,8 @@
 //-----------------------------------------------------------------------------
 //
-// Copyright(C) 2012 David Hill
+// Copyright (C) 2012-2015 David Hill
 //
-// This program is free software; you can redistribute it and/or modify
-// it under the terms of the GNU General Public License as published by
-// the Free Software Foundation; either version 3 of the License, or
-// (at your option) any later version.
-//
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-//
-// You should have received a copy of the GNU General Public License
-// along with this program; if not, see <http://www.gnu.org/licenses/>.
+// See COPYING for license information.
 //
 //-----------------------------------------------------------------------------
 //
@@ -53,7 +42,7 @@ actor DUH_BagOfHolding : CustomInventory replaces BagOfHolding
       goto Spawn
 
    Pickup:
-      TNT1 A 0 A_GiveInventory("ArtiTomeOfPower", 2)
+      BAGH A 0 A_GiveInventory("ArtiTomeOfPower", 2)
       stop
    }
 }
@@ -61,39 +50,54 @@ actor DUH_BagOfHolding : CustomInventory replaces BagOfHolding
 //
 // DUH_ChickenFriend
 //
-actor DUH_ChickenFriend : Chicken
+actor DUH_ChickenFriend
 {
+   ActiveSound "chicken/active"
    AttackSound ""
    Damage 0
-   Health 300
+   DeathSound "chicken/death"
+   Game Heretic
+   Health 256
+   Height 22
+   Mass 40
+   Obituary "$OB_CHICKEN"
+   PainChance 200
+   PainSound "chicken/pain"
+   Radius 9
+   SeeSound "chicken/pain"
    Speed 8
 
+   MONSTER
+   +DONTMORPH
+   +FLOORCLIP
    +FRIENDLY
    +NORADIUSDMG
+   +WINDTHRUST
+   -COUNTKILL
 
    states
    {
    Spawn:
       CHKN AB 10 A_Look
-      TNT1 A 0 ACS_ExecuteAlways(DUH_ChickenFriendCountdown,0, 20)
+      CHKN A 0 ACS_NamedExecuteAlways("DUH_ChickenFriendCountdown",0, 20)
       goto Spawn
 
    See:
-      CHKN A 0 A_CustomMeleeAttack(random[ChicAttack](5,9), "chicken/attack")
+      CHKN A 0 A_CustomMeleeAttack(Random(5, 9), "chicken/attack")
       CHKN AABB 1 A_Chase
-      TNT1 A 0 ACS_ExecuteAlways(DUH_ChickenFriendCountdown,0, 4)
+      CHKN A 0 ACS_NamedExecuteAlways("DUH_ChickenFriendCountdown",0, 4)
       goto See
 
    Pain:
-      TNT1 A 0 ThrustThing(angle*256/360+128, 2)
-      TNT1 A 0 ThrustThingZ(0, 32, false, true)
+      CHKN D 0 ThrustThing(angle*256/360+128, 2)
+      CHKN D 0 ThrustThingZ(0, 32, false, true)
       CHKN D 5 A_Feathers
       CHKN C 5 A_Pain
       goto See
 
    Melee:
       CHKN A 8 A_FaceTarget
-      CHKN C 10 A_CustomMeleeAttack(random[ChicAttack](5,9), "chicken/attack")
+      CHKN C 10 A_CustomMeleeAttack(Random(5, 9), "chicken/attack")
       goto See
 
    Missile:
@@ -104,6 +108,15 @@ actor DUH_ChickenFriend : Chicken
       CHKN A 2 A_SkullAttack
       CHKN C 2 A_SkullAttack
       goto Missile+3
+
+   Death:
+      CHKN E 6 A_Scream
+      CHKN F 6 A_Feathers
+      CHKN G 6
+      CHKN H 6 A_NoBlocking
+      CHKN IJK 6
+      CHKN L -1
+      stop
    }
 }
 
