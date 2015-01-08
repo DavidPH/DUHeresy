@@ -1,19 +1,8 @@
-//DS---------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
 //
-// Copyright(C) 2012 David Hill
+// Copyright (C) 2012-2015 David Hill
 //
-// This program is free software; you can redistribute it and/or modify
-// it under the terms of the GNU General Public License as published by
-// the Free Software Foundation; either version 3 of the License, or
-// (at your option) any later version.
-//
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-//
-// You should have received a copy of the GNU General Public License
-// along with this program; if not, see <http://www.gnu.org/licenses/>.
+// See COPYING for license information.
 //
 //-----------------------------------------------------------------------------
 //
@@ -21,8 +10,10 @@
 //
 //-----------------------------------------------------------------------------
 
-#include "dum_spel.dh"
-#include "dum_stan.dh"
+#include "dum_spel.h"
+#include "dum_stan.h"
+
+#include <stddef.h>
 
 
 //----------------------------------------------------------------------------|
@@ -32,13 +23,13 @@
 //
 // MenuState
 //
-enum MenuState
+typedef enum MenuState
 {
    MS_NONE,
    MS_HUD,
    MS_SPELL,
    MS_STANCE,
-};
+} MenuState;
 
 
 //----------------------------------------------------------------------------|
@@ -48,10 +39,11 @@ enum MenuState
 //
 // DUM_MainMenu
 //
-__extscript "ACS" DUM_MainMenu() __enter
+[[call("ScriptS"), extern("ACS"), script("Enter")]]
+void DUM_MainMenu(void)
 {
    int buttons, oldbuttons, newbuttons = 0;
-   int pnum = PlayerNumber();
+   int pnum = ACS_PlayerNumber();
    MenuState ms = MS_HUD;
 
    if(pnum < 0) return;
@@ -59,7 +51,7 @@ __extscript "ACS" DUM_MainMenu() __enter
    while(true)
    {
       oldbuttons = newbuttons;
-      newbuttons = GetPlayerInput(pnum, INPUT_BUTTONS);
+      newbuttons = ACS_GetPlayerInput(pnum, INPUT_BUTTONS);
       buttons = newbuttons & ~oldbuttons;
 
       switch(ms)
@@ -70,9 +62,9 @@ __extscript "ACS" DUM_MainMenu() __enter
       case MS_HUD:
          if(buttons & BT_USER1)
          {
-            SetPlayerProperty(0, true, PROP_TOTALLYFROZEN);
+            ACS_SetPlayerProperty(0, true, PROP_TOTALLYFROZEN);
 
-            switch(PlayerClass(pnum))
+            switch(ACS_PlayerClass(pnum))
             {
             case CLASS_FIGHTER:
                ms = MS_STANCE;
@@ -80,44 +72,51 @@ __extscript "ACS" DUM_MainMenu() __enter
 
             case CLASS_CLERIC:
             case CLASS_MAGE:
-               if(!DUMspellSelect[pnum])
-                  DUMspellSelect[pnum] = &DUMspellBasic;
+               if(!DUM_SpellSelect[pnum])
+                  DUM_SpellSelect[pnum] = &DUM_SpellBasic;
                ms = MS_SPELL;
                break;
-            };
+            }
          }
          else
          {
-            SetPlayerProperty(0, false, PROP_TOTALLYFROZEN);
+            ACS_SetPlayerProperty(0, false, PROP_TOTALLYFROZEN);
 
             // Cast spell.
             if(buttons & BT_USER2)
             {
-               SpellData **spell = &DUMspellSelect[pnum];
+               SpellData **spell = &DUM_SpellSelect[pnum];
 
                if(*spell)
                {
                   // Clear spell text, if any.
-                  __printf("\n");
+                  ACS_BeginPrint();
+                  ACS_EndPrint();
 
                   if((*spell)->funcCast)
                      (*spell)->funcCast(*spell);
 
-                  *spell = nullptr;
+                  *spell = NULL;
                }
                else
-                  __printf("No spell selected.\n");
-            };
+               {
+                  ACS_BeginPrint();
+                  ACS_PrintString(s"No spell selected.");
+                  ACS_EndPrint();
+               }
+            }
 
             // TODO: Draw HUD.
-         };
+         }
          break;
 
       case MS_SPELL:
          if(buttons & BT_USER1)
          {
             // Clear menu.
-            __printf("\n");
+            ACS_BeginPrint();
+            ACS_EndPrint();
+
             ms = MS_HUD;
          }
          else
@@ -128,17 +127,19 @@ __extscript "ACS" DUM_MainMenu() __enter
          if(buttons & BT_USER1)
          {
             // Clear menu.
-            __printf("\n");
+            ACS_BeginPrint();
+            ACS_EndPrint();
+
             ms = MS_HUD;
          }
          else
             DUM_StanceMenu(buttons);
          break;
-      };
+      }
 
-      Delay(1);
-   };
-};
+      ACS_Delay(1);
+   }
+}
 
 // EOF
 

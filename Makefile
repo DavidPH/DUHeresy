@@ -17,7 +17,7 @@ LD = gdcc-ld
 GDCC_LIB_PATH = /usr/share/gdcc/lib
 
 
-all: build/DUDamned.pkz build/DUHeresy.pkz
+all: build/DUDamned.pkz build/DUHeresy.pkz build/DUMagick.pkz
 
 clean:
 	rm -f build/*.bin build/*.ir build/*.pkz
@@ -226,6 +226,54 @@ build/DUHeresy.ir: $(DUH_IR)
 
 $(DUH_IR_CC) : build/duh_%.ir : src/DUHeresy/code/duh_%.c $(DU_H) $(DUH_H)
 	$(CC) --bc-target=ZDoom $(DUH_INC) -o$@ $<
+
+##
+## DUMagick
+##
+
+DUM_DEC = \
+   src/DUMagick/code/dum_spel.dec
+
+DUM_H = \
+   src/DUMagick/code/dum_spel.h \
+   src/DUMagick/code/dum_stan.h
+
+DUM_INC = -isrc/DUMagick/code $(DU_INC)
+
+DUM_IR_CC = \
+   build/dum_main.ir \
+   build/dum_spel.ir \
+   build/dum_stan.ir
+
+DUM_IR = $(DUM_IR_CC)
+
+build/DUMagick.pkz: build/DUMagick.bin $(DU_DEC) $(DUM_DEC)
+	@rm -f $@
+	@rm -rf build/DUMagick
+
+	@mkdir build/DUMagick
+	@mkdir build/DUMagick/acs
+	@mkdir build/DUMagick/code
+
+	@cp COPYING README        build/DUMagick
+	@cp src/DUCommon/LOADACS  build/DUMagick
+	@cp src/DUMagick/DECORATE build/DUMagick
+	@cp build/DUMagick.bin    build/DUMagick/acs/du.o
+	@cp $(DU_DEC) $(DUM_DEC)  build/DUMagick/code
+
+	@echo 7z a $@ build/DUMagick
+	@cd build/DUMagick && 7z a ../DUMagick.pkz . >/dev/null
+
+	@rm -rf build/DUMagick
+
+build/DUMagick.bin: build/DUCommon.ir build/DUMagick.ir
+	$(LD) --bc-target=ZDoom -o$@ $^
+
+build/DUMagick.ir: $(DUM_IR)
+	$(LD) --bc-target=ZDoom -co$@ $^
+
+$(DUM_IR_CC) : build/dum_%.ir : src/DUMagick/code/dum_%.c $(DU_H) $(DUM_H)
+	$(CC) --bc-target=ZDoom $(DUM_INC) -o$@ $<
 
 ## EOF
 
