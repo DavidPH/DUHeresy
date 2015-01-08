@@ -17,7 +17,7 @@ LD = gdcc-ld
 GDCC_LIB_PATH = /usr/share/gdcc/lib
 
 
-all: build/DUHeresy.pkz
+all: build/DUDamned.pkz build/DUHeresy.pkz
 
 clean:
 	rm -f build/*.bin build/*.ir build/*.pkz
@@ -95,24 +95,75 @@ $(libc_IR_CC) : build/libc_%.ir : $(GDCC_LIB_PATH)/src/libc/%.c
 ## DUCommon
 ##
 
-DUC_DEC = \
+DU_DEC = \
    src/DUCommon/code/du_defs.dec
 
-DUC_H = \
+DU_H = \
    src/DUCommon/code/du_defs.h
 
-DUC_INC = -isrc/DUCommon/code
+DU_INC = -isrc/DUCommon/code
 
-DUC_IR_CC = \
-   build/du_defs.ir
+DU_IR_CC = \
+   build/du_defs.ir \
+   build/du_menu.ir
 
-DUC_IR = $(DUC_IR_CC)
+DU_IR = $(DU_IR_CC)
 
-build/DUCommon.ir: build/libGDCC.ir build/libc.ir $(DUC_IR)
+build/DUCommon.ir: build/libGDCC.ir build/libc.ir $(DU_IR)
 	$(LD) --bc-target=ZDoom -co$@ $^
 
-$(DUC_IR_CC) : build/du_%.ir : src/DUCommon/code/du_%.c $(DUC_H)
+$(DU_IR_CC) : build/du_%.ir : src/DUCommon/code/du_%.c $(DU_H)
 	$(CC) --bc-target=ZDoom -isrc/DUCommon/code -o$@ $<
+
+##
+## DUDamned
+##
+
+DUD_DEC = \
+   src/DUDamned/code/dud_arti.dec \
+   src/DUDamned/code/dud_cell.dec \
+   src/DUDamned/code/dud_clip.dec \
+   src/DUDamned/code/dud_rckt.dec \
+   src/DUDamned/code/dud_shel.dec \
+   src/DUDamned/code/dud_weap.dec
+
+DUD_INC = -isrc/DUDamned/code $(DU_INC)
+
+DUD_IR_CC = \
+   build/dud_abil.ir \
+   build/dud_weap.ir
+
+DUD_IR = $(DUD_IR_CC)
+
+build/DUDamned.pkz: build/DUDamned.bin $(DU_DEC) $(DUD_DEC)
+	@rm -f $@
+	@rm -rf build/DUDamned
+
+	@mkdir build/DUDamned
+	@mkdir build/DUDamned/acs
+	@mkdir build/DUDamned/code
+
+	@cp COPYING README        build/DUDamned
+	@cp src/DUCommon/LOADACS  build/DUDamned
+	@cp src/DUDamned/DECORATE build/DUDamned
+	@cp src/DUDamned/KEYCONF  build/DUDamned
+	@cp src/DUDamned/TEXTURES build/DUDamned
+	@cp build/DUDamned.bin    build/DUDamned/acs/du.o
+	@cp $(DU_DEC) $(DUD_DEC)  build/DUDamned/code
+
+	@echo 7z a $@ build/DUDamned
+	@cd build/DUDamned && 7z a ../DUDamned.pkz . >/dev/null
+
+	@rm -rf build/DUDamned
+
+build/DUDamned.bin: build/DUCommon.ir build/DUDamned.ir
+	$(LD) --bc-target=ZDoom -o$@ $^
+
+build/DUDamned.ir: $(DUD_IR)
+	$(LD) --bc-target=ZDoom -co$@ $^
+
+$(DUD_IR_CC) : build/dud_%.ir : src/DUDamned/code/dud_%.c $(DU_H) $(DUD_H)
+	$(CC) --bc-target=ZDoom $(DUD_INC) --no-warn-unused-initializer -o$@ $<
 
 ##
 ## DUHeresy
@@ -133,7 +184,7 @@ DUH_DEC = \
 DUH_H = \
    src/DUHeresy/code/duh_arti.h
 
-DUH_INC = -isrc/DUHersey/code $(DUC_INC)
+DUH_INC = -isrc/DUHersey/code $(DU_INC)
 
 DUH_IR_CC = \
    build/duh_arti.ir \
@@ -147,7 +198,7 @@ DUH_IR_CC = \
 
 DUH_IR = $(DUH_IR_CC)
 
-build/DUHeresy.pkz: build/DUHeresy.bin $(DUC_DEC) $(DUH_DEC)
+build/DUHeresy.pkz: build/DUHeresy.bin $(DU_DEC) $(DUH_DEC)
 	@rm -f $@
 	@rm -rf build/DUHeresy
 
@@ -160,7 +211,7 @@ build/DUHeresy.pkz: build/DUHeresy.bin $(DUC_DEC) $(DUH_DEC)
 	@cp src/DUHeresy/DECORATE build/DUHeresy
 	@cp src/DUHeresy/KEYCONF  build/DUHeresy
 	@cp build/DUHeresy.bin    build/DUHeresy/acs/du.o
-	@cp $(DUC_DEC) $(DUH_DEC) build/DUHeresy/code
+	@cp $(DU_DEC) $(DUH_DEC)  build/DUHeresy/code
 
 	@echo 7z a $@ build/DUHeresy
 	@cd build/DUHeresy && 7z a ../DUHeresy.pkz . >/dev/null
@@ -173,7 +224,7 @@ build/DUHeresy.bin: build/DUCommon.ir build/DUHeresy.ir
 build/DUHeresy.ir: $(DUH_IR)
 	$(LD) --bc-target=ZDoom -co$@ $^
 
-$(DUH_IR_CC) : build/duh_%.ir : src/DUHeresy/code/duh_%.c $(DUC_H) $(DUH_H)
+$(DUH_IR_CC) : build/duh_%.ir : src/DUHeresy/code/duh_%.c $(DU_H) $(DUH_H)
 	$(CC) --bc-target=ZDoom $(DUH_INC) -o$@ $<
 
 ## EOF
