@@ -27,7 +27,7 @@ void DUH_CrossbowAltFire(bool useammo)
 {
    int ammoCount = ACS_CheckInventory(DUH_CrossbowAmmo);
    int ammoUsage = (ammoCount / 25) + 1;
-   int damage    = (ammoCount / 10) + ammoUsage + 5;
+   int damage    = (ammoCount /  5) + ammoUsage + 1;
 
    accum angle = ACS_GetActorAngle(0);
    accum pitch = ACS_GetActorPitch(0);

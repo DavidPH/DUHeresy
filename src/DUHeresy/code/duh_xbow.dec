@@ -23,8 +23,6 @@ actor DUH_CrossbowMissile1 : CrossbowFX3
    Damage 10
    SeeSound "weapons/bowshoot"
    Speed 30
-
-   +RIPPER
 }
 
 //
