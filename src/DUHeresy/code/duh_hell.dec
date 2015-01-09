@@ -30,6 +30,7 @@ actor DUH_HellstaffMissile2 : HornRodFX2
    Damage 0
 
    var int user_shooter;
+   var int user_stormTics;
 
    states
    {
@@ -42,6 +43,7 @@ actor DUH_HellstaffMissile2 : HornRodFX2
       FX00 I 5 BRIGHT
       FX00 J 4 BRIGHT
       FX00 KLM 3 BRIGHT
+      TNT1 A -1
       stop
    }
 }
@@ -52,14 +54,6 @@ actor DUH_HellstaffMissile2 : HornRodFX2
 actor DUH_HellstaffMissile3 : RainPillar
 {
    +SPAWNCEILING
-}
-
-//
-// DUH_HellstaffMissileStormTics
-//
-actor DUH_HellstaffMissileStormTics : Inventory
-{
-   Inventory.MaxAmount 2010
 }
 
 //

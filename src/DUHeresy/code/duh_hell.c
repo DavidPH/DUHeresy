@@ -34,8 +34,7 @@ void DUH_HellstaffAltFire(bool useammo)
    tid = DU_FireMissile(ACS_ActivatorTID(), s"DUH_HellstaffMissile2", damage,
       ACS_GetActorAngle(0), ACS_GetActorPitch(0), 25);
 
-   ACS_GiveActorInventory(tid, s"DUH_HellstaffMissileStormTics",
-      (ammoCount / 10) + 10);
+   ACS_SetUserVariable(tid, s"user_stormTics", (ammoCount / 10) + 10);
    ACS_SetUserVariable(tid, s"user_shooter", ACS_ActivatorTID());
 
    if(useammo)
@@ -64,7 +63,7 @@ void DUH_HellstaffStorm(void)
    accum basez = ACS_GetActorCeilingZ(0) - 12;
 
    int shooter = ACS_GetUserVariable(0, s"user_shooter");
-   int tics    = ACS_CheckInventory(s"DUH_HellstaffMissileStormtics");
+   int tics    = ACS_GetUserVariable(0, s"user_stormTics");
 
    while(tics)
    {
@@ -94,6 +93,10 @@ void DUH_HellstaffStorm(void)
 
       ACS_Delay(1);
    }
+
+   ACS_Delay(23);
+
+   ACS_Thing_Remove(ACS_ActivatorTID());
 }
 
 // EOF
