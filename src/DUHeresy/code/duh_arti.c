@@ -40,13 +40,9 @@ static void DUH_ArtifactTomeReady(__str ammo, int cap)
 //
 // DUH_AmmoReady
 //
-void DUH_AmmoReady(int tic, __str ammo, int mul)
+void DUH_AmmoReady(int tic, __str ammo, int period)
 {
-   int ammo_count = ACS_CheckInventory(ammo);
-   int ammo_limit = ACS_GetAmmoCapacity(ammo) * mul;
-   int period;
-
-   period = ammo_count ? ammo_limit / ammo_count : ammo_limit;
+   period /= ACS_CheckInventory(s"ArtiTomeOfPower") + 1;
    if(!period || !(tic % period)) ACS_GiveInventory(ammo, 1);
 }
 
@@ -105,8 +101,8 @@ void DUH_ArtifactReady(int frames)
       if(inv && !(tic % ((35 * 16) / inv)))
          ACS_SpawnProjectile(tid, s"DUH_TimeBombAura", 0, 0, 0, 0, 0);
 
-      inv = ACS_CheckInventory(s"ArtiTomeOfPower") + 4;
-      if(inv > 65536) inv = 65536;
+      inv = ACS_CheckInventory(s"DUH_BagOfHolding") + 4;
+      if(inv > 16) inv = 16;
       DUH_ArtifactTomeReady(DUH_ElvenWandAmmo,  inv *  50);
       DUH_ArtifactTomeReady(DUH_CrossbowAmmo,   inv *  25);
       DUH_ArtifactTomeReady(DUH_DragonClawAmmo, inv * 100);
@@ -119,12 +115,12 @@ void DUH_ArtifactReady(int frames)
       if(inv && !(tic % ((35 * 64) / inv)))
          ACS_GiveInventory(s"ArtiTorch", 1);
 
-      DUH_AmmoReady(tic, DUH_ElvenWandAmmo,   20);
-      DUH_AmmoReady(tic, DUH_CrossbowAmmo,    30);
-      DUH_AmmoReady(tic, DUH_DragonClawAmmo,  40);
-      DUH_AmmoReady(tic, DUH_HellstaffAmmo,   50);
-      DUH_AmmoReady(tic, DUH_PhoenixRodAmmo, 100);
-      DUH_AmmoReady(tic, DUH_FiremaceAmmo,   200);
+      DUH_AmmoReady(tic, DUH_ElvenWandAmmo,   350);
+      DUH_AmmoReady(tic, DUH_CrossbowAmmo,   1750);
+      DUH_AmmoReady(tic, DUH_DragonClawAmmo,  700);
+      DUH_AmmoReady(tic, DUH_HellstaffAmmo,  1050);
+      DUH_AmmoReady(tic, DUH_PhoenixRodAmmo, 3500);
+      DUH_AmmoReady(tic, DUH_FiremaceAmmo,   7000);
 
       if(frames) ACS_Delay(1);
    }
@@ -149,13 +145,13 @@ void DUH_ChickenFriendCountdown(int frames)
 // DUH_WeaponReady
 //
 [[call("ScriptS")]]
-void DUH_WeaponReady(int frames, int *tics, __str ammo, int multiplier)
+void DUH_WeaponReady(int frames, int *tics, __str ammo, int period)
 {
    DUH_ArtifactReady(frames);
 
    while(frames--)
    {
-      DUH_AmmoReady(++tics[ACS_PlayerNumber()], ammo, multiplier);
+      DUH_AmmoReady(++tics[ACS_PlayerNumber()], ammo, period);
 
       if(frames) ACS_Delay(1);
    }

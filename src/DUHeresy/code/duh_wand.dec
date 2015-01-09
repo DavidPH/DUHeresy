@@ -100,11 +100,11 @@ actor DUH_ElvenWand : GoldWand replaces GoldWand
    Hold:
       GWND C 0 A_PlaySound("weapons/wandhit")
       GWND C 0 A_Light(1)
-      GWND C 3 ACS_NamedExecuteAlways("DUH_ElvenWandFire",0, false)
+      GWND C 3 //ACS_NamedExecuteAlways("DUH_ElvenWandFire",0, false)
       GWND C 0 A_Light(2)
       GWND C 3 ACS_NamedExecuteAlways("DUH_ElvenWandFire",0, false)
       GWND C 0 A_Light(3)
-      GWND C 3 ACS_NamedExecuteAlways("DUH_ElvenWandFire",0, true)
+      GWND C 3 //ACS_NamedExecuteAlways("DUH_ElvenWandFire",0, false)
       GWND C 0 A_Light(2)
       GWND C 3 ACS_NamedExecuteAlways("DUH_ElvenWandFire",0, false)
       GWND D 9 A_ReFire
@@ -115,7 +115,7 @@ actor DUH_ElvenWand : GoldWand replaces GoldWand
       GWND B 3
       TNT1 A 0 A_PlaySound("weapons/wandhit")
       GWND C 6 A_FireBullets(1.0, 1.0, -1,
-         CallACS("DUH_ElvenWandDamage", true), "GoldWandPuff1")
+         CallACS("DUH_ElvenWandDamage", true), "GoldWandPuff1", FBF_NORANDOM)
       GWND D 3
       TNT1 A 0 A_ReFire
       goto Ready
@@ -140,11 +140,11 @@ actor DUH_ElvenWandPowered : DUH_ElvenWand replaces GoldWandPowered
       GWND C 0 ACS_NamedExecuteAlways("DUH_ElvenWandReady",0, 8)
       GWND C 0 A_PlaySound("weapons/wandhit")
       GWND C 0 A_Light(1)
-      GWND C 2 ACS_NamedExecuteAlways("DUH_ElvenWandFire",0, true)
+      GWND C 2 //ACS_NamedExecuteAlways("DUH_ElvenWandFire",0, true)
       GWND C 0 A_Light(2)
       GWND C 2 ACS_NamedExecuteAlways("DUH_ElvenWandFire",0, true)
       GWND C 0 A_Light(3)
-      GWND C 2 ACS_NamedExecuteAlways("DUH_ElvenWandFire",0, true)
+      GWND C 2 //ACS_NamedExecuteAlways("DUH_ElvenWandFire",0, true)
       GWND C 0 A_Light(2)
       GWND C 2 ACS_NamedExecuteAlways("DUH_ElvenWandFire",0, true)
       GWND D 2 A_ReFire
@@ -155,7 +155,7 @@ actor DUH_ElvenWandPowered : DUH_ElvenWand replaces GoldWandPowered
       GWND B 3
       GWND C 0 A_PlaySound("weapons/wandhit")
       GWND C 6 A_FireBullets(1.0, 1.0, -1,
-         CallACS("DUH_ElvenWandDamage", false), "GoldWandPuff1")
+         CallACS("DUH_ElvenWandDamage", false), "GoldWandPuff1", FBF_NORANDOM)
       GWND D 3
       GWND A 0 A_ReFire
       goto Ready

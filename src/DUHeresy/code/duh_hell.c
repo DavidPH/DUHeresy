@@ -50,7 +50,7 @@ void DUH_HellstaffReady(int frames)
 {
    static int tics[MAX_PLAYERS];
 
-   DUH_WeaponReady(frames, tics, DUH_HellstaffAmmo, 5);
+   DUH_WeaponReady(frames, tics, DUH_HellstaffAmmo, 105);
 }
 
 //

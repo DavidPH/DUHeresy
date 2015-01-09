@@ -59,7 +59,7 @@ void DUH_CrossbowReady(int frames)
 {
    static int tics[MAX_PLAYERS];
 
-   DUH_WeaponReady(frames, tics, DUH_CrossbowAmmo, 3);
+   DUH_WeaponReady(frames, tics, DUH_CrossbowAmmo, 175);
 }
 
 // EOF

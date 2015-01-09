@@ -89,7 +89,7 @@ void DUH_PhoenixRodReady(int frames)
 {
    static int tics[MAX_PLAYERS];
 
-   DUH_WeaponReady(frames, tics, DUH_PhoenixRodAmmo, 10);
+   DUH_WeaponReady(frames, tics, DUH_PhoenixRodAmmo, 350);
 }
 
 // EOF

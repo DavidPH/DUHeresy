@@ -26,11 +26,15 @@
 int DUH_DragonClawDamage(bool useammo)
 {
    int ammoCount = ACS_CheckInventory(DUH_DragonClawAmmo);
-   int ammoUsage = (ammoCount / 100) + 1;
-   int damage    = (ammoCount / 50) + ammoUsage + 5;
+   int ammoUsage = ammoCount / 100 + 1;
+   int dice      = ammoCount /  25 + 1;
 
    if(useammo)
       ACS_TakeInventory(DUH_DragonClawAmmo, ammoUsage);
+
+   int damage = ammoUsage;
+   while(dice--)
+      damage += ACS_Random(1, 8);
 
    return damage;
 }
@@ -43,7 +47,7 @@ void DUH_DragonClawReady(int frames)
 {
    static int tics[MAX_PLAYERS];
 
-   DUH_WeaponReady(frames, tics, DUH_DragonClawAmmo, 4);
+   DUH_WeaponReady(frames, tics, DUH_DragonClawAmmo, 70);
 }
 
 // EOF

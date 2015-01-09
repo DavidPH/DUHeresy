@@ -80,11 +80,15 @@ void DUH_ElvenLaserTrailSpawn(bool final)
 int DUH_ElvenWandDamage(bool useammo)
 {
    int ammoCount = ACS_CheckInventory(DUH_ElvenWandAmmo);
-   int ammoUsage = (ammoCount / 50) + 1;
-   int damage    = (ammoCount / 25) + ammoUsage + 1;
+   int ammoUsage = ammoCount / 50 + 1;
+   int dice      = ammoCount / 25 + 1;
 
    if(useammo)
       ACS_TakeInventory(DUH_ElvenWandAmmo, ammoUsage);
+
+   int damage = ammoUsage;
+   while(dice--)
+      damage += ACS_Random(1, 8);
 
    return damage;
 }
@@ -113,7 +117,7 @@ void DUH_ElvenWandReady(int frames)
 {
    static int tics[MAX_PLAYERS];
 
-   DUH_WeaponReady(frames, tics, DUH_ElvenWandAmmo, 2);
+   DUH_WeaponReady(frames, tics, DUH_ElvenWandAmmo, 35);
 }
 
 // EOF

@@ -75,7 +75,7 @@ void DUH_FiremaceReady(int frames)
 {
    static int tics[MAX_PLAYERS];
 
-   DUH_WeaponReady(frames, tics, DUH_FiremaceAmmo, 20);
+   DUH_WeaponReady(frames, tics, DUH_FiremaceAmmo, 700);
 }
 
 // EOF
