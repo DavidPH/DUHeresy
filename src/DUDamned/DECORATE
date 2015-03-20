@@ -30,7 +30,11 @@
 //
 actor DUD_Player : DoomPlayer
 {
+   Health 250
+
    Player.DisplayName "Damned"
+
+   Player.MaxHealth 250
 
    Player.StartItem DUD_Pistol
    Player.StartItem Clip, 50

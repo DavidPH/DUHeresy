@@ -137,7 +137,14 @@ DUD_IR_CC = \
 
 DUD_IR = $(DUD_IR_CC)
 
-build/DUDamned.pkz: build/DUDamned.bin $(DU_DEC) $(DUD_DEC)
+DUD_ROOT = \
+   COPYING README \
+   src/DUCommon/LOADACS \
+   src/DUDamned/DECORATE \
+   src/DUDamned/KEYCONF \
+   src/DUDamned/TEXTURES
+
+build/DUDamned.pkz: build/DUDamned.bin $(DU_DEC) $(DUD_DEC) $(DUD_ROOT)
 	@rm -f $@
 	@rm -rf build/DUDamned
 
@@ -145,13 +152,9 @@ build/DUDamned.pkz: build/DUDamned.bin $(DU_DEC) $(DUD_DEC)
 	@mkdir build/DUDamned/acs
 	@mkdir build/DUDamned/code
 
-	@cp COPYING README        build/DUDamned
-	@cp src/DUCommon/LOADACS  build/DUDamned
-	@cp src/DUDamned/DECORATE build/DUDamned
-	@cp src/DUDamned/KEYCONF  build/DUDamned
-	@cp src/DUDamned/TEXTURES build/DUDamned
-	@cp build/DUDamned.bin    build/DUDamned/acs/du.o
-	@cp $(DU_DEC) $(DUD_DEC)  build/DUDamned/code
+	@cp $(DUD_ROOT)          build/DUDamned
+	@cp build/DUDamned.bin   build/DUDamned/acs/du.o
+	@cp $(DU_DEC) $(DUD_DEC) build/DUDamned/code
 
 	@echo 7z a $@ build/DUDamned
 	@cd build/DUDamned && 7z a ../DUDamned.pkz . >/dev/null
@@ -200,7 +203,13 @@ DUH_IR_CC = \
 
 DUH_IR = $(DUH_IR_CC)
 
-build/DUHeresy.pkz: build/DUHeresy.bin $(DU_DEC) $(DUH_DEC)
+DUH_ROOT = \
+   COPYING README \
+   src/DUCommon/LOADACS \
+   src/DUHeresy/DECORATE \
+   src/DUHeresy/KEYCONF
+
+build/DUHeresy.pkz: build/DUHeresy.bin $(DU_DEC) $(DUH_DEC) $(DUH_ROOT)
 	@rm -f $@
 	@rm -rf build/DUHeresy
 
@@ -208,12 +217,9 @@ build/DUHeresy.pkz: build/DUHeresy.bin $(DU_DEC) $(DUH_DEC)
 	@mkdir build/DUHeresy/acs
 	@mkdir build/DUHeresy/code
 
-	@cp COPYING README        build/DUHeresy
-	@cp src/DUCommon/LOADACS  build/DUHeresy
-	@cp src/DUHeresy/DECORATE build/DUHeresy
-	@cp src/DUHeresy/KEYCONF  build/DUHeresy
-	@cp build/DUHeresy.bin    build/DUHeresy/acs/du.o
-	@cp $(DU_DEC) $(DUH_DEC)  build/DUHeresy/code
+	@cp $(DUH_ROOT)          build/DUHeresy
+	@cp build/DUHeresy.bin   build/DUHeresy/acs/du.o
+	@cp $(DU_DEC) $(DUH_DEC) build/DUHeresy/code
 
 	@echo 7z a $@ build/DUHeresy
 	@cd build/DUHeresy && 7z a ../DUHeresy.pkz . >/dev/null
@@ -249,7 +255,12 @@ DUM_IR_CC = \
 
 DUM_IR = $(DUM_IR_CC)
 
-build/DUMagick.pkz: build/DUMagick.bin $(DU_DEC) $(DUM_DEC)
+DUM_ROOT = \
+   COPYING README \
+   src/DUCommon/LOADACS \
+   src/DUMagick/DECORATE
+
+build/DUMagick.pkz: build/DUMagick.bin $(DU_DEC) $(DUM_DEC) $(DUM_ROOT)
 	@rm -f $@
 	@rm -rf build/DUMagick
 
@@ -257,11 +268,9 @@ build/DUMagick.pkz: build/DUMagick.bin $(DU_DEC) $(DUM_DEC)
 	@mkdir build/DUMagick/acs
 	@mkdir build/DUMagick/code
 
-	@cp COPYING README        build/DUMagick
-	@cp src/DUCommon/LOADACS  build/DUMagick
-	@cp src/DUMagick/DECORATE build/DUMagick
-	@cp build/DUMagick.bin    build/DUMagick/acs/du.o
-	@cp $(DU_DEC) $(DUM_DEC)  build/DUMagick/code
+	@cp $(DUM_ROOT)          build/DUMagick
+	@cp build/DUMagick.bin   build/DUMagick/acs/du.o
+	@cp $(DU_DEC) $(DUM_DEC) build/DUMagick/code
 
 	@echo 7z a $@ build/DUMagick
 	@cd build/DUMagick && 7z a ../DUMagick.pkz . >/dev/null

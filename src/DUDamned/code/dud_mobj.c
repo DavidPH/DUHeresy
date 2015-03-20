@@ -30,7 +30,7 @@ void DUD_Respawne(void)
    int healthBase = ACS_GetActorProperty(0, APROP_SpawnHealth);
    int health     = ACS_GetActorProperty(0, APROP_Health);
 
-   int healthMin = -healthBase * (ACS_GameSkill() + 1);
+   int healthMin = -healthBase * (ACS_GameSkill() + 4) / 2;
 
    // If the caller is too dead, then it stays dead.
    if(health < healthMin) {ACS_Thing_Remove(0); return;}
@@ -41,7 +41,7 @@ void DUD_Respawne(void)
    ACS_SetActorProperty(0, APROP_RenderStyle, STYLE_Translucent);
 
    // Delay before summoning. Deader monsters spawn slower.
-   int delay = (healthBase - health) * 35;
+   int delay = (healthBase - health) * (8 - ACS_GameSkill()) * 35;
    delay = ACS_Random(sqrtf(delay), delay) + 35;
 
    for(; delay; --delay)

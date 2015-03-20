@@ -20,7 +20,17 @@
 //
 actor DUD_ArmorBonus : ArmorBonus replaces ArmorBonus
 {
-   Armor.SavePercent 50
+   Armor.MaxSaveAmount 500
+   Armor.SaveAmount      2
+   Armor.SavePercent    50
+}
+
+//
+// DUD_ArmorBonusSmall
+//
+actor DUD_ArmorBonusSmall : DUD_ArmorBonus
+{
+   Armor.SaveAmount 1
 }
 
 //
@@ -30,6 +40,7 @@ actor DUD_ArmorBonus : ArmorBonus replaces ArmorBonus
 //
 actor DUD_Backpack : Inventory replaces Backpack
 {
+   Inventory.InterHubAmount 6
    Inventory.MaxAmount 6
    Inventory.PickupMessage "$GOTBACKPACK"
 
@@ -49,7 +60,7 @@ actor DUD_Backpack : Inventory replaces Backpack
 actor DUD_Berserk : Inventory replaces Berserk
 {
    Inventory.Amount 1
-   Inventory.InterHubAmount 0
+   Inventory.InterHubAmount 4
    Inventory.MaxAmount 4
    Inventory.PickupMessage "$GOTBERSERK"
    Inventory.PickupSound "misc/p_pkup"
@@ -67,11 +78,47 @@ actor DUD_Berserk : Inventory replaces Berserk
 }
 
 //
+// DUD_BlueArmor
+//
+actor DUD_BlueArmor : BlueArmor replaces BlueArmor
+{
+   Armor.SaveAmount  500
+   Armor.SavePercent  50
+}
+
+//
 // DUD_GreenArmor
 //
 actor DUD_GreenArmor : GreenArmor replaces GreenArmor
 {
-   Armor.SavePercent 50
+   Armor.SaveAmount  250
+   Armor.SavePercent  50
+}
+
+//
+// DUD_HealthBonus
+//
+actor DUD_HealthBonus : HealthBonus replaces HealthBonus
+{
+   Inventory.Amount      2
+   Inventory.MaxAmount 500
+}
+
+//
+// DUD_HealthBonusSmall
+//
+actor DUD_HealthBonusSmall : DUD_HealthBonus
+{
+   Inventory.Amount 1
+}
+
+//
+// DUD_Soulsphere
+//
+actor DUD_Soulsphere : Soulsphere replaces Soulsphere
+{
+   Inventory.Amount    200
+   Inventory.MaxAmount 500
 }
 
 // EOF

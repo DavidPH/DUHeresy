@@ -125,8 +125,8 @@ dud_ability_t DUD_Ability[3][ABILMAX] =
          DUD_AbilityDefaults,
 
          .used      = true,
-         .ammoRegen = {9, 3, 1, 0},
-         .desc      = s"Gives basic ammo regeneration.",
+         .ammoRegen = {9, 3, 1, 3},
+         .desc      = s"Gives CLIP ammo regeneration.",
          .name      = s"Ammo Regen I",
          .nameIco   = s"AMMO-1",
       },
@@ -201,8 +201,8 @@ dud_ability_t DUD_Ability[3][ABILMAX] =
          DUD_AbilityDefaults,
 
          .used      = true,
-         .ammoRegen = {5, 3, 1, 3},
-         .desc      = s"Gives ammo regeneration.",
+         .ammoRegen = {3, 9, 1, 3},
+         .desc      = s"Gives SHEL ammo regeneration.",
          .name      = s"Ammo Regen II",
          .nameIco   = s"AMMO-2",
       },
@@ -257,8 +257,8 @@ dud_ability_t DUD_Ability[3][ABILMAX] =
          DUD_AbilityDefaults,
 
          .used      = true,
-         .ammoRegen = {1, 3, 1, 9},
-         .desc      = s"Gives advanced ammo regeneration.",
+         .ammoRegen = {3, 3, 1, 9},
+         .desc      = s"Gives CELL ammo regeneration.",
          .name      = s"Ammo Regen III",
          .nameIco   = s"AMMO-3",
       },
@@ -794,7 +794,7 @@ void DUD_DoArmorRegen(int pnum)
    if((armorCount[pnum] -= armorRegen) < 0)
    {
       armorCount[pnum] += 35*60;
-      ACS_GiveInventory(s"ArmorBonus", 1);
+      ACS_GiveInventory(s"DUD_ArmorBonusSmall", 1);
    }
 }
 
@@ -818,7 +818,7 @@ void DUD_DoHealthRegen(int pnum)
    while((healthCount[pnum] -= healthRegen) < 0)
    {
       healthCount[pnum] += 35*60;
-      ACS_GiveInventory(s"HealthBonus", 1);
+      ACS_GiveInventory(s"DUD_HealthBonusSmall", 1);
    }
 }
 
