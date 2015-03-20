@@ -943,6 +943,8 @@ void DUD_Main(void)
 
    while(true)
    {
+      ACS_Delay(1);
+
       if(ACS_GetPlayerInput(-1, INPUT_BUTTONS) & BT_USER1)
       {
          if(!(ACS_GetPlayerInput(-1, INPUT_OLDBUTTONS) & BT_USER1))
@@ -975,8 +977,6 @@ void DUD_Main(void)
             DUD_DoWeaponSelect(pnum);
          }
       }
-
-      ACS_Delay(1);
    }
 }
 

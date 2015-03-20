@@ -15,6 +15,7 @@
 #include "code/dud_arti.dec"
 #include "code/dud_cell.dec"
 #include "code/dud_clip.dec"
+#include "code/dud_mobj.dec"
 #include "code/dud_shel.dec"
 #include "code/dud_rckt.dec"
 #include "code/dud_weap.dec"

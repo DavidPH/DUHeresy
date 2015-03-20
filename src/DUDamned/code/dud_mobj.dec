@@ -1,0 +1,448 @@
+//-----------------------------------------------------------------------------
+//
+// Copyright (C) 2015 David Hill
+//
+// See COPYING for license information.
+//
+//-----------------------------------------------------------------------------
+//
+// Mobj actors.
+//
+//-----------------------------------------------------------------------------
+
+
+//----------------------------------------------------------------------------|
+// Types                                                                      |
+//
+
+//
+// DUD_BaronOfHell
+//
+actor DUD_BaronOfHell : BaronOfHell replaces BaronOfHell
+{
+   states
+   {
+   Death:
+      BOSS I 8
+      BOSS J 8 A_Scream
+      BOSS K 8
+      BOSS L 8 A_NoBlocking
+      BOSS MN 8
+      BOSS O 8 A_BossDeath
+      goto Respawne
+
+   Raise:
+      stop
+
+   Respawne:
+      "####" "#" -1 ACS_NamedExecuteWithResult("DUD_Respawne")
+      stop
+   }
+}
+
+//
+// DUD_Cacodemon
+//
+actor DUD_Cacodemon : Cacodemon replaces Cacodemon
+{
+   states
+   {
+   Death:
+      HEAD G 8
+      HEAD H 8 A_Scream
+      HEAD IJ 8
+      HEAD K 8 A_NoBlocking
+      HEAD L 8 A_SetFloorClip
+      goto Respawne
+
+   Raise:
+      stop
+
+   Respawne:
+      "####" "#" -1 ACS_NamedExecuteWithResult("DUD_Respawne")
+      stop
+   }
+}
+
+//
+// DUD_Cyberdemon
+//
+actor DUD_Cyberdemon : Cyberdemon replaces Cyberdemon
+{
+   states
+   {
+   Death:
+      CYBR H 10
+      CYBR I 10 A_Scream
+      CYBR JKL 10
+      CYBR M 10 A_NoBlocking
+      CYBR NO 10
+      CYBR P 30
+      CYBR P 10 A_BossDeath
+      goto Respawne
+
+   Respawne:
+      "####" "#" -1 ACS_NamedExecuteWithResult("DUD_Respawne")
+      stop
+   }
+}
+
+//
+// DUD_Demon
+//
+actor DUD_Demon : Demon replaces Demon
+{
+   states
+   {
+   Death:
+      SARG I 8
+      SARG J 8 A_Scream
+      SARG K 4
+      SARG L 4 A_NoBlocking
+      SARG M 4
+      SARG N 4
+      goto Respawne
+
+   Raise:
+      stop
+
+   Respawne:
+      "####" "#" -1 ACS_NamedExecuteWithResult("DUD_Respawne")
+      stop
+   }
+}
+
+//
+// DUD_Imp
+//
+actor DUD_Imp : DoomImp replaces DoomImp
+{
+   states
+   {
+   Death:
+      TROO I 8
+      TROO J 8 A_Scream
+      TROO K 6
+      TROO L 6 A_NoBlocking
+      TROO M 6
+      goto Respawne
+
+   XDeath:
+      TROO N 5
+      TROO O 5 A_XScream
+      TROO P 5
+      TROO Q 5 A_NoBlocking
+      TROO RST 5
+      TROO U 5
+      goto Respawne
+
+   Raise:
+      stop
+
+   Respawne:
+      "####" "#" -1 ACS_NamedExecuteWithResult("DUD_Respawne")
+      stop
+   }
+}
+
+//
+// DUD_Sergeant
+//
+actor DUD_Sergeant : ShotgunGuy replaces ShotgunGuy
+{
+   DropItem None
+
+   states
+   {
+   Death:
+      SPOS H 5
+      SPOS I 5 A_Scream
+      SPOS J 5 A_NoBlocking
+      SPOS K 5
+      SPOS L 5
+      goto Respawne
+
+   XDeath:
+      SPOS M 5
+      SPOS N 5 A_XScream
+      SPOS O 5 A_NoBlocking
+      SPOS PQRST 5
+      SPOS U 5
+      goto Respawne
+
+   Raise:
+      stop
+
+   Respawne:
+      "####" "#" -1 ACS_NamedExecuteWithResult("DUD_Respawne")
+      stop
+   }
+}
+
+//
+// DUD_Spectre
+//
+actor DUD_Spectre : Spectre replaces Spectre
+{
+   states
+   {
+   Death:
+      SARG I 8
+      SARG J 8 A_Scream
+      SARG K 4
+      SARG L 4 A_NoBlocking
+      SARG M 4
+      SARG N 4
+      goto Respawne
+
+   Raise:
+      stop
+
+   Respawne:
+      "####" "#" -1 ACS_NamedExecuteWithResult("DUD_Respawne")
+      stop
+   }
+}
+
+//
+// DUD_SpiderMastermind
+//
+actor DUD_SpiderMastermind : SpiderMastermind replaces SpiderMastermind
+{
+   states
+   {
+   Death:
+      SPID J 20 A_Scream
+      SPID K 10 A_NoBlocking
+      SPID LMNOPQR 10
+      SPID S 30
+      SPID S 10 A_BossDeath
+      goto Respawne
+
+   Respawne:
+      "####" "#" -1 ACS_NamedExecuteWithResult("DUD_Respawne")
+      stop
+   }
+}
+
+//
+// DUD_Zombie
+//
+actor DUD_Zombie : ZombieMan replaces ZombieMan
+{
+   DropItem None
+
+   states
+   {
+   Death:
+      POSS H 5
+      POSS I 5 A_Scream
+      POSS J 5 A_NoBlocking
+      POSS K 5
+      POSS L 5
+      goto Respawne
+
+   XDeath:
+      POSS M 5
+      POSS N 5 A_XScream
+      POSS O 5 A_NoBlocking
+      POSS PQRST 5
+      POSS U 5
+      goto Respawne
+
+   Raise:
+      stop
+
+   Respawne:
+      "####" "#" -1 ACS_NamedExecuteWithResult("DUD_Respawne")
+      stop
+   }
+}
+
+//
+// DUD_Arachnotron
+//
+actor DUD_Arachnotron : Arachnotron replaces Arachnotron
+{
+   states
+   {
+   Death:
+      BSPI J 20 A_Scream
+      BSPI K 7 A_NoBlocking
+      BSPI LMNO 7
+      BSPI P 7 A_BossDeath
+      goto Respawne
+
+   Raise:
+      stop
+
+   Respawne:
+      "####" "#" -1 ACS_NamedExecuteWithResult("DUD_Respawne")
+      stop
+   }
+}
+
+//
+// DUD_Archvile
+//
+actor DUD_Archvile : Archvile replaces Archvile
+{
+   states
+   {
+   Death:
+      VILE Q 7
+      VILE R 7 A_Scream
+      VILE S 7 A_NoBlocking
+      VILE TUVWXY 7
+      VILE Z 7
+      goto Respawne
+
+   Respawne:
+      "####" "#" -1 ACS_NamedExecuteWithResult("DUD_Respawne")
+      stop
+   }
+}
+
+//
+// DUD_Commando
+//
+actor DUD_Commando : ChaingunGuy replaces ChaingunGuy
+{
+   DropItem None
+
+   states
+   {
+   Death:
+      CPOS H 5
+      CPOS I 5 A_Scream
+      CPOS J 5 A_NoBlocking
+      CPOS KLM 5
+      CPOS N 5
+      goto Respawne
+
+   XDeath:
+      CPOS O 5
+      CPOS P 5 A_XScream
+      CPOS Q 5 A_NoBlocking
+      CPOS RS 5
+      CPOS T 5
+      goto Respawne
+
+   Raise:
+      stop
+
+   Respawne:
+      "####" "#" -1 ACS_NamedExecuteWithResult("DUD_Respawne")
+      stop
+   }
+}
+
+//
+// DUD_HellKnight
+//
+actor DUD_HellKnight : HellKnight replaces HellKnight
+{
+   states
+   {
+   Death:
+      BOS2 I 8
+      BOS2 J 8 A_Scream
+      BOS2 K 8
+      BOS2 L 8 A_NoBlocking
+      BOS2 MN 8
+      BOS2 O 8
+      goto Respawne
+
+   Raise:
+      stop
+
+   Respawne:
+      "####" "#" -1 ACS_NamedExecuteWithResult("DUD_Respawne")
+      stop
+   }
+}
+
+//
+// DUD_Mancubus
+//
+actor DUD_Mancubus : Fatso replaces Fatso
+{
+   states
+   {
+   Death:
+      FATT K 6
+      FATT L 6 A_Scream
+      FATT M 6 A_NoBlocking
+      FATT NOPQRS 6
+      FATT T 6 A_BossDeath
+      goto Respawne
+
+   Raise:
+      stop
+
+   Respawne:
+      "####" "#" -1 ACS_NamedExecuteWithResult("DUD_Respawne")
+      stop
+   }
+}
+
+//
+// DUD_Revenant
+//
+actor DUD_Revenant : Revenant replaces Revenant
+{
+   states
+   {
+   Death:
+      SKEL LM 7
+      SKEL N 7 A_Scream
+      SKEL O 7 A_NoBlocking
+      SKEL P 7
+      SKEL Q 7
+      goto Respawne
+
+   Raise:
+      stop
+
+   Respawne:
+      "####" "#" -1 ACS_NamedExecuteWithResult("DUD_Respawne")
+      stop
+   }
+}
+
+//
+// DUD_WolfensteinSS
+//
+actor DUD_WolfensteinSS : WolfensteinSS replaces WolfensteinSS
+{
+   DropItem None
+
+   states
+   {
+   Death:
+      SSWV I 5
+      SSWV J 5 A_Scream
+      SSWV K 5 A_NoBlocking
+      SSWV L 5
+      SSWV M 5
+      goto Respawne
+
+   XDeath:
+      SSWV N 5 
+      SSWV O 5 A_XScream
+      SSWV P 5 A_NoBlocking
+      SSWV QRSTU 5
+      SSWV V 5
+      goto Respawne
+
+   Raise:
+      stop
+
+   Respawne:
+      "####" "#" -1 ACS_NamedExecuteWithResult("DUD_Respawne")
+      stop
+   }
+}
+
+// EOF
+

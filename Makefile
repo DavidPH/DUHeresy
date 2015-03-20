@@ -123,6 +123,7 @@ DUD_DEC = \
    src/DUDamned/code/dud_arti.dec \
    src/DUDamned/code/dud_cell.dec \
    src/DUDamned/code/dud_clip.dec \
+   src/DUDamned/code/dud_mobj.dec \
    src/DUDamned/code/dud_rckt.dec \
    src/DUDamned/code/dud_shel.dec \
    src/DUDamned/code/dud_weap.dec
@@ -131,6 +132,7 @@ DUD_INC = -isrc/DUDamned/code $(DU_INC)
 
 DUD_IR_CC = \
    build/dud_abil.ir \
+   build/dud_mobj.ir \
    build/dud_weap.ir
 
 DUD_IR = $(DUD_IR_CC)
