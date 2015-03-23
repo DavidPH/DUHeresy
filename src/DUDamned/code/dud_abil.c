@@ -51,8 +51,8 @@ dud_ability_t DUD_Ability[3][ABILMAX] =
          DUD_AbilityDefaults,
 
          .used      = true,
-         .ammoRegen = {9, 3, 1, 3},
-         .desc      = s"Gives CLIP ammo regeneration.",
+         .ammoRegen = {4, 4, 4, 4},
+         .desc      = s"Gives basic ammo regeneration.",
          .name      = s"Ammo Regen I",
          .nameIco   = s"AMMO-1",
       },
@@ -127,8 +127,8 @@ dud_ability_t DUD_Ability[3][ABILMAX] =
          DUD_AbilityDefaults,
 
          .used      = true,
-         .ammoRegen = {3, 9, 1, 3},
-         .desc      = s"Gives SHEL ammo regeneration.",
+         .ammoRegen = {8, 8, 8, 8},
+         .desc      = s"Gives better ammo regeneration.",
          .name      = s"Ammo Regen II",
          .nameIco   = s"AMMO-2",
       },
@@ -183,8 +183,8 @@ dud_ability_t DUD_Ability[3][ABILMAX] =
          DUD_AbilityDefaults,
 
          .used      = true,
-         .ammoRegen = {3, 3, 1, 9},
-         .desc      = s"Gives CELL ammo regeneration.",
+         .ammoRegen = {12, 12, 12, 12},
+         .desc      = s"Gives best ammo regeneration.",
          .name      = s"Ammo Regen III",
          .nameIco   = s"AMMO-3",
       },
