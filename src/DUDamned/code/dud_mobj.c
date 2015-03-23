@@ -74,12 +74,16 @@ void DUD_Respawne(void)
 
    // Try to summon a new enemy.
    accum x = ACS_GetActorX(0), y = ACS_GetActorY(0), z = ACS_GetActorZ(0);
-   ACS_Spawn(type, x, y, z, 0, ACS_Random(0, 255));
-   ACS_Spawn(s"TeleportFog", x, y, z, 0, 0);
+   int   tid = DU_MakeTID();
+   if(ACS_Spawn(type, x, y, z, tid, ACS_Random(0, 255)))
+   {
+      ACS_SetActorState(tid, s"Wander");
+      ACS_Spawn(s"TeleportFog", x, y, z, 0, 0);
 
-   // Deplete health. Afterall, summoning enemies infinitely would be unfair.
-   int healthNew  = health - ACS_Random(sqrtf(healthBase), healthBase);
-   ACS_SetActorProperty(0, APROP_Health, healthNew);
+      // Deplete health. Because summoning enemies infinitely would be unfair.
+      int healthNew  = health - ACS_Random(sqrtf(healthBase), healthBase);
+      ACS_SetActorProperty(0, APROP_Health, healthNew);
+   }
 
    // Branch to start of Respawne state sequence.
    ACS_SetActorState(0, s"Respawne");
