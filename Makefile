@@ -147,7 +147,9 @@ DUD_ROOT = \
    src/DUCommon/LOADACS \
    src/DUDamned/DECORATE \
    src/DUDamned/KEYCONF \
-   src/DUDamned/TEXTURES
+   src/DUDamned/LANGUAGE \
+   src/DUDamned/TEXTURES \
+   src/DUDamned/ZMAPINFO
 
 build/DUDamned.pkz: build/DUDamned.bin $(DU_DEC) $(DUD_DEC) $(DUD_ROOT)
 	@rm -f $@

@@ -1,0 +1,67 @@
+//-----------------------------------------------------------------------------
+//
+//
+//
+//-----------------------------------------------------------------------------
+
+clearskills
+
+skill VeryEasy
+{
+   ACSReturn   = 0
+   Name        = "$SKILL_NAME_0"
+   SpawnFilter = 1
+}
+
+skill Easy
+{
+   ACSReturn   = 1
+   Name        = "$SKILL_NAME_1"
+   SpawnFilter = 2
+}
+
+skill Normal
+{
+   ACSReturn   = 2
+   DefaultSkill
+   Name        = "$SKILL_NAME_2"
+   SpawnFilter = 3
+}
+
+skill Hard
+{
+   ACSReturn   = 3
+   Name        = "$SKILL_NAME_3"
+   SpawnFilter = 4
+}
+
+skill VeryHard
+{
+   ACSReturn   = 4
+   Name        = "$SKILL_NAME_4"
+   SpawnFilter = 5
+}
+
+skill VeryVeryHard
+{
+   ACSReturn   = 5
+   Name        = "$SKILL_NAME_5"
+   SpawnFilter = 5
+}
+
+skill OhMyGod
+{
+   ACSReturn   = 6
+   Name        = "$SKILL_NAME_6"
+   SpawnFilter = 5
+}
+
+skill FuckBalls
+{
+   ACSReturn   = 7
+   Name        = "$SKILL_NAME_7"
+   SpawnFilter = 5
+}
+
+// EOF
+
