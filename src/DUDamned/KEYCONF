@@ -1,2 +1,5 @@
 clearplayerclasses
 addplayerclass DUD_Player
+
+addkeysection "DUDamned" DUD_Keysection
+addmenukey "Menu" +USER1
