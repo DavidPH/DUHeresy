@@ -131,8 +131,8 @@ void DU_MenuRun(Menu *menu)
    int buttonsNew = buttons & ~buttonsOld;
 
    // Poll and cap cursor movement.
-   menu->x -= ACS_GetPlayerInputFixed(-1, INPUT_YAW)   * menu->w * 3;
-   menu->y -= ACS_GetPlayerInputFixed(-1, INPUT_PITCH) * menu->w * 3;
+   menu->x -= ACS_GetPlayerInputFixed(-1, INPUT_YAW)   * menu->w * 2;
+   menu->y -= ACS_GetPlayerInputFixed(-1, INPUT_PITCH) * menu->h * 2;
 
    if(menu->x < 0)       menu->x = 0;
    if(menu->x > menu->w) menu->x = menu->w;
