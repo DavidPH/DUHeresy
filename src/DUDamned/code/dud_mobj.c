@@ -27,7 +27,9 @@
 [[call("ScriptS"), extern("ACS")]]
 void DUD_Death(void)
 {
-   int tics = sqrtf(ACS_GetActorProperty(0, APROP_SpawnHealth)) * 35;
+   int healthBase = ACS_GetActorProperty(0, APROP_SpawnHealth);
+   int health     = ACS_GetActorProperty(0, APROP_Health);
+   int tics       = sqrtf(healthBase - health) * 15 + 1;
 
    for(int pnum = 0; pnum != MAX_PLAYERS; ++pnum)
    {
@@ -48,7 +50,7 @@ void DUD_Respawne(void)
    int healthBase = ACS_GetActorProperty(0, APROP_SpawnHealth);
    int health     = ACS_GetActorProperty(0, APROP_Health);
 
-   int healthMin = -healthBase * (ACS_GameSkill() + 4) / 2;
+   int healthMin = -healthBase * (ACS_GameSkill() + 1);
 
    // If the caller is too dead, then it stays dead.
    if(health < healthMin) {ACS_Thing_Remove(0); return;}
