@@ -132,6 +132,7 @@ DUD_INC = -isrc/DUDamned/code $(DU_INC)
 
 DUD_IR_CC = \
    build/dud_abil.ir \
+   build/dud_menu.ir \
    build/dud_mobj.ir \
    build/dud_weap.ir
 

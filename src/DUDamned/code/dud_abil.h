@@ -80,6 +80,14 @@ extern dud_ability_t *DUD_AbilitySelected[MAX_PLAYERS][3];
 // Extern Functions                                                           |
 //
 
+void DUD_DoAmmoCap(int pnum);
+void DUD_DoAmmoRegen(int pnum);
+void DUD_DoArmorRegen(int pnum);
+void DUD_DoHealthRegen(int pnum);
+void DUD_DoJumpHeight(int pnum);
+void DUD_DoRunSpeed(int pnum);
+void DUD_DoWeaponSelect(int pnum);
+
 accum DUD_GetDamageFactor(int pnum, int ammo);
 accum DUD_GetPSpeedFactor(int pnum, int ammo);
 accum DUD_GetRadiusFactor(int pnum, int ammo);
