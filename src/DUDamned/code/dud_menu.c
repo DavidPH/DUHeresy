@@ -34,7 +34,7 @@
    button.w     = MENUBOX_W; \
    button.h     = MENUBOX_H; \
    button.txt   = DUD_Ability[slot][abil].nameIco; \
-   button.img   = NULL; \
+   button.img   = s"ABILBACK"; \
    button.color = CR_BRICK; \
    \
    /* Callbacks */ \
@@ -61,7 +61,7 @@
    button.w     = MENUBOX_W; \
    button.h     = MENUBOX_H; \
    button.txt   = DUD_Weapon[slot][weap].nameIco; \
-   button.img   = NULL; \
+   button.img   = s"WEAPBACK"; \
    button.color = CR_BRICK; \
    \
    /* Callbacks */ \

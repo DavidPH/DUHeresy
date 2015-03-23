@@ -10,6 +10,77 @@
 //
 //-----------------------------------------------------------------------------
 
+//
+// Menu backgrounds
+//
+
+graphic BACKPRT0, 2, 2 {patch EXIT1,   0,   0}
+graphic BACKPRT1, 2, 2 {patch EXIT1, -30,   0}
+graphic BACKPRT2, 2, 2 {patch EXIT1,   0, -14}
+graphic BACKPRT3, 2, 2 {patch EXIT1, -30, -14}
+
+graphic BACKPRT4, 28,  2 {patch EXIT1,  -2,   0}
+graphic BACKPRT5,  2, 12 {patch EXIT1,   0,  -2}
+graphic BACKPRT6,  2, 12 {patch EXIT1, -30,  -2}
+graphic BACKPRT7, 28,  2 {patch EXIT1,  -2, -14}
+
+graphic BACKEDGE, 64, 40
+{
+   patch BACKPRT0,  2,  6
+   patch BACKPRT1, 58,  6
+   patch BACKPRT2,  2, 32
+   patch BACKPRT3, 58, 32
+
+   patch BACKPRT4,  4,  6
+   patch BACKPRT4, 30,  6
+   patch BACKPRT5,  2,  8
+   patch BACKPRT5,  2, 20
+   patch BACKPRT6, 58,  8
+   patch BACKPRT6, 58, 20
+   patch BACKPRT7,  4, 32
+   patch BACKPRT7, 30, 32
+}
+
+graphic BACKFIL0, 28,  1 {patch EXIT1, -2, -2}
+graphic BACKFIL1, 28, 12
+{
+   patch BACKFIL0, 0,  0
+   patch BACKFIL0, 0,  1
+   patch BACKFIL0, 0,  2
+   patch BACKFIL0, 0,  3
+   patch BACKFIL0, 0,  4
+   patch BACKFIL0, 0,  5
+   patch BACKFIL0, 0,  6
+   patch BACKFIL0, 0,  7
+   patch BACKFIL0, 0,  8
+   patch BACKFIL0, 0,  9
+   patch BACKFIL0, 0, 10
+   patch BACKFIL0, 0, 11
+}
+graphic BACKFILL, 64, 40
+{
+   patch BACKFIL1,  4,  8
+   patch BACKFIL1, 32,  8
+   patch BACKFIL1,  4, 20
+   patch BACKFIL1, 32, 20
+}
+
+graphic ABILBACK, 64, 40
+{
+   patch BACKFILL, 0, 0
+   patch BACKEDGE, 0, 0
+}
+
+graphic WEAPBACK, 64, 40
+{
+   patch BACKFILL, 0, 0
+   patch BACKEDGE, 0, 0
+}
+
+//
+// Chainfist
+//
+
 sprite CFISH0, 17, 35 {patch SAWGC0, -34, 0 {flipx}}
 sprite CFISI0, 17, 34 {patch SAWGD0, -34, 0 {flipx}}
 
@@ -44,6 +115,10 @@ sprite CFISG0, 147, 106
 
    offset -36, -62
 }
+
+//
+// Dakkagun
+//
 
 sprite DAKAA0, 8, 7 {patch STCFN065, 0, 0 offset 4, 4}
 sprite DAKAD0, 8, 7 {patch STCFN068, 0, 0 offset 4, 4}

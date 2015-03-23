@@ -155,12 +155,12 @@ void DU_MenuRun(Menu *menu)
       int x = button->x + button->w/2;
       int y = button->y + button->h/2;
 
+      DU_MenuHudText(menu, msgid++, button->txt, button->color, x, y);
+
       if(button->img[0])
          DU_MenuHudImage(menu, msgid++, button->img, x, y);
       else
          DU_MenuHudClear(menu, msgid++);
-
-      DU_MenuHudText(menu, msgid++, button->txt, button->color, x, y);
    }
 
    // Draw labels.
@@ -172,12 +172,12 @@ void DU_MenuRun(Menu *menu)
       int x = label->x + label->w/2;
       int y = label->y + label->h/2;
 
+      DU_MenuHudText(menu, msgid++, label->txt, label->color, x, y);
+
       if(label->img[0])
          DU_MenuHudImage(menu, msgid++, label->img, x, y);
       else
          DU_MenuHudClear(menu, msgid++);
-
-      DU_MenuHudText(menu, msgid++, label->txt, label->color, x, y);
    }
 
    // Draw texts.
