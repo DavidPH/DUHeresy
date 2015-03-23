@@ -23,7 +23,7 @@ actor DUD_BaronOfHell : BaronOfHell replaces BaronOfHell
    states
    {
    Death:
-      BOSS I 8
+      BOSS I 8 ACS_NamedExecuteWithResult("DUD_Death")
       BOSS J 8 A_Scream
       BOSS K 8
       BOSS L 8 A_NoBlocking
@@ -48,7 +48,7 @@ actor DUD_Cacodemon : Cacodemon replaces Cacodemon
    states
    {
    Death:
-      HEAD G 8
+      HEAD G 8 ACS_NamedExecuteWithResult("DUD_Death")
       HEAD H 8 A_Scream
       HEAD IJ 8
       HEAD K 8 A_NoBlocking
@@ -72,7 +72,7 @@ actor DUD_Cyberdemon : Cyberdemon replaces Cyberdemon
    states
    {
    Death:
-      CYBR H 10
+      CYBR H 10 ACS_NamedExecuteWithResult("DUD_Death")
       CYBR I 10 A_Scream
       CYBR JKL 10
       CYBR M 10 A_NoBlocking
@@ -95,7 +95,7 @@ actor DUD_Demon : Demon replaces Demon
    states
    {
    Death:
-      SARG I 8
+      SARG I 8 ACS_NamedExecuteWithResult("DUD_Death")
       SARG J 8 A_Scream
       SARG K 4
       SARG L 4 A_NoBlocking
@@ -120,7 +120,7 @@ actor DUD_Imp : DoomImp replaces DoomImp
    states
    {
    Death:
-      TROO I 8
+      TROO I 8 ACS_NamedExecuteWithResult("DUD_Death")
       TROO J 8 A_Scream
       TROO K 6
       TROO L 6 A_NoBlocking
@@ -128,7 +128,7 @@ actor DUD_Imp : DoomImp replaces DoomImp
       goto Respawne
 
    XDeath:
-      TROO N 5
+      TROO N 5 ACS_NamedExecuteWithResult("DUD_Death")
       TROO O 5 A_XScream
       TROO P 5
       TROO Q 5 A_NoBlocking
@@ -155,7 +155,7 @@ actor DUD_Sergeant : ShotgunGuy replaces ShotgunGuy
    states
    {
    Death:
-      SPOS H 5
+      SPOS H 5 ACS_NamedExecuteWithResult("DUD_Death")
       SPOS I 5 A_Scream
       SPOS J 5 A_NoBlocking
       SPOS K 5
@@ -163,7 +163,7 @@ actor DUD_Sergeant : ShotgunGuy replaces ShotgunGuy
       goto Respawne
 
    XDeath:
-      SPOS M 5
+      SPOS M 5 ACS_NamedExecuteWithResult("DUD_Death")
       SPOS N 5 A_XScream
       SPOS O 5 A_NoBlocking
       SPOS PQRST 5
@@ -187,7 +187,7 @@ actor DUD_Spectre : Spectre replaces Spectre
    states
    {
    Death:
-      SARG I 8
+      SARG I 8 ACS_NamedExecuteWithResult("DUD_Death")
       SARG J 8 A_Scream
       SARG K 4
       SARG L 4 A_NoBlocking
@@ -212,6 +212,7 @@ actor DUD_SpiderMastermind : SpiderMastermind replaces SpiderMastermind
    states
    {
    Death:
+      SPID J  0 ACS_NamedExecuteWithResult("DUD_Death")
       SPID J 20 A_Scream
       SPID K 10 A_NoBlocking
       SPID LMNOPQR 10
@@ -235,7 +236,7 @@ actor DUD_Zombie : ZombieMan replaces ZombieMan
    states
    {
    Death:
-      POSS H 5
+      POSS H 5 ACS_NamedExecuteWithResult("DUD_Death")
       POSS I 5 A_Scream
       POSS J 5 A_NoBlocking
       POSS K 5
@@ -243,7 +244,7 @@ actor DUD_Zombie : ZombieMan replaces ZombieMan
       goto Respawne
 
    XDeath:
-      POSS M 5
+      POSS M 5 ACS_NamedExecuteWithResult("DUD_Death")
       POSS N 5 A_XScream
       POSS O 5 A_NoBlocking
       POSS PQRST 5
@@ -267,6 +268,7 @@ actor DUD_Arachnotron : Arachnotron replaces Arachnotron
    states
    {
    Death:
+      BSPI J  0 ACS_NamedExecuteWithResult("DUD_Death")
       BSPI J 20 A_Scream
       BSPI K 7 A_NoBlocking
       BSPI LMNO 7
@@ -290,7 +292,7 @@ actor DUD_Archvile : Archvile replaces Archvile
    states
    {
    Death:
-      VILE Q 7
+      VILE Q 7 ACS_NamedExecuteWithResult("DUD_Death")
       VILE R 7 A_Scream
       VILE S 7 A_NoBlocking
       VILE TUVWXY 7
@@ -313,7 +315,7 @@ actor DUD_Commando : ChaingunGuy replaces ChaingunGuy
    states
    {
    Death:
-      CPOS H 5
+      CPOS H 5 ACS_NamedExecuteWithResult("DUD_Death")
       CPOS I 5 A_Scream
       CPOS J 5 A_NoBlocking
       CPOS KLM 5
@@ -321,7 +323,7 @@ actor DUD_Commando : ChaingunGuy replaces ChaingunGuy
       goto Respawne
 
    XDeath:
-      CPOS O 5
+      CPOS O 5 ACS_NamedExecuteWithResult("DUD_Death")
       CPOS P 5 A_XScream
       CPOS Q 5 A_NoBlocking
       CPOS RS 5
@@ -345,7 +347,7 @@ actor DUD_HellKnight : HellKnight replaces HellKnight
    states
    {
    Death:
-      BOS2 I 8
+      BOS2 I 8 ACS_NamedExecuteWithResult("DUD_Death")
       BOS2 J 8 A_Scream
       BOS2 K 8
       BOS2 L 8 A_NoBlocking
@@ -370,7 +372,7 @@ actor DUD_Mancubus : Fatso replaces Fatso
    states
    {
    Death:
-      FATT K 6
+      FATT K 6 ACS_NamedExecuteWithResult("DUD_Death")
       FATT L 6 A_Scream
       FATT M 6 A_NoBlocking
       FATT NOPQRS 6
@@ -394,7 +396,8 @@ actor DUD_Revenant : Revenant replaces Revenant
    states
    {
    Death:
-      SKEL LM 7
+      SKEL L 7 ACS_NamedExecuteWithResult("DUD_Death")
+      SKEL M 7
       SKEL N 7 A_Scream
       SKEL O 7 A_NoBlocking
       SKEL P 7
@@ -420,7 +423,7 @@ actor DUD_WolfensteinSS : WolfensteinSS replaces WolfensteinSS
    states
    {
    Death:
-      SSWV I 5
+      SSWV I 5 ACS_NamedExecuteWithResult("DUD_Death")
       SSWV J 5 A_Scream
       SSWV K 5 A_NoBlocking
       SSWV L 5
@@ -428,7 +431,7 @@ actor DUD_WolfensteinSS : WolfensteinSS replaces WolfensteinSS
       goto Respawne
 
    XDeath:
-      SSWV N 5 
+      SSWV N 5 ACS_NamedExecuteWithResult("DUD_Death")
       SSWV O 5 A_XScream
       SSWV P 5 A_NoBlocking
       SSWV QRSTU 5

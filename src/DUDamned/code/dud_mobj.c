@@ -12,12 +12,30 @@
 
 #include "du_defs.h"
 
+#include "dud_abil.h"
+
 #include <math.h>
 
 
 //----------------------------------------------------------------------------|
 // Extern Functions                                                           |
 //
+
+//
+// DUD_Death
+//
+[[call("ScriptS"), extern("ACS")]]
+void DUD_Death(void)
+{
+   int tics = sqrtf(ACS_GetActorProperty(0, APROP_SpawnHealth)) * 35;
+
+   for(int pnum = 0; pnum != MAX_PLAYERS; ++pnum)
+   {
+      if(!ACS_PlayerInGame(pnum)) continue;
+
+      DUD_DoAbilities(pnum, tics);
+   }
+}
 
 //
 // DUD_Respawne

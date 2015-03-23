@@ -330,13 +330,8 @@ void DUD_MenuLoop(void)
          else
          {
             // Apply selected abilities.
+            DUD_DoAbilities(pnum, 1);
 
-            DUD_DoAmmoCap(pnum);
-            DUD_DoAmmoRegen(pnum);
-            DUD_DoArmorRegen(pnum);
-            DUD_DoHealthRegen(pnum);
-            DUD_DoJumpHeight(pnum);
-            DUD_DoRunSpeed(pnum);
             DUD_DoWeaponSelect(pnum);
          }
       }

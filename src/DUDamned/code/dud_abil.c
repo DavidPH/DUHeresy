@@ -249,9 +249,22 @@ dud_ability_t *DUD_AbilitySelected[MAX_PLAYERS][3];
 //
 
 //
+// DUD_DoAbilities
+//
+void DUD_DoAbilities(int pnum, int tics)
+{
+   DUD_DoAmmoCap(pnum, tics);
+   DUD_DoAmmoRegen(pnum, tics);
+   DUD_DoArmorRegen(pnum, tics);
+   DUD_DoHealthRegen(pnum, tics);
+   DUD_DoJumpHeight(pnum, tics);
+   DUD_DoRunSpeed(pnum, tics);
+}
+
+//
 // DUD_DoAmmoCap
 //
-void DUD_DoAmmoCap(int pnum)
+void DUD_DoAmmoCap(int pnum, int)
 {
    accum ammoBase = 1 + ACS_CheckInventory(s"DUD_Backpack") * 0.5k;
 
@@ -284,7 +297,7 @@ void DUD_DoAmmoCap(int pnum)
 //
 // DUD_DoAmmoRegen
 //
-void DUD_DoAmmoRegen(int pnum)
+void DUD_DoAmmoRegen(int pnum, int tics)
 {
    static int ammoCount[MAX_PLAYERS][AMMOMAX];
 
@@ -299,7 +312,7 @@ void DUD_DoAmmoRegen(int pnum)
 
    for(int ammo = 0; ammo < AMMOMAX; ++ammo)
    {
-      if((ammoCount[pnum][ammo] -= ammoRegen[ammo]) < 0)
+      if((ammoCount[pnum][ammo] -= ammoRegen[ammo] * tics) < 0)
       {
          ammoCount[pnum][ammo] += DUD_Ammo[ammo].regen;
          ACS_GiveInventory(DUD_Ammo[ammo].nameDec, 1);
@@ -310,7 +323,7 @@ void DUD_DoAmmoRegen(int pnum)
 //
 // DUD_DoArmorRegen
 //
-void DUD_DoArmorRegen(int pnum)
+void DUD_DoArmorRegen(int pnum, int tics)
 {
    static int armorCount[MAX_PLAYERS];
    int armorRegen = 0;
@@ -321,7 +334,7 @@ void DUD_DoArmorRegen(int pnum)
       armorRegen += (*itr)->armorRegen;
    }
 
-   if((armorCount[pnum] -= armorRegen) < 0)
+   if((armorCount[pnum] -= armorRegen * tics) < 0)
    {
       armorCount[pnum] += 35*60;
       ACS_GiveInventory(s"DUD_ArmorBonusSmall", 1);
@@ -331,7 +344,7 @@ void DUD_DoArmorRegen(int pnum)
 //
 // DUD_DoHealthRegen
 //
-void DUD_DoHealthRegen(int pnum)
+void DUD_DoHealthRegen(int pnum, int tics)
 {
    static int healthCount[MAX_PLAYERS];
    int healthRegen = 0;
@@ -345,7 +358,7 @@ void DUD_DoHealthRegen(int pnum)
    for(int i = ACS_CheckInventory(s"DUD_Berserk"); i--;)
       healthRegen += DUD_Ability[0][ABIL1_BERSERK].healthRegen;
 
-   while((healthCount[pnum] -= healthRegen) < 0)
+   if((healthCount[pnum] -= healthRegen * tics) < 0)
    {
       healthCount[pnum] += 35*60;
       ACS_GiveInventory(s"DUD_HealthBonusSmall", 1);
@@ -355,7 +368,7 @@ void DUD_DoHealthRegen(int pnum)
 //
 // DUD_DoJumpHeight
 //
-void DUD_DoJumpHeight(int pnum)
+void DUD_DoJumpHeight(int pnum, int)
 {
    accum jumpz = 8;
 
@@ -374,7 +387,7 @@ void DUD_DoJumpHeight(int pnum)
 //
 // DUD_DoRunSpeed
 //
-void DUD_DoRunSpeed(int pnum)
+void DUD_DoRunSpeed(int pnum, int)
 {
    accum speed = 1;
 
