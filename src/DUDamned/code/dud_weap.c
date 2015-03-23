@@ -73,6 +73,7 @@ dud_weapon_t DUD_Weapon[7][WEAPMAX] =
       // WEAP1_FIST
       {
          true,
+         true,
          AMMOMAX,
          s"Lets you punch zombies with your bare hands like real\n"
          s"men do. Heck yeah!",
@@ -86,6 +87,7 @@ dud_weapon_t DUD_Weapon[7][WEAPMAX] =
       // WEAP1_CSAW
       {
          true,
+         true,
          AMMOMAX,
          s"Chops up demons real quick-like.",
          NULL,
@@ -97,6 +99,7 @@ dud_weapon_t DUD_Weapon[7][WEAPMAX] =
 
       // WEAP1_CFIST
       {
+         true,
          true,
          AMMOMAX,
          s"Smash and chop with the finest of them.",
@@ -113,6 +116,7 @@ dud_weapon_t DUD_Weapon[7][WEAPMAX] =
       // WEAP2_PIST
       {
          true,
+         true,
          AMMO_CLIP,
          s"Shoots bullets.",
          NULL,
@@ -128,6 +132,7 @@ dud_weapon_t DUD_Weapon[7][WEAPMAX] =
       // WEAP3_SHTG
       {
          true,
+         true,
          AMMO_SHEL,
          s"Shoots shells.",
          NULL,
@@ -139,6 +144,7 @@ dud_weapon_t DUD_Weapon[7][WEAPMAX] =
 
       // WEAP3_SHT2
       {
+         true,
          true,
          AMMO_SHEL,
          s"Shoots two shells. Slower than the shotgun, but more\npowerful.",
@@ -155,6 +161,7 @@ dud_weapon_t DUD_Weapon[7][WEAPMAX] =
       // WEAP4_CGUN
       {
          true,
+         true,
          AMMO_CLIP,
          s"Shoots bullets fast.",
          NULL,
@@ -166,6 +173,7 @@ dud_weapon_t DUD_Weapon[7][WEAPMAX] =
 
       // WEAP4_DGUN
       {
+         true,
          true,
          AMMO_CLIP,
          s"Shoots dakka.",
@@ -182,6 +190,7 @@ dud_weapon_t DUD_Weapon[7][WEAPMAX] =
       // WEAP5_RCKT
       {
          true,
+         true,
          AMMO_RCKT,
          s"Shoots rockets.",
          NULL,
@@ -197,6 +206,7 @@ dud_weapon_t DUD_Weapon[7][WEAPMAX] =
       // WEAP6_PLAS
       {
          true,
+         true,
          AMMO_CELL,
          s"Shoots plasma fast.",
          NULL,
@@ -208,6 +218,7 @@ dud_weapon_t DUD_Weapon[7][WEAPMAX] =
 
       // WEAP6_LASG
       {
+         true,
          true,
          AMMO_CELL,
          s"Shoots plasma hitscans. No affiliation with 40K. Nope.",
@@ -224,6 +235,7 @@ dud_weapon_t DUD_Weapon[7][WEAPMAX] =
       // WEAP7_BFG9
       {
          true,
+         true,
          AMMO_CELL,
          s"Shoots plasma.",
          NULL,
@@ -235,6 +247,7 @@ dud_weapon_t DUD_Weapon[7][WEAPMAX] =
 
       // WEAP7_RAIL
       {
+         true,
          true,
          AMMO_CELL,
          s"Shoots piercing plasma.",

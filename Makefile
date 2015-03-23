@@ -128,6 +128,10 @@ DUD_DEC = \
    src/DUDamned/code/dud_shel.dec \
    src/DUDamned/code/dud_weap.dec
 
+DUD_H = \
+   src/DUDamned/code/dud_abil.h \
+   src/DUDamned/code/dud_weap.h
+
 DUD_INC = -isrc/DUDamned/code $(DU_INC)
 
 DUD_IR_CC = \

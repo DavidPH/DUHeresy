@@ -10,7 +10,7 @@
 //
 //-----------------------------------------------------------------------------
 
-#include "dud_menu.h"
+#include "du_menu.h"
 
 #include "dud_abil.h"
 
@@ -26,21 +26,6 @@
 
 #define MENUBOX_W 64
 #define MENUBOX_H 40
-
-#define DUD_AbilityDefaults \
-   false, \
-   {0, 0, 0, 0}, \
-   {0, 0, 0, 0}, \
-   {1, 1, 1, 1}, \
-   {1, 1, 1, 1}, \
-   {1, 1, 1, 1}, \
-   0, 0, \
-   1, 1, \
-   NULL, \
-   NULL, \
-   NULL, \
-   NULL, \
-   NULL
 
 #define DUD_MenuInitAbility(button, slot, abil) \
    /* Rendering */ \
@@ -82,6 +67,7 @@
    /* Callbacks */ \
    button.click = DUD_ClickWeapon; \
    button.hover = DUD_HoverWeapon; \
+   button.run   = DUD_RunWeapon; \
    \
    /* Misc Data */ \
    button.next = &button + 1; \
@@ -97,14 +83,10 @@
 // Static Objects                                                             |
 //
 
-[[no_init]]
 static MenuButton DUD_MenuAbility[MAX_PLAYERS][3][ABILMAX];
-[[no_init]]
 static MenuButton DUD_MenuWeapon[MAX_PLAYERS][7][WEAPMAX];
 
-[[no_init]]
 static MenuText DUD_MenuName[MAX_PLAYERS];
-[[no_init]]
 static MenuText DUD_MenuDesc[MAX_PLAYERS];
 
 static Menu DUD_Menu[MAX_PLAYERS];
@@ -148,22 +130,15 @@ static void DUD_ClickWeapon(MenuButton *button)
 {
    int pnum = ACS_PlayerNumber(), slot;
 
-   dud_weapon_t  *weapon = (dud_weapon_t *)button->data;
-   dud_weapon_t **select;
+   dud_weapon_t *weapon = (dud_weapon_t *)button->data;
 
-   if(!weapon->used) return;
+   if(!weapon->used || !weapon->have) return;
 
    // Figure out which slot number this weapon is for.
    for(slot = 0; weapon >= &DUD_Weapon[slot+1][0]; ++slot);
 
-   select = &DUD_WeaponSelected[pnum][slot];
-
-   // Clear old weapon's button.
-   DUD_MenuWeapon[pnum][slot][*select - &DUD_Weapon[slot][0]].color = CR_BRICK;
-
    // Make this button's ability selected.
-   button->color = CR_GOLD;
-   *select = weapon;
+   DUD_WeaponSelected[pnum][slot] = weapon;
 }
 
 //
@@ -186,8 +161,52 @@ static void DUD_HoverWeapon(MenuButton *button)
 {
    int pnum = ACS_PlayerNumber();
 
-   DUD_MenuName[pnum].txt = ((dud_weapon_t *)button->data)->name;
-   DUD_MenuDesc[pnum].txt = ((dud_weapon_t *)button->data)->desc;
+   dud_weapon_t *weapon = (dud_weapon_t *)button->data;
+
+   if(weapon->used)
+   {
+      DUD_MenuName[pnum].txt = weapon->name;
+      DUD_MenuDesc[pnum].txt = weapon->desc;
+   }
+   else
+   {
+      DUD_MenuName[pnum].txt = s"";
+      DUD_MenuDesc[pnum].txt = s"";
+   }
+}
+
+//
+// DUD_RunWeapon
+//
+[[call("ScriptS")]]
+static void DUD_RunWeapon(MenuButton *button)
+{
+   int pnum = ACS_PlayerNumber(), slot;
+
+   dud_weapon_t *weapon = (dud_weapon_t *)button->data;
+   dud_weapon_t *select;
+
+   // Figure out which slot number this weapon is for.
+   for(slot = 0; weapon >= &DUD_Weapon[slot+1][0]; ++slot);
+
+   select = DUD_WeaponSelected[pnum][slot];
+
+   if(weapon->used)
+   {
+      button->txt = weapon->nameIco;
+
+      if(weapon == select)
+         button->color = CR_GOLD;
+      else if(weapon->have)
+         button->color = CR_BRICK;
+      else
+         button->color = CR_GRAY;
+   }
+   else
+   {
+      button->txt   = NULL;
+      button->color = CR_GRAY;
+   }
 }
 
 //

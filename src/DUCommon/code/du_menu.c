@@ -140,12 +140,18 @@ void DU_MenuRun(Menu *menu)
    if(menu->y < 0)       menu->y = 0;
    if(menu->y > menu->h) menu->y = menu->h;
 
+   if(menu->run)
+      menu->run(menu);
+
    // Draw cursor.
    DU_MenuHudImage(menu, msgid++, s"CURSOR", (int)menu->x+0.1k, (int)menu->y+0.1k);
 
    // Draw buttons.
    for(MenuButton *button = menu->buttons; button; button = button->next)
    {
+      if(button->run)
+         button->run(button);
+
       int x = button->x + button->w/2;
       int y = button->y + button->h/2;
 
@@ -160,6 +166,9 @@ void DU_MenuRun(Menu *menu)
    // Draw labels.
    for(MenuLabel *label = menu->labels; label; label = label->next)
    {
+      if(label->run)
+         label->run(label);
+
       int x = label->x + label->w/2;
       int y = label->y + label->h/2;
 
@@ -174,6 +183,9 @@ void DU_MenuRun(Menu *menu)
    // Draw texts.
    for(MenuText *text = menu->texts; text; text = text->next)
    {
+      if(text->run)
+         text->run(text);
+
       accum x = (int)text->x + 0.1;
       accum y = (int)text->y + 0.1;
 

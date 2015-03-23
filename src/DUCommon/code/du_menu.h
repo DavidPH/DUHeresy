@@ -29,6 +29,15 @@ typedef struct Menu       Menu;
 [[call("ScriptS")]]
 typedef void (*MenuButtonFunc)(MenuButton *);
 
+[[call("ScriptS")]]
+typedef void (*MenuLabelFunc)(MenuLabel *);
+
+[[call("ScriptS")]]
+typedef void (*MenuTextFunc)(MenuText *);
+
+[[call("ScriptS")]]
+typedef void (*MenuFunc)(Menu *);
+
 struct MenuButton
 {
    // Rendering
@@ -41,6 +50,7 @@ struct MenuButton
    // Callbacks
    MenuButtonFunc click; // on-click
    MenuButtonFunc hover; // mouse-over
+   MenuButtonFunc run;   // on-run, pre-draw
 
    // Misc Data
    MenuButton *next; // next button in menu
@@ -56,6 +66,9 @@ struct MenuLabel
    __str img;   // image
    int   color; // text color
 
+   // Callbacks
+   MenuLabelFunc run; // on-run, pre-draw
+
    // Misc Data
    MenuLabel *next; // next label in menu
 };
@@ -67,15 +80,21 @@ struct MenuText
    __str txt;   // text
    int   color; // text color
 
+   // Callbacks
+   MenuTextFunc run; // on-run, pre-draw
+
    // Misc Data
    MenuText *next; // next text in menu
 };
 
 struct Menu
 {
-   // Configuration
+   // Rendering
    accum w, h;
    __str font;
+
+   // Callbacks
+   MenuFunc run; // on-run, pre-draw
 
    MenuButton *buttons;
    MenuLabel  *labels;

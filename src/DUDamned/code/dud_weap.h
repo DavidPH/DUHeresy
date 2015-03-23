@@ -76,6 +76,7 @@ struct dud_ammo_t
 struct dud_weapon_t
 {
    bool  used;
+   bool  have;
    int   ammo;
    __str desc;
    __str icon;
