@@ -28,8 +28,6 @@ clean:
 
 libGDCC_IR_AS = \
    build/libGDCC_AddF.ir \
-   build/libGDCC_AddU.ir \
-   build/libGDCC_Bclz.ir \
    build/libGDCC_CmpF.ir \
    build/libGDCC_CmpI.ir \
    build/libGDCC_CmpU.ir \
@@ -39,8 +37,7 @@ libGDCC_IR_AS = \
    build/libGDCC_MulF.ir \
    build/libGDCC_MulU.ir \
    build/libGDCC_Sh.ir \
-   build/libGDCC_SubF.ir \
-   build/libGDCC_SubU.ir
+   build/libGDCC_SubF.ir
 
 libGDCC_IR_CC = \
    build/libGDCC_alloc.ir \
