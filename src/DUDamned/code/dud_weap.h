@@ -37,12 +37,13 @@ enum
 {
    WEAP1_FIST = 0,
    WEAP1_CSAW,
-   WEAP1_CFIST,
+   WEAP1_CFIS,
 
    WEAP2_PIST = 0,
 
    WEAP3_SHTG = 0,
    WEAP3_SHT2,
+   WEAP3_AGUN,
 
    WEAP4_CGUN = 0,
    WEAP4_DGUN,

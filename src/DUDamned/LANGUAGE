@@ -6,6 +6,10 @@
 
 [enu default]
 
+GOTALPHAGUN = "You got the Alphagun! Get Literate!";
+
+OB_MPALPHAGUN = "%o got spelled by %k";
+
 SKILL_NAME_0 = "The Unending Darned";
 SKILL_NAME_1 = "Marine In Training";
 SKILL_NAME_2 = "Probably Winnable";
@@ -14,6 +18,8 @@ SKILL_NAME_4 = "They Will Not Die";
 SKILL_NAME_5 = "Literally Worse Than Hitler";
 SKILL_NAME_6 = "Oh my Goooooooooood";
 SKILL_NAME_7 = "Fornication Spheres";
+
+TAG_ALPHAGUN = "Alphagun";
 
 // EOF
 

@@ -21,6 +21,116 @@ actor DUD_SuperShotgunAmmo : RandomSpawner replaces SuperShotgun
    {DropItem "Shell"}
 
 //
+// DUD_Alphagun
+//
+actor DUD_Alphagun : Weapon
+{
+   Weapon.AmmoType1 "Shell"
+   Weapon.AmmoType2 "Shell"
+   Weapon.AmmoUse1 1
+   Weapon.AmmoUse2 1
+   Weapon.SelectionOrder 400
+
+   Inventory.PickupMessage "$GOTALPHAGUN"
+
+   Obituary "$OB_MPALPHAGUN"
+   Tag "$TAG_ALPHAGUN"
+
+   States
+   {
+   Spawn:
+      SHOT A -1
+      stop
+
+   Select:
+      SHTG A 1 A_Raise
+      goto Select
+
+   Ready:
+      SHTG A 1 A_WeaponReady
+      goto Ready
+
+   Deselect:
+      SHTG A 1 A_Lower
+      goto Deselect
+
+   Fire:
+      SHTG A 3
+      SHTG A 0 ACS_NamedExecuteWithResult("DUD_FireAlphagun", 16, 1)
+      SHTG A 0 A_PlaySound("weapons/shotgf", CHAN_WEAPON)
+      SHTG A 7 A_GunFlash
+      SHTG B 5
+      SHTG C 5
+      SHTG D 4
+      SHTG C 5
+      SHTG B 5
+      SHTG A 3
+      SHTG A 7 A_ReFire
+      goto Ready
+
+   Flash:
+      SHTF A 4 bright A_Light1
+      SHTF B 3 bright A_Light2
+      goto LightDone
+   }
+}
+
+//
+// DUD_Alphapellet
+//
+actor DUD_Alphapellet : FastProjectile
+{
+   Damage 1
+   Height 8
+   Obituary "$OB_MPALPHAGUN"
+   Radius 8
+   Speed 80
+
+   States
+   {
+   Spawn:
+      DAKA A 1
+      DAKA A 1 A_Jump(256,
+         "SpawnA", "SpawnB", "SpawnC", "SpawnD", "SpawnE", "SpawnF", "SpawnG",
+         "SpawnH", "SpawnI", "SpawnJ", "SpawnK", "SpawnL", "SpawnM", "SpawnN",
+         "SpawnO", "SpawnP", "SpawnQ", "SpawnR", "SpawnS", "SpawnT", "SpawnU",
+         "SpawnV", "SpawnW", "SpawnX", "SpawnY", "SpawnZ")
+
+   SpawnA: DAKA A -1 bright
+   SpawnB: DAKA B -1 bright
+   SpawnC: DAKA C -1 bright
+   SpawnD: DAKA D -1 bright
+   SpawnE: DAKA E -1 bright
+   SpawnF: DAKA F -1 bright
+   SpawnG: DAKA G -1 bright
+   SpawnH: DAKA H -1 bright
+   SpawnI: DAKA I -1 bright
+   SpawnJ: DAKA J -1 bright
+   SpawnK: DAKA K -1 bright
+   SpawnL: DAKA L -1 bright
+   SpawnM: DAKA M -1 bright
+   SpawnN: DAKA N -1 bright
+   SpawnO: DAKA O -1 bright
+   SpawnP: DAKA P -1 bright
+   SpawnQ: DAKA Q -1 bright
+   SpawnR: DAKA R -1 bright
+   SpawnS: DAKA S -1 bright
+   SpawnT: DAKA T -1 bright
+   SpawnU: DAKA U -1 bright
+   SpawnV: DAKA V -1 bright
+   SpawnW: DAKA W -1 bright
+   SpawnX: DAKA X -1 bright
+   SpawnY: DAKA Y -1 bright
+   SpawnZ: DAKA Z -1 bright
+      stop
+
+   Death:
+      "####" "#" 35 bright
+      stop
+   }
+}
+
+//
 // DUD_Shotgun
 //
 actor DUD_Shotgun : Shotgun

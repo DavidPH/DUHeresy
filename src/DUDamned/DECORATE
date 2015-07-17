@@ -37,11 +37,14 @@ actor DUD_Player : DoomPlayer
    Player.MaxHealth 250
 
    Player.StartItem DUD_Pistol
-   Player.StartItem Clip, 50
+   Player.StartItem Clip,      45
+   Player.StartItem Shell,     15
+   Player.StartItem RocketAmmo, 5
+   Player.StartItem Cell,      60
 
    Player.WeaponSlot 1, DUD_Fist, DUD_Chainsaw, DUD_Chainfist
    Player.WeaponSlot 2, DUD_Pistol
-   Player.WeaponSlot 3, DUD_Shotgun, DUD_SuperShotgun
+   Player.WeaponSlot 3, DUD_Shotgun, DUD_SuperShotgun, DUD_Alphagun
    Player.WeaponSlot 4, DUD_Chaingun, DUD_Dakkagun
    Player.WeaponSlot 5, DUD_RocketLauncher
    Player.WeaponSlot 6, DUD_PlasmaRifle, DUD_Lasgun

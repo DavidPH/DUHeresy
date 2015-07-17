@@ -121,8 +121,31 @@ sprite CFISG0, 147, 106
 //
 
 sprite DAKAA0, 8, 7 {patch STCFN065, 0, 0 offset 4, 4}
+sprite DAKAB0, 8, 7 {patch STCFN066, 0, 0 offset 4, 4}
+sprite DAKAC0, 8, 7 {patch STCFN067, 0, 0 offset 4, 4}
 sprite DAKAD0, 8, 7 {patch STCFN068, 0, 0 offset 4, 4}
+sprite DAKAE0, 8, 7 {patch STCFN069, 0, 0 offset 4, 4}
+sprite DAKAF0, 8, 7 {patch STCFN070, 0, 0 offset 4, 4}
+sprite DAKAG0, 8, 7 {patch STCFN071, 0, 0 offset 4, 4}
+sprite DAKAH0, 8, 7 {patch STCFN072, 0, 0 offset 4, 4}
+sprite DAKAI0, 8, 7 {patch STCFN073, 0, 0 offset 4, 4}
+sprite DAKAJ0, 8, 7 {patch STCFN074, 0, 0 offset 4, 4}
 sprite DAKAK0, 8, 7 {patch STCFN075, 0, 0 offset 4, 4}
+sprite DAKAL0, 8, 7 {patch STCFN076, 0, 0 offset 4, 4}
+sprite DAKAM0, 8, 7 {patch STCFN077, 0, 0 offset 4, 4}
+sprite DAKAN0, 8, 7 {patch STCFN078, 0, 0 offset 4, 4}
+sprite DAKAO0, 8, 7 {patch STCFN079, 0, 0 offset 4, 4}
+sprite DAKAP0, 8, 7 {patch STCFN080, 0, 0 offset 4, 4}
+sprite DAKAQ0, 8, 7 {patch STCFN081, 0, 0 offset 4, 4}
+sprite DAKAR0, 8, 7 {patch STCFN082, 0, 0 offset 4, 4}
+sprite DAKAS0, 8, 7 {patch STCFN083, 0, 0 offset 4, 4}
+sprite DAKAT0, 8, 7 {patch STCFN084, 0, 0 offset 4, 4}
+sprite DAKAU0, 8, 7 {patch STCFN085, 0, 0 offset 4, 4}
+sprite DAKAV0, 8, 7 {patch STCFN086, 0, 0 offset 4, 4}
+sprite DAKAW0, 8, 7 {patch STCFN087, 0, 0 offset 4, 4}
+sprite DAKAX0, 8, 7 {patch STCFN088, 0, 0 offset 4, 4}
+sprite DAKAY0, 8, 7 {patch STCFN089, 0, 0 offset 4, 4}
+sprite DAKAZ0, 8, 7 {patch STCFN090, 0, 0 offset 4, 4}
 
 sprite DAKGA0, 114, 83
 {

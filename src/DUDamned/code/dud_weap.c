@@ -97,7 +97,7 @@ dud_weapon_t DUD_Weapon[7][WEAPMAX] =
          s"C. SAW",
       },
 
-      // WEAP1_CFIST
+      // WEAP1_CFIS
       {
          true,
          true,
@@ -153,6 +153,19 @@ dud_weapon_t DUD_Weapon[7][WEAPMAX] =
          s"Super Shotgun",
          s"DUD_SuperShotgun",
          s"SHT2",
+      },
+
+      // WEAP3_AGUN
+      {
+         true,
+         true,
+         AMMO_SHEL,
+         s"Shoots letters. Destroy enemies with the written word.",
+         NULL,
+         NULL,
+         s"Alphagun",
+         s"DUD_Alphagun",
+         s"ALGUN",
       },
    },
 
@@ -282,6 +295,31 @@ void DUD_AddWeapon(int slot, int weap)
 int DUD_ChaingunDamage(void)
 {
    return 5 * DUD_GetDamageFactor(ACS_PlayerNumber(), AMMO_CLIP);
+}
+
+//
+// DUD_FireAlphagun
+//
+[[call("ScriptS"), extern("ACS")]]
+void DUD_FireAlphagun(int n, int ammoUse)
+{
+   int damage  =  1;
+   int pellets =  n * DUD_GetDamageFactor(ACS_PlayerNumber(), AMMO_SHEL);
+   int pspeed  = 80 * DUD_GetPSpeedFactor(ACS_PlayerNumber(), AMMO_SHEL);
+
+   for(; pellets; --pellets)
+   {
+      accum offA = ACS_RandomFixed(0, 1);
+      accum offD = ACS_RandomFixed(0, 6/256k);
+
+      accum angle = ACS_GetActorAngle(0) + ACS_Cos(offA) * offD;
+      accum pitch = ACS_GetActorPitch(0) + ACS_Sin(offA) * offD * 0.75k;
+
+      DU_FireMissile(0, s"DUD_Alphapellet", damage, angle, pitch, pspeed);
+   }
+
+   if(ammoUse)
+      ACS_TakeInventory(s"Shell", ammoUse);
 }
 
 //
