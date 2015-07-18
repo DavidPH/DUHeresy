@@ -15,10 +15,13 @@ CC = gdcc-cc
 LD = gdcc-ld
 
 
-all: build/DUDamned.pkz build/DUHeresy.pkz build/DUMagick.pkz
+all: build/ build/DUDamned.pkz build/DUHeresy.pkz build/DUMagick.pkz
 
 clean:
 	rm -f build/*.bin build/*.ir build/*.pkz
+
+build/:
+	mkdir "build"
 
 ##
 ## libGDCC
