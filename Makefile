@@ -14,8 +14,6 @@ AS = gdcc-as
 CC = gdcc-cc
 LD = gdcc-ld
 
-GDCC_LIB_PATH = /usr/share/gdcc/lib
-
 
 all: build/DUDamned.pkz build/DUHeresy.pkz build/DUMagick.pkz
 
@@ -48,11 +46,11 @@ libGDCC_IR = $(libGDCC_IR_AS) $(libGDCC_IR_CC)
 build/libGDCC.ir: $(libGDCC_IR)
 	$(LD) -co$@ $^
 
-$(libGDCC_IR_AS) : build/libGDCC_%.ir : $(GDCC_LIB_PATH)/src/libGDCC/ZDACS/%.asm
-	$(AS) --bc-target=ZDoom -o$@ $<
+$(libGDCC_IR_AS) : build/libGDCC_%.ir :
+	$(AS) --bc-target=ZDoom -o$@ --sys-source libGDCC/ZDACS/$*.asm
 
-$(libGDCC_IR_CC) : build/libGDCC_%.ir : $(GDCC_LIB_PATH)/src/libGDCC/%.c
-	$(CC) --bc-target=ZDoom -o$@ $<
+$(libGDCC_IR_CC) : build/libGDCC_%.ir :
+	$(CC) --bc-target=ZDoom -o$@ --sys-source libGDCC/$*.c
 
 ##
 ## libc
@@ -82,11 +80,11 @@ libc_IR = $(libc_IR_AS) $(libc_IR_CC)
 build/libc.ir: $(libc_IR)
 	$(LD) -co$@ $^
 
-$(libc_IR_AS) : build/libc_%.ir : $(GDCC_LIB_PATH)/src/libc/ZDACS/%.asm
-	$(AS) --bc-target=ZDoom -o$@ $<
+$(libc_IR_AS) : build/libc_%.ir :
+	$(AS) --bc-target=ZDoom -o$@ --sys-source libc/ZDACS/$*.asm
 
-$(libc_IR_CC) : build/libc_%.ir : $(GDCC_LIB_PATH)/src/libc/%.c
-	$(CC) --bc-target=ZDoom -o$@ $<
+$(libc_IR_CC) : build/libc_%.ir :
+	$(CC) --bc-target=ZDoom -o$@ --sys-source libc/$*.c
 
 ##
 ## DUCommon
@@ -152,16 +150,16 @@ build/DUDamned.pkz: build/DUDamned.bin $(DU_DEC) $(DUD_DEC) $(DUD_ROOT)
 	@rm -f $@
 	@rm -rf build/DUDamned
 
-	@mkdir build/DUDamned
-	@mkdir build/DUDamned/acs
-	@mkdir build/DUDamned/code
+	@mkdir "build/DUDamned"
+	@mkdir "build/DUDamned/acs"
+	@mkdir "build/DUDamned/code"
 
 	@cp $(DUD_ROOT)          build/DUDamned
 	@cp build/DUDamned.bin   build/DUDamned/acs/du.o
 	@cp $(DU_DEC) $(DUD_DEC) build/DUDamned/code
 
 	@echo 7z a $@ build/DUDamned
-	@cd build/DUDamned && 7z a ../DUDamned.pkz . >/dev/null
+	@cd build/DUDamned && 7z a ../DUDamned.pkz .
 
 	@rm -rf build/DUDamned
 
@@ -217,16 +215,16 @@ build/DUHeresy.pkz: build/DUHeresy.bin $(DU_DEC) $(DUH_DEC) $(DUH_ROOT)
 	@rm -f $@
 	@rm -rf build/DUHeresy
 
-	@mkdir build/DUHeresy
-	@mkdir build/DUHeresy/acs
-	@mkdir build/DUHeresy/code
+	@mkdir "build/DUHeresy"
+	@mkdir "build/DUHeresy/acs"
+	@mkdir "build/DUHeresy/code"
 
 	@cp $(DUH_ROOT)          build/DUHeresy
 	@cp build/DUHeresy.bin   build/DUHeresy/acs/du.o
 	@cp $(DU_DEC) $(DUH_DEC) build/DUHeresy/code
 
 	@echo 7z a $@ build/DUHeresy
-	@cd build/DUHeresy && 7z a ../DUHeresy.pkz . >/dev/null
+	@cd build/DUHeresy && 7z a ../DUHeresy.pkz .
 
 	@rm -rf build/DUHeresy
 
@@ -268,16 +266,16 @@ build/DUMagick.pkz: build/DUMagick.bin $(DU_DEC) $(DUM_DEC) $(DUM_ROOT)
 	@rm -f $@
 	@rm -rf build/DUMagick
 
-	@mkdir build/DUMagick
-	@mkdir build/DUMagick/acs
-	@mkdir build/DUMagick/code
+	@mkdir "build/DUMagick"
+	@mkdir "build/DUMagick/acs"
+	@mkdir "build/DUMagick/code"
 
 	@cp $(DUM_ROOT)          build/DUMagick
 	@cp build/DUMagick.bin   build/DUMagick/acs/du.o
 	@cp $(DU_DEC) $(DUM_DEC) build/DUMagick/code
 
 	@echo 7z a $@ build/DUMagick
-	@cd build/DUMagick && 7z a ../DUMagick.pkz . >/dev/null
+	@cd build/DUMagick && 7z a ../DUMagick.pkz .
 
 	@rm -rf build/DUMagick
 
