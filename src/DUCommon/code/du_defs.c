@@ -18,6 +18,17 @@
 //
 
 //
+// DU_AverageAngle
+//
+accum DU_AverageAngle(accum angle1, accum angle2)
+{
+   if(absk(angle1 - angle2) > 0.5k)
+      return ((angle1 + angle2) / 2 + 0.5k) % 1.0k;
+   else
+      return (angle1 + angle2) / 2;
+}
+
+//
 // DU_FireMissile
 //
 int DU_FireMissile(int shooter, __str name, int damage, accum angle,
@@ -84,9 +95,27 @@ accum DU_GetInventoryFixed(int tid, __str inv)
 }
 
 //
+// DU_GetTargetPosition
+//
+[[call("ScriptS")]]
+DU_Position DU_GetTargetPosition(int tid)
+{
+   ACS_SetActivatorToTarget(tid);
+
+   DU_Position pos =
+   {
+      .x = ACS_GetActorX(0),
+      .y = ACS_GetActorY(0),
+      .z = ACS_GetActorZ(0),
+   };
+
+   return pos;
+}
+
+//
 // DU_MakeTID
 //
-int DU_MakeTID()
+int DU_MakeTID(void)
 {
    // Might be worth using a static object to store the last result?
    return ACS_UniqueTID();

@@ -15,6 +15,72 @@
 #include "dud_abil.h"
 
 #include <math.h>
+#include <stdio.h>
+
+
+//----------------------------------------------------------------------------|
+// Static Functions                                                           |
+//
+
+//
+// DUD_SpawnAlpha
+//
+[[call("ScriptS")]]
+static void DUD_SpawnAlpha(char c, accum angle, accum x, accum y, accum z,
+   accum velx, accum vely, accum velz, int timeFull, int timeFade)
+{
+   __str state = (ACS_BeginPrint(), __nprintf("Spawn%c", c), ACS_EndStrParam());
+
+   int tid = DU_MakeTID();
+
+   // If spawn fails, just silently fail.
+   if(!ACS_SpawnForced(s"DUD_AlphapelletGFX", x, y, z, tid))
+      return;
+
+   // Similarly for setting state, which occurs for unimplemented characters.
+   if(!ACS_SetActorState(tid, state))
+   {
+      ACS_Thing_Remove(tid);
+      return;
+   }
+
+   ACS_SetActorAngle(tid, angle);
+   ACS_SetActorVelocity(tid, velx, vely, velz, 0, 0);
+
+   ACS_Delay(timeFull);
+
+   // Fade out over timeFade tics.
+   ACS_SetActorProperty(tid, APROP_RenderStyle, STYLE_Translucent);
+   for(int fade = timeFade; fade--;)
+   {
+      ACS_SetActorPropertyFixed(tid, APROP_Alpha, (accum)fade / timeFade);
+      ACS_Delay(1);
+   }
+
+   ACS_Thing_Remove(tid);
+}
+
+//
+// DUD_SpawnAlphaString
+//
+static void DUD_SpawnAlphaString(__str s, accum angle, accum x, accum y, accum z,
+   accum velx, accum vely, accum velz, int timeFull, int timeFadeMin, int timeFadeMax)
+{
+   int len = ACS_StrLen(s);
+
+   accum dist = -len * 4;
+   accum cang = angle + 0.25k;
+
+   for(int i = 0; i != len; ++i, dist += 8)
+   {
+      accum cx = x + ACS_Cos(cang) * dist;
+      accum cy = y + ACS_Sin(cang) * dist;
+
+      int timeFade = ACS_Random(timeFadeMin, timeFadeMax);
+
+      DUD_SpawnAlpha(s[i], angle, cx, cy, z, velx, vely, velz, timeFull, timeFade);
+   }
+}
 
 
 //----------------------------------------------------------------------------|
@@ -37,6 +103,28 @@ void DUD_Death(void)
 
       DUD_DoAbilities(pnum, tics);
    }
+}
+
+//
+// DUD_DeathAlphabet
+//
+// Writes the activator's tag in floating text with the activator's facing.
+//
+[[call("ScriptS"), extern("ACS")]]
+void DUD_DeathAlphabet(void)
+{
+   __str tag   = ACS_GetActorPropertyString(0, APROP_NameTag);
+   accum angle = ACS_GetActorAngle(0);
+   accum x     = ACS_GetActorX(0);
+   accum y     = ACS_GetActorY(0);
+   accum z     = ACS_GetActorZ(0) + 40;
+
+   DU_Position tpos = DU_GetTargetPosition(0);
+   accum       tang = ACS_VectorAngle(tpos.x - x, tpos.y - y);
+
+   accum sang = DU_AverageAngle(angle, tang);
+
+   DUD_SpawnAlphaString(tag, sang, x, y, z, 0, 0, 1, 35, 35, 70);
 }
 
 //

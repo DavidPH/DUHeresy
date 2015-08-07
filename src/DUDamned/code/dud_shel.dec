@@ -81,6 +81,7 @@ actor DUD_Alphagun : Weapon
 actor DUD_Alphapellet : FastProjectile
 {
    Damage 1
+   DamageType "Alphabet"
    Height 8
    Obituary "$OB_MPALPHAGUN"
    Radius 8
@@ -96,6 +97,57 @@ actor DUD_Alphapellet : FastProjectile
          "SpawnO", "SpawnP", "SpawnQ", "SpawnR", "SpawnS", "SpawnT", "SpawnU",
          "SpawnV", "SpawnW", "SpawnX", "SpawnY", "SpawnZ")
 
+   SpawnA: DAKA A -1 bright
+   SpawnB: DAKA B -1 bright
+   SpawnC: DAKA C -1 bright
+   SpawnD: DAKA D -1 bright
+   SpawnE: DAKA E -1 bright
+   SpawnF: DAKA F -1 bright
+   SpawnG: DAKA G -1 bright
+   SpawnH: DAKA H -1 bright
+   SpawnI: DAKA I -1 bright
+   SpawnJ: DAKA J -1 bright
+   SpawnK: DAKA K -1 bright
+   SpawnL: DAKA L -1 bright
+   SpawnM: DAKA M -1 bright
+   SpawnN: DAKA N -1 bright
+   SpawnO: DAKA O -1 bright
+   SpawnP: DAKA P -1 bright
+   SpawnQ: DAKA Q -1 bright
+   SpawnR: DAKA R -1 bright
+   SpawnS: DAKA S -1 bright
+   SpawnT: DAKA T -1 bright
+   SpawnU: DAKA U -1 bright
+   SpawnV: DAKA V -1 bright
+   SpawnW: DAKA W -1 bright
+   SpawnX: DAKA X -1 bright
+   SpawnY: DAKA Y -1 bright
+   SpawnZ: DAKA Z -1 bright
+      stop
+
+   Death:
+      "####" "#" 35 bright
+      stop
+   }
+}
+
+//
+// DUD_AlphapelletGFX
+//
+// A purely visual version of the Alphapellet for effects.
+//
+actor DUD_AlphapelletGFX
+{
+   Height 8
+   Radius 8
+
+   +NOBLOCKMAP
+   +NOGRAVITY
+   +NOINTERACTION
+
+   States
+   {
+   Spawn:
    SpawnA: DAKA A -1 bright
    SpawnB: DAKA B -1 bright
    SpawnC: DAKA C -1 bright

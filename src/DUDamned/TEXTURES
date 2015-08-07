@@ -128,7 +128,7 @@ sprite DAKAE0, 8, 7 {patch STCFN069, 0, 0 offset 4, 4}
 sprite DAKAF0, 8, 7 {patch STCFN070, 0, 0 offset 4, 4}
 sprite DAKAG0, 8, 7 {patch STCFN071, 0, 0 offset 4, 4}
 sprite DAKAH0, 8, 7 {patch STCFN072, 0, 0 offset 4, 4}
-sprite DAKAI0, 8, 7 {patch STCFN073, 0, 0 offset 4, 4}
+sprite DAKAI0, 8, 7 {patch STCFN073, 2, 0 offset 4, 4}
 sprite DAKAJ0, 8, 7 {patch STCFN074, 0, 0 offset 4, 4}
 sprite DAKAK0, 8, 7 {patch STCFN075, 0, 0 offset 4, 4}
 sprite DAKAL0, 8, 7 {patch STCFN076, 0, 0 offset 4, 4}
