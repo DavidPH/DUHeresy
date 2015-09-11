@@ -27,67 +27,15 @@ build/:
 ## libGDCC
 ##
 
-libGDCC_IR_AS = \
-   build/libGDCC_AddF.ir \
-   build/libGDCC_CmpF.ir \
-   build/libGDCC_CmpI.ir \
-   build/libGDCC_CmpU.ir \
-   build/libGDCC_DivF.ir \
-   build/libGDCC_DivI.ir \
-   build/libGDCC_DivU.ir \
-   build/libGDCC_MulF.ir \
-   build/libGDCC_MulU.ir \
-   build/libGDCC_Sh.ir \
-   build/libGDCC_SubF.ir
-
-libGDCC_IR_CC = \
-   build/libGDCC_alloc.ir \
-   build/libGDCC_format.ir
-
-libGDCC_IR = $(libGDCC_IR_AS) $(libGDCC_IR_CC)
-
-build/libGDCC.ir: $(libGDCC_IR)
-	$(LD) -co$@ $^
-
-$(libGDCC_IR_AS) : build/libGDCC_%.ir :
-	$(AS) --bc-target=ZDoom -o$@ --sys-source libGDCC/ZDACS/$*.asm
-
-$(libGDCC_IR_CC) : build/libGDCC_%.ir :
-	$(CC) --bc-target=ZDoom -o$@ --sys-source libGDCC/$*.c
+build/libGDCC.ir:
+	gdcc-makelib --bc-target=ZDoom -co$@ libGDCC
 
 ##
 ## libc
 ##
 
-libc_IR_AS = \
-   build/libc_approx.ir \
-   build/libc_fpclassify.ir
-
-libc_IR_CC = \
-   build/libc_ctype.ir \
-   build/libc_errno.ir \
-   build/libc_exp.ir \
-   build/libc_locale.ir \
-   build/libc_math.ir \
-   build/libc_printf.ir \
-   build/libc_round.ir \
-   build/libc_sort.ir \
-   build/libc_stdfix.ir \
-   build/libc_stdio.ir \
-   build/libc_stdlib.ir \
-   build/libc_string.ir \
-   build/libc_trig.ir
-
-libc_IR = $(libc_IR_AS) $(libc_IR_CC)
-
 build/libc.ir: $(libc_IR)
-	$(LD) -co$@ $^
-
-$(libc_IR_AS) : build/libc_%.ir :
-	$(AS) --bc-target=ZDoom -o$@ --sys-source libc/ZDACS/$*.asm
-
-$(libc_IR_CC) : build/libc_%.ir :
-	$(CC) --bc-target=ZDoom -o$@ --sys-source libc/$*.c
+	gdcc-makelib --bc-target=ZDoom -co$@ libc
 
 ##
 ## DUCommon
@@ -111,7 +59,7 @@ build/DUCommon.ir: build/libGDCC.ir build/libc.ir $(DU_IR)
 	$(LD) --bc-target=ZDoom -co$@ $^
 
 $(DU_IR_CC) : build/du_%.ir : src/DUCommon/code/du_%.c $(DU_H)
-	$(CC) --bc-target=ZDoom -isrc/DUCommon/code -o$@ $<
+	$(CC) --bc-target=ZDoom -isrc/DUCommon/code -co$@ $<
 
 ##
 ## DUDamned
@@ -173,7 +121,7 @@ build/DUDamned.ir: $(DUD_IR)
 	$(LD) --bc-target=ZDoom -co$@ $^
 
 $(DUD_IR_CC) : build/dud_%.ir : src/DUDamned/code/dud_%.c $(DU_H) $(DUD_H)
-	$(CC) --bc-target=ZDoom $(DUD_INC) --no-warn-unused-initializer -o$@ $<
+	$(CC) --bc-target=ZDoom $(DUD_INC) --no-warn-unused-initializer -co$@ $<
 
 ##
 ## DUHeresy
@@ -238,7 +186,7 @@ build/DUHeresy.ir: $(DUH_IR)
 	$(LD) --bc-target=ZDoom -co$@ $^
 
 $(DUH_IR_CC) : build/duh_%.ir : src/DUHeresy/code/duh_%.c $(DU_H) $(DUH_H)
-	$(CC) --bc-target=ZDoom $(DUH_INC) -o$@ $<
+	$(CC) --bc-target=ZDoom $(DUH_INC) -co$@ $<
 
 ##
 ## DUMagick
@@ -289,7 +237,7 @@ build/DUMagick.ir: $(DUM_IR)
 	$(LD) --bc-target=ZDoom -co$@ $^
 
 $(DUM_IR_CC) : build/dum_%.ir : src/DUMagick/code/dum_%.c $(DU_H) $(DUM_H)
-	$(CC) --bc-target=ZDoom $(DUM_INC) -o$@ $<
+	$(CC) --bc-target=ZDoom $(DUM_INC) -co$@ $<
 
 ## EOF
 
