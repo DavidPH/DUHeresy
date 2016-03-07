@@ -1,6 +1,6 @@
 //-----------------------------------------------------------------------------
 //
-// Copyright (C) 2012-2015 David Hill
+// Copyright (C) 2012-2016 David Hill
 //
 // See COPYING for license information.
 //
@@ -15,6 +15,13 @@
 #include "dud_abil.h"
 
 #include <stddef.h>
+
+
+//----------------------------------------------------------------------------|
+// Static Objects                                                             |
+//
+
+static int DakkaCount[MAX_PLAYERS];
 
 
 //----------------------------------------------------------------------------|
@@ -298,6 +305,15 @@ int DUD_ChaingunDamage(void)
 }
 
 //
+// DUD_ClearDakka
+//
+[[call("ScriptS"), extern("ACS")]]
+void DUD_ClearDakka(void)
+{
+   DakkaCount[ACS_PlayerNumber()] = 0;
+}
+
+//
 // DUD_FireAlphagun
 //
 [[call("ScriptS"), extern("ACS")]]
@@ -343,9 +359,7 @@ void DUD_FireBFG(void)
 [[call("ScriptS"), extern("ACS")]]
 void DUD_FireDGun(void)
 {
-   static int counts[MAX_PLAYERS];
-
-   int *count = &counts[ACS_PlayerNumber()];
+   int *count = &DakkaCount[ACS_PlayerNumber()];
 
    int damage =  1 * DUD_GetDamageFactor(ACS_PlayerNumber(), AMMO_CLIP);
    int pspeed = 80 * DUD_GetPSpeedFactor(ACS_PlayerNumber(), AMMO_CLIP);
