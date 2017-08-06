@@ -23,6 +23,7 @@ actor DUH_Disciple : Wizard replaces Wizard
    states
    {
    Death:
+      WZRD F 0 ACS_NamedExecuteWithResult("DUH_ThingDeath", 180)
       WZRD F 6 A_GhostOff
       WZRD G 6 A_Scream
       WZRD HI 6
@@ -70,6 +71,7 @@ actor DUH_DSparil : Sorcerer2 replaces Sorcerer2
       goto See
 
    Death:
+      SDTH A 0 ACS_NamedExecuteWithResult("DUH_ThingDeath", 8000)
       SDTH AB 8
       SDTH C 8 A_PlaySoundEx("dsparil/scream", "Body")
       SDTH DEFDEFDEFDEFDEFDEFDEF 7
@@ -111,11 +113,13 @@ actor DUH_FireGargoyle : HereticImpLeader replaces HereticImpLeader
    states
    {
    Death:
+      IMPX G 0 ACS_NamedExecuteWithResult("DUH_ThingDeath", 80)
       IMPX G 4 A_ImpDeath
       IMPX H 5
       wait
 
    XDeath:
+      IMPX S 0 ACS_NamedExecuteWithResult("DUH_ThingDeath", 80)
       IMPX S 5 A_ImpXDeath1
       IMPX TU 5
       IMPX V 5 A_Gravity
@@ -151,11 +155,13 @@ actor DUH_Gargoyle : HereticImp replaces HereticImp
    states
    {
    Death:
+      IMPX G 0 ACS_NamedExecuteWithResult("DUH_ThingDeath", 40)
       IMPX G 4 A_ImpDeath
       IMPX H 5
       wait
 
    XDeath:
+      IMPX S 0 ACS_NamedExecuteWithResult("DUH_ThingDeath", 40)
       IMPX S 5 A_ImpXDeath1
       IMPX TU 5
       IMPX V 5 A_Gravity
@@ -191,6 +197,7 @@ actor DUH_Golem : Mummy replaces Mummy
    states
    {
    Death:
+      MUMM I 0 ACS_NamedExecuteWithResult("DUH_ThingDeath", 80)
       MUMM I 5
       MUMM J 5 A_Scream
       MUMM K 5 A_SpawnItemEx("MummySoul", 0,0,10, 0,0,1)
@@ -227,6 +234,7 @@ actor DUH_IronLich : IronLich replaces IronLich
    states
    {
    Death:
+      LICH C 0 ACS_NamedExecuteWithResult("DUH_ThingDeath", 700)
       LICH C 7
       LICH D 7 A_Scream
       LICH EF 7
@@ -251,6 +259,7 @@ actor DUH_Maulotaur : Minotaur replaces Minotaur
    states
    {
    Death:
+      MNTR F 0 ACS_NamedExecuteWithResult("DUH_ThingDeath", 3000)
       MNTR F 6 A_MinotaurDeath
       MNTR G 5
       MNTR H 6 A_Scream
@@ -284,6 +293,7 @@ actor DUH_Nitrogolem : MummyLeader replaces MummyLeader
    states
    {
    Death:
+      MUMM I 0 ACS_NamedExecuteWithResult("DUH_ThingDeath", 100)
       MUMM I 5
       MUMM J 5 A_Scream
       MUMM K 5 A_SpawnItemEx("MummySoul", 0,0,10, 0,0,1)
@@ -320,6 +330,7 @@ actor DUH_Ophidian : Snake replaces Snake
    states
    {
    Death:
+      SNKE G 0 ACS_NamedExecuteWithResult("DUH_ThingDeath", 280)
       SNKE G 5
       SNKE H 5 A_Scream
       SNKE IJKL 5
@@ -343,6 +354,7 @@ actor DUH_Sabreclaw : Clink replaces Clink
    states
    {
    Death:
+      CLNK I 0 ACS_NamedExecuteWithResult("DUH_ThingDeath", 150)
       CLNK IJ 6
       CLNK K 5 A_Scream
       CLNK L 5 A_NoBlocking
@@ -365,6 +377,7 @@ actor DUH_UndeadWarrior : Knight replaces Knight
    states
    {
    Death:
+      KNIG I 0 ACS_NamedExecuteWithResult("DUH_ThingDeath", 200)
       KNIG I 6
       KNIG J 6 A_Scream
       KNIG K 6
@@ -400,6 +413,7 @@ actor DUH_Weredragon : Beast replaces Beast
    states
    {
    Death:
+      BEAS R 0 ACS_NamedExecuteWithResult("DUH_ThingDeath", 220)
       BEAS R 6
       BEAS S 6 A_Scream
       BEAS TUV 6
@@ -410,6 +424,7 @@ actor DUH_Weredragon : Beast replaces Beast
       stop
 
    XDeath:
+      BEAS J 0 ACS_NamedExecuteWithResult("DUH_ThingDeath", 220)
       BEAS J 5
       BEAS K 6 A_Scream
       BEAS L 5

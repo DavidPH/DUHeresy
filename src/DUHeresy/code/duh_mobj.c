@@ -12,6 +12,10 @@
 
 #include "du_defs.h"
 
+#include "duh_arti.h"
+
+#include <math.h>
+
 
 //----------------------------------------------------------------------------|
 // Global Functions                                                           |
@@ -50,6 +54,15 @@ void DUH_RaiseThingDelayed(int delay)
       ACS_Thing_Raise(0);
       ACS_Delay(1);
    }
+}
+
+//
+// DUH_ThingDeath
+//
+[[call("ScriptS"), extern("ACS")]]
+void DUH_ThingDeath(int score)
+{
+   DUH_ArtifactReadyTID(ACS_GetActorProperty(0, APROP_TargetTID), sqrtf(score));
 }
 
 // EOF

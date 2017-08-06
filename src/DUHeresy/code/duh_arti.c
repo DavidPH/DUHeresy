@@ -1,6 +1,6 @@
 //-----------------------------------------------------------------------------
 //
-// Copyright (C) 2012-2015 David Hill
+// Copyright (C) 2012-2017 David Hill
 //
 // See COPYING for license information.
 //
@@ -34,30 +34,32 @@ static void DUH_ArtifactTomeReady(__str ammo, int cap)
 
 
 //----------------------------------------------------------------------------|
-// Global Functions                                                           |
+// Extern Functions                                                           |
 //
 
 //
 // DUH_AmmoReady
 //
-void DUH_AmmoReady(int tic, __str ammo, int period)
+void DUH_AmmoReady(unsigned tic, __str ammo, unsigned mul)
 {
-   period /= ACS_CheckInventory(s"ArtiTomeOfPower") + 1;
-   if(!period || !(tic % period)) ACS_GiveInventory(ammo, 1);
+   unsigned inv = ACS_CheckInventory(s"ArtiTomeOfPower") + 2;
+   if(inv > 70 * mul) inv = 70 * mul;
+   if(!(tic % (70 * mul / inv)))
+      ACS_GiveInventory(ammo, 1);
 }
 
 //
 // DUH_ArtifactReady
 //
 [[call("ScriptS"), extern("ACS")]]
-void DUH_ArtifactReady(int frames)
+void DUH_ArtifactReady(unsigned frames)
 {
-   static int tics[MAX_PLAYERS];
+   static unsigned tics[MAX_PLAYERS];
 
    while(frames--)
    {
-      int tic = ++tics[ACS_PlayerNumber()];
-      int inv;
+      unsigned tic = ++tics[ACS_PlayerNumber()];
+      unsigned inv;
 
       int tid = ACS_ActivatorTID();
 
@@ -101,36 +103,48 @@ void DUH_ArtifactReady(int frames)
       if(inv && !(tic % ((35 * 16) / inv)))
          ACS_SpawnProjectile(tid, s"DUH_TimeBombAura", 0, 0, 0, 0, 0);
 
-      inv = ACS_CheckInventory(s"DUH_BagOfHolding") + 4;
+      inv = ACS_CheckInventory(s"DUH_BagOfHolding");
       if(inv > 16) inv = 16;
-      DUH_ArtifactTomeReady(DUH_ElvenWandAmmo,  inv *  50);
-      DUH_ArtifactTomeReady(DUH_CrossbowAmmo,   inv *  25);
-      DUH_ArtifactTomeReady(DUH_DragonClawAmmo, inv * 100);
-      DUH_ArtifactTomeReady(DUH_HellstaffAmmo,  inv * 100);
-      DUH_ArtifactTomeReady(DUH_PhoenixRodAmmo, inv *  10);
-      DUH_ArtifactTomeReady(DUH_FiremaceAmmo,   inv *  75);
+      DUH_ArtifactTomeReady(DUH_ElvenWandAmmo,  inv * 25 + 100);
+      DUH_ArtifactTomeReady(DUH_CrossbowAmmo,   inv * 25 + 100);
+      DUH_ArtifactTomeReady(DUH_DragonClawAmmo, inv * 25 + 100);
+      DUH_ArtifactTomeReady(DUH_HellstaffAmmo,  inv * 25 + 100);
+      DUH_ArtifactTomeReady(DUH_PhoenixRodAmmo, inv * 25 + 100);
+      DUH_ArtifactTomeReady(DUH_FiremaceAmmo,   inv * 25 + 100);
 
       inv = ACS_CheckInventory(s"ArtiTorch");
-      if(inv > 64) inv = 64;
-      if(inv && !(tic % ((35 * 64) / inv)))
+      if(inv > 0x7FFFFFFF / 35) inv = 0x7FFFFFFF / 35;
+      if(inv && !(tic % (35 * inv)))
          ACS_GiveInventory(s"ArtiTorch", 1);
 
-      DUH_AmmoReady(tic, DUH_ElvenWandAmmo,   350);
-      DUH_AmmoReady(tic, DUH_CrossbowAmmo,   1750);
-      DUH_AmmoReady(tic, DUH_DragonClawAmmo,  700);
-      DUH_AmmoReady(tic, DUH_HellstaffAmmo,  1050);
-      DUH_AmmoReady(tic, DUH_PhoenixRodAmmo, 3500);
-      DUH_AmmoReady(tic, DUH_FiremaceAmmo,   7000);
+      DUH_AmmoReady(tic, DUH_ElvenWandAmmo,  60);
+      DUH_AmmoReady(tic, DUH_CrossbowAmmo,   60);
+      DUH_AmmoReady(tic, DUH_DragonClawAmmo, 60);
+      DUH_AmmoReady(tic, DUH_HellstaffAmmo,  60);
+      DUH_AmmoReady(tic, DUH_PhoenixRodAmmo, 60);
+      DUH_AmmoReady(tic, DUH_FiremaceAmmo,   60);
 
       if(frames) ACS_Delay(1);
    }
 }
 
 //
+// DUH_ArtifaceReadyTID
+//
+[[call("ScriptS"), extern("ACS")]]
+void DUH_ArtifactReadyTID(int tid, unsigned frames)
+{
+   ACS_SetActivator(tid);
+
+   if(ACS_PlayerNumber() != -1)
+      DUH_ArtifactReady(frames);
+}
+
+//
 // DUH_ChickenFriendCountdown
 //
 [[call("ScriptS"), extern("ACS")]]
-void DUH_ChickenFriendCountdown(int frames)
+void DUH_ChickenFriendCountdown(unsigned frames)
 {
    ACS_GiveInventory(s"DUH_ChickenFriendCounter", frames);
 
@@ -145,13 +159,13 @@ void DUH_ChickenFriendCountdown(int frames)
 // DUH_WeaponReady
 //
 [[call("ScriptS")]]
-void DUH_WeaponReady(int frames, int *tics, __str ammo, int period)
+void DUH_WeaponReady(unsigned frames, unsigned *tics, __str ammo, unsigned mul)
 {
    DUH_ArtifactReady(frames);
 
    while(frames--)
    {
-      DUH_AmmoReady(++tics[ACS_PlayerNumber()], ammo, period);
+      DUH_AmmoReady(++tics[ACS_PlayerNumber()], ammo, mul);
 
       if(frames) ACS_Delay(1);
    }

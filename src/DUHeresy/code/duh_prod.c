@@ -1,6 +1,6 @@
 //-----------------------------------------------------------------------------
 //
-// Copyright (C) 2012-2015 David Hill
+// Copyright (C) 2012-2017 David Hill
 //
 // See COPYING for license information.
 //
@@ -16,7 +16,7 @@
 
 
 //----------------------------------------------------------------------------|
-// Global Functions                                                           |
+// Extern Functions                                                           |
 //
 
 //
@@ -58,7 +58,7 @@ void DUH_PhoenixRodAltInit()
 {
    int ammoCount = ACS_CheckInventory(DUH_PhoenixRodAmmo);
    int ammoUsage = (ammoCount / 10) + 1;
-   int damage    = (ammoCount / 10) + ammoUsage + 1;
+   int damage    = (ammoCount / 10) + 1;
 
    ACS_TakeInventory(s"DUH_PhoenixRodFireAmmo", 1000);
    ACS_TakeInventory(s"DUH_PhoenixRodFireDamage", 1000);
@@ -85,11 +85,11 @@ void DUH_PhoenixRodFlameTic()
 // DUH_PhoenixRodReady
 //
 [[call("ScriptS"), extern("ACS")]]
-void DUH_PhoenixRodReady(int frames)
+void DUH_PhoenixRodReady(unsigned frames)
 {
-   static int tics[MAX_PLAYERS];
+   static unsigned tics[MAX_PLAYERS];
 
-   DUH_WeaponReady(frames, tics, DUH_PhoenixRodAmmo, 350);
+   DUH_WeaponReady(frames, tics, DUH_PhoenixRodAmmo, 1);
 }
 
 // EOF

@@ -1,6 +1,6 @@
 //-----------------------------------------------------------------------------
 //
-// Copyright (C) 2012-2015 David Hill
+// Copyright (C) 2012-2017 David Hill
 //
 // See COPYING for license information.
 //
@@ -105,7 +105,6 @@ actor DUH_PhoenixRod : PhoenixRod replaces PhoenixRod
       PHNX B 3 ACS_NamedExecuteAlways("DUH_PhoenixRodAltInit",0)
    AltHold:
       PHNX C 1 ACS_NamedExecuteAlways("DUH_PhoenixRodAltFire",0)
-      PHNX B 0 A_JumpIfInventory("DUH_PhoenixRodFireEnd", 1, "Powerdown")
       PHNX B 4 A_ReFire
    Powerdown:
       PHNX B 4 ACS_NamedExecuteAlways("DUH_PhoenixRodAltDone",0, true)
@@ -138,7 +137,6 @@ actor DUH_PhoenixRodPowered : DUH_PhoenixRod replaces PhoenixRodPowered
       PHNX B 3 ACS_NamedExecuteAlways("DUH_PhoenixRodAltInit",0)
    AltHold:
       PHNX C 1 ACS_NamedExecuteAlways("DUH_PhoenixRodAltFire",0)
-      PHNX B 0 A_JumpIfInventory("DUH_PhoenixRodFireEnd", 1, "Powerdown")
       PHNX B 4 A_ReFire
    Powerdown:
       PHNX B 4 ACS_NamedExecuteAlways("DUH_PhoenixRodAltDone",0, false)

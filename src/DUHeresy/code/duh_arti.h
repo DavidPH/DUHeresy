@@ -1,6 +1,6 @@
 //-----------------------------------------------------------------------------
 //
-// Copyright (C) 2015 David Hill
+// Copyright (C) 2015-2017 David Hill
 //
 // See COPYING for license information.
 //
@@ -30,13 +30,16 @@
 // Global Functions                                                           |
 //
 
-void DUH_AmmoReady(int tic, __str ammo, int mul);
+void DUH_AmmoReady(unsigned tic, __str ammo, unsigned mul);
 
 [[call("ScriptS"), extern("ACS")]]
-void DUH_ArtifactReady(int frames);
+void DUH_ArtifactReady(unsigned frames);
+
+[[call("ScriptS"), extern("ACS")]]
+void DUH_ArtifactReadyTID(int tid, unsigned frames);
 
 [[call("ScriptS")]]
-void DUH_WeaponReady(int frames, int *tics, __str ammo, int multiplier);
+void DUH_WeaponReady(unsigned frames, unsigned *tics, __str ammo, unsigned mul);
 
 #endif//DUH_ARTI__
 

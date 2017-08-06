@@ -1,6 +1,6 @@
 //-----------------------------------------------------------------------------
 //
-// Copyright (C) 2012-2015 David Hill
+// Copyright (C) 2012-2017 David Hill
 //
 // See COPYING for license information.
 //
@@ -16,7 +16,7 @@
 
 
 //----------------------------------------------------------------------------|
-// Global Functions                                                           |
+// Extern Functions                                                           |
 //
 
 //
@@ -26,8 +26,8 @@
 void DUH_FiremaceAltFire(bool useammo)
 {
    int ammoCount = ACS_CheckInventory(DUH_FiremaceAmmo);
-   int ammoUsage = (ammoCount / 75) + 1;
-   int damage    = (ammoCount / 25) + ammoUsage + 7;
+   int ammoUsage = (ammoCount / 10) + 1;
+   int damage    = (ammoCount / 20) + 7;
 
    int tid;
 
@@ -71,11 +71,11 @@ void DUH_FiremaceMissileSound(void)
 // DUH_FiremaceReady
 //
 [[call("ScriptS"), extern("ACS")]]
-void DUH_FiremaceReady(int frames)
+void DUH_FiremaceReady(unsigned frames)
 {
-   static int tics[MAX_PLAYERS];
+   static unsigned tics[MAX_PLAYERS];
 
-   DUH_WeaponReady(frames, tics, DUH_FiremaceAmmo, 700);
+   DUH_WeaponReady(frames, tics, DUH_FiremaceAmmo, 1);
 }
 
 // EOF

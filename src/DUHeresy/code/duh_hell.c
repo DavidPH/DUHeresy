@@ -1,6 +1,6 @@
 //-----------------------------------------------------------------------------
 //
-// Copyright (C) 2012-2015 David Hill
+// Copyright (C) 2012-2017 David Hill
 //
 // See COPYING for license information.
 //
@@ -26,8 +26,8 @@
 void DUH_HellstaffAltFire(bool useammo)
 {
    int ammoCount = ACS_CheckInventory(DUH_HellstaffAmmo);
-   int ammoUsage = (ammoCount / 100) + 1;
-   int damage    = (ammoCount / 25) + ammoUsage + 1;
+   int ammoUsage = ammoCount / 10 + 1;
+   int damage    = ammoCount / 20 + 1;
 
    int tid;
 
@@ -45,11 +45,11 @@ void DUH_HellstaffAltFire(bool useammo)
 // DUH_HellstaffReady
 //
 [[call("ScriptS"), extern("ACS")]]
-void DUH_HellstaffReady(int frames)
+void DUH_HellstaffReady(unsigned frames)
 {
-   static int tics[MAX_PLAYERS];
+   static unsigned tics[MAX_PLAYERS];
 
-   DUH_WeaponReady(frames, tics, DUH_HellstaffAmmo, 105);
+   DUH_WeaponReady(frames, tics, DUH_HellstaffAmmo, 1);
 }
 
 //

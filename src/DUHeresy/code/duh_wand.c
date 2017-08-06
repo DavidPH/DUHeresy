@@ -1,6 +1,6 @@
 //-----------------------------------------------------------------------------
 //
-// Copyright (C) 2012-2015 David Hill
+// Copyright (C) 2012-2017 David Hill
 //
 // See COPYING for license information.
 //
@@ -16,7 +16,7 @@
 
 
 //----------------------------------------------------------------------------|
-// Global Functions                                                           |
+// Extern Functions                                                           |
 //
 
 //
@@ -80,8 +80,8 @@ void DUH_ElvenLaserTrailSpawn(bool final)
 int DUH_ElvenWandDamage(bool useammo)
 {
    int ammoCount = ACS_CheckInventory(DUH_ElvenWandAmmo);
-   int ammoUsage = ammoCount / 50 + 1;
-   int dice      = ammoCount / 25 + 1;
+   int ammoUsage = ammoCount / 10 + 1;
+   int dice      = ammoCount / 20 + 1;
 
    if(useammo)
       ACS_TakeInventory(DUH_ElvenWandAmmo, ammoUsage);
@@ -101,7 +101,7 @@ void DUH_ElvenWandFire(bool piercing)
 {
    __str missile = piercing ? s"DUH_ElvenLaserRipper" : s"DUH_ElvenLaser";
 
-   int tid = DU_FireMissile(ACS_ActivatorTID(), missile, 1,
+   int tid = DU_FireMissile(ACS_ActivatorTID(), missile, 2 - piercing,
       ACS_GetActorAngle(0), ACS_GetActorPitch(0), 256);
 
    ACS_SetUserVariableFixed(tid, s"user_oldX", ACS_GetActorX(tid));
@@ -113,11 +113,11 @@ void DUH_ElvenWandFire(bool piercing)
 // DUH_ElvenWandReady
 //
 [[call("ScriptS"), extern("ACS")]]
-void DUH_ElvenWandReady(int frames)
+void DUH_ElvenWandReady(unsigned frames)
 {
-   static int tics[MAX_PLAYERS];
+   static unsigned tics[MAX_PLAYERS];
 
-   DUH_WeaponReady(frames, tics, DUH_ElvenWandAmmo, 35);
+   DUH_WeaponReady(frames, tics, DUH_ElvenWandAmmo, 1);
 }
 
 // EOF
