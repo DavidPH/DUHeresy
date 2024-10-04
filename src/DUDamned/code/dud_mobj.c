@@ -1,6 +1,6 @@
 //-----------------------------------------------------------------------------
 //
-// Copyright (C) 2015 David Hill
+// Copyright (C) 2015, 2024 David Hill
 //
 // See COPYING for license information.
 //
@@ -113,7 +113,7 @@ void DUD_Death(void)
 [[call("ScriptS"), extern("ACS")]]
 void DUD_DeathAlphabet(void)
 {
-   __str tag   = ACS_GetActorPropertyString(0, APROP_NameTag);
+   __str tag   = ACS_GetActorPropertyString(0, APROP_Nametag);
    accum angle = ACS_GetActorAngle(0);
    accum x     = ACS_GetActorX(0);
    accum y     = ACS_GetActorY(0);

@@ -1,6 +1,6 @@
 //-----------------------------------------------------------------------------
 //
-// Copyright (C) 2012-2015 David Hill
+// Copyright (C) 2012-2015, 2024 David Hill
 //
 // See COPYING for license information.
 //
@@ -39,7 +39,7 @@ typedef enum MenuState
 //
 // DUM_MainMenu
 //
-[[call("ScriptS"), extern("ACS"), script("Enter")]]
+[[call("ScriptS"), extern("ACS"), script("enter")]]
 void DUM_MainMenu(void)
 {
    int buttons, oldbuttons, newbuttons = 0;

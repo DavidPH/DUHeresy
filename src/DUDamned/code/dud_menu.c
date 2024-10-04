@@ -1,6 +1,6 @@
 //-----------------------------------------------------------------------------
 //
-// Copyright (C) 2015 David Hill
+// Copyright (C) 2015, 2024 David Hill
 //
 // See COPYING for license information.
 //
@@ -296,7 +296,7 @@ static void DUD_MenuInit(int pnum)
 //
 // DUD_MenuLoop
 //
-[[call("ScriptS"), script("Enter")]]
+[[call("ScriptS"), script("enter")]]
 void DUD_MenuLoop(void)
 {
    int pnum = ACS_PlayerNumber();

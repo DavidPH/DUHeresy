@@ -1,6 +1,6 @@
 ##-----------------------------------------------------------------------------
 ##
-## Copyright (C) 2015 David Hill
+## Copyright (C) 2015, 2024 David Hill
 ##
 ## See COPYING for license information.
 ##
@@ -28,14 +28,14 @@ build/:
 ##
 
 build/libGDCC.ir:
-	gdcc-makelib --bc-target=ZDoom -co$@ libGDCC
+	gdcc-makelib --target-engine=ZDoom -co$@ libGDCC
 
 ##
 ## libc
 ##
 
 build/libc.ir: $(libc_IR)
-	gdcc-makelib --bc-target=ZDoom -co$@ libc
+	gdcc-makelib --target-engine=ZDoom -co$@ libc
 
 ##
 ## DUCommon
@@ -56,10 +56,10 @@ DU_IR_CC = \
 DU_IR = $(DU_IR_CC)
 
 build/DUCommon.ir: build/libGDCC.ir build/libc.ir $(DU_IR)
-	$(LD) --bc-target=ZDoom -co$@ $^
+	$(LD) --target-engine=ZDoom -co$@ $^
 
 $(DU_IR_CC) : build/du_%.ir : src/DUCommon/code/du_%.c $(DU_H)
-	$(CC) --bc-target=ZDoom -isrc/DUCommon/code -co$@ $<
+	$(CC) --target-engine=ZDoom -isrc/DUCommon/code -co$@ $<
 
 ##
 ## DUDamned
@@ -115,13 +115,13 @@ build/DUDamned.pkz: build/DUDamned.bin $(DU_DEC) $(DUD_DEC) $(DUD_ROOT)
 	@rm -rf build/DUDamned
 
 build/DUDamned.bin: build/DUCommon.ir build/DUDamned.ir
-	$(LD) --bc-target=ZDoom -o$@ $^
+	$(LD) --target-engine=ZDoom -o$@ $^
 
 build/DUDamned.ir: $(DUD_IR)
-	$(LD) --bc-target=ZDoom -co$@ $^
+	$(LD) --target-engine=ZDoom -co$@ $^
 
 $(DUD_IR_CC) : build/dud_%.ir : src/DUDamned/code/dud_%.c $(DU_H) $(DUD_H)
-	$(CC) --bc-target=ZDoom $(DUD_INC) --no-warn-unused-initializer -co$@ $<
+	$(CC) --target-engine=ZDoom $(DUD_INC) --no-warn-unused-initializer -co$@ $<
 
 ##
 ## DUHeresy
@@ -180,13 +180,13 @@ build/DUHeresy.pkz: build/DUHeresy.bin $(DU_DEC) $(DUH_DEC) $(DUH_ROOT)
 	@rm -rf build/DUHeresy
 
 build/DUHeresy.bin: build/DUCommon.ir build/DUHeresy.ir
-	$(LD) --bc-target=ZDoom -o$@ $^
+	$(LD) --target-engine=ZDoom -o$@ $^
 
 build/DUHeresy.ir: $(DUH_IR)
-	$(LD) --bc-target=ZDoom -co$@ $^
+	$(LD) --target-engine=ZDoom -co$@ $^
 
 $(DUH_IR_CC) : build/duh_%.ir : src/DUHeresy/code/duh_%.c $(DU_H) $(DUH_H)
-	$(CC) --bc-target=ZDoom $(DUH_INC) -co$@ $<
+	$(CC) --target-engine=ZDoom $(DUH_INC) -co$@ $<
 
 ##
 ## DUMagick
@@ -231,13 +231,13 @@ build/DUMagick.pkz: build/DUMagick.bin $(DU_DEC) $(DUM_DEC) $(DUM_ROOT)
 	@rm -rf build/DUMagick
 
 build/DUMagick.bin: build/DUCommon.ir build/DUMagick.ir
-	$(LD) --bc-target=ZDoom -o$@ $^
+	$(LD) --target-engine=ZDoom -o$@ $^
 
 build/DUMagick.ir: $(DUM_IR)
-	$(LD) --bc-target=ZDoom -co$@ $^
+	$(LD) --target-engine=ZDoom -co$@ $^
 
 $(DUM_IR_CC) : build/dum_%.ir : src/DUMagick/code/dum_%.c $(DU_H) $(DUM_H)
-	$(CC) --bc-target=ZDoom $(DUM_INC) -co$@ $<
+	$(CC) --target-engine=ZDoom $(DUM_INC) -co$@ $<
 
 ## EOF
 
